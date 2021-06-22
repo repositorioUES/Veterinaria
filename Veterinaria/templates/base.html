@@ -15,8 +15,20 @@
   </head>
   <body>
 		{% block navbar %}
+		<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white border-bottom box-shadow">
+      <h3 class="my-0 mr-md-auto font-weight-normal">Pet & Leafde</h3>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="#">Enlace 1</a>
+        <a class="p-2 text-dark" href="#">Enlace 2</a>
+        <a class="p-2 text-dark" href="#">Enlace 3</a>
+        <a class="p-2 text-dark" href="#">Enlace 4</a>
+      </nav>
+      <a class="btn btn-outline-primary" href="#">Iniciar sesión</a>
+    </div>
+
+	
 		<div class="wrapper d-flex align-items-stretch">
-			<nav id="sidebar" class="active">
+			<nav id="sidebar">
 				<div class="custom-menu">
 					<button type="button" id="sidebarCollapse" class="btn btn-primary">
 	          <i class="fa fa-bars"></i>
@@ -24,67 +36,62 @@
 	        </button>
         </div>
 				<div class="p-4">
-		  		<h1><a href="index.html" class="logo">Pet & Leafde</a></h1>
+        <div class="contenedor_logo" align="center">
+            <img  class="logo"  align="center" src="{% static 'images/logo.png'%}" alt="logo">
+        </div>
 	        <ul class="list-unstyled components mb-5">
 	          <li class="active">
 	            <a href="#"><span class="fa fa-home mr-3"></span> Clínicas</a>
 	          </li>
-	          <li>
+	          <li class="active">
 	              <a href="#"><span class="fa fa-user mr-3"></span> Pacientes</a>
 	          </li>
-	          <li>
-              <a href="#"><span class="fa fa-briefcase mr-3"></span> Citas</a>
+	          <li class="active">
+              <a href="#"><span class="fa fa-address-book mr-3"></span> Citas</a>
 	          </li>
-	          <li>
-              <a href="#"><span class="fa fa-sticky-note mr-3"></span> Empleados</a>
+	          <li class="active">
+              <a href="#"><span class="fa fa-users mr-3"></span> Empleados</a>
 	          </li>
-	          <li>
+	          <li class="active">
               <a href="#"><span class="fa fa-paper-plane mr-3"></span> Solicitudes de ingreso</a>
 	          </li>
 	        </ul>
 
-	        <div class="mb-5">
-						<h3 class="h6 mb-3">Iniciar sesion</h3>
-                        <form action="#" class="subscribe-form">
-	            <div class="form-group d-flex">
-	            	<div class="icon"><span class="icon-paper-plane"></span></div>
-	              <input type="text" class="form-control" placeholder="Usuario">
-	            </div>
-	          </form>
-						<form action="#" class="subscribe-form">
-	            <div class="form-group d-flex">
-	            	<div class="icon"><span class="icon-paper-plane"></span></div>
-	              <input type="text" class="form-control" placeholder="Contraseña">
-	            </div>
-	          </form>
-					</div>
+	        <!--Div de contenedor de iniciar sesion
+				<div class="mb-5">
+				<h3 class="h6 mb-3">Iniciar sesion</h3>
+					<ul class="list-unstyled components mb-5">
+						<li class="active">
+	              			<a href="#"><span class="fa fa-user mr-3"></span> Ingresar</a>
+	          			</li>
+					</ul>
+			</div>
+			-->
 
-            {% block footer %}
-  
+
 	        <div class="footer">
 	        	<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Proyecto DSI-115 <i class="icon-heart" aria-hidden="true"></i>
 						  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
 	        </div>
-            {% endblock footer%}
 	      </div>
     	</nav>
         {% endblock navbar%} 
 
        
-       {% block content %}
+    
        <!-- Page Content  -->
       <div id="content" class="p-4 p-md-5 pt-5">
-        <h2 class="mb-4">Dashboard</h2>
+	  {% block content %}
       </div>
-
-      {% endblock content%}
 		</div>
+	{% endblock content%}
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/popper.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+
 
   </body>
 </html>
