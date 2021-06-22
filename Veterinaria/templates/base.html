@@ -22,7 +22,7 @@
         <a class="p-2 text-dark" href="#">Enlace 2</a>
         <a class="p-2 text-dark" href="#">Enlace 3</a>
         <a class="p-2 text-dark" href="#">Enlace 4</a>-->
-		<a class="btn btn-outline-primary" href="#">Registrate</a>
+		<a class="btn btn-outline-primary" href="{% url 'registro'%}">Registrate</a>
       </nav>
 
 	  {% if request.user.is_authenticated %}
@@ -95,7 +95,7 @@
        
     
        <!-- Page Content  -->
-      <div id="content" class="p-4 p-md-5 pt-5">
+      <div id="content" class="p-4 p-md-5 pt-5">	
 	  {% block content %}
       </div>
 		</div>
