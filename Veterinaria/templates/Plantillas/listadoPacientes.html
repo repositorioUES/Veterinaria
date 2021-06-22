@@ -1,0 +1,33 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+
+<h3>Listado de Pacientes Activos</h3>
+
+<div class="container">
+	<div class="row">
+
+	<a href="{% url 'registrar_paciente' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
+   Registrar Paciente</a>
+</div>
+<br>
+<br>
+
+	<table  class="table table-sm">
+		<tr style="text-align: center">
+			<th style="text-align: center">Nombre del Paciente</th>
+			<th style="text-align: center">Nombre del Propietario</th>
+		</tr>
+		{% for p in pacientes %}
+			{% if p.Activo == 1 %}
+			<tr>
+				<td>{{p.nombre}}</td>
+				<td>{{p.Propietario.nombre}}</td>
+				<td style="text-align:center;">
+			</tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+
+
+{% endblock content%}
