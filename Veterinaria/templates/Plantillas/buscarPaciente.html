@@ -8,7 +8,7 @@
 <div>
     <form role="form" method="get" >
         <div>
-            <label> Introduzca el Nombre del Paciente </label>
+            <label> Introduzca el Nombre del Paciente, el Nombre del Propietario o su DUI </label>
             <input type="text" class="form-control" placeholder="Nombre del Paciente" name="buscar" value="{{ request.GET.buscar }}">
 
             <div>
@@ -36,6 +36,9 @@
                         </tr>
                         {% endif %}
                     {%endfor%}
+                    {% if pacientes == None %}
+                        <h3>No hay Resultados</h3>
+                    {% endif %}
                 </tr>
             </table>    
     </form>

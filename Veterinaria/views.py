@@ -155,7 +155,7 @@ class ListadoPacientes(ListView):
     template_name = 'Plantillas/listadoPacientes.html'
     context_object_name = 'pacientes'
 
-# Vista DETALLE DE PROPIETARIO -------------------------------------------------------------------
+# Vista BUSCAR PACIENTE -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
 def BuscarPaciente(request):
     queryset = request.GET.get('buscar')
@@ -167,10 +167,11 @@ def BuscarPaciente(request):
             print(pacientes)
         else:
             p = Propietario.objects.filter(Q(nombre__icontains=queryset) | Q(apellido__icontains=queryset) | Q(dui=queryset)).first()
-            pacientes = Paciente.objects.filter(propietario_id=p.dui)
-            context = {'pacientes':pacientes}
-            print(p)
-            print(pacientes)
+            if p:
+                pacientes = Paciente.objects.filter(propietario_id=p.dui)
+                context = {'pacientes':pacientes}
+                print(p)
+                print(pacientes)
         
     return render(request,'Plantillas/buscarPaciente.html', context)
 
