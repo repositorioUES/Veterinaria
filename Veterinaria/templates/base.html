@@ -22,9 +22,9 @@
         <a class="p-2 text-dark" href="#">Enlace 2</a>
         <a class="p-2 text-dark" href="#">Enlace 3</a>
         <a class="p-2 text-dark" href="#">Enlace 4</a>-->
-		<a class="btn btn-outline-primary" href="{% url 'registro'%}">Registrate</a>
+		
       </nav>
-
+	  <a class="btn btn-outline-primary" href="{% url 'registro'%}">Registrate</a>&nbsp;
 	  {% if request.user.is_authenticated %}
       <a class="btn btn-outline-danger" href="{% url 'logout' %}">Cerrar sesión</a>
 	  {% else %}
@@ -32,8 +32,6 @@
 	  {% endif %}
 
     </div>
-
-	
 		<div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar">
 				<div class="custom-menu">
@@ -48,14 +46,14 @@
         </div><p><p>
 
 			{% if request.user.is_authenticated %}
-			<h5 style="color:whitesmoke;" class="my-0 mr-md-auto font-weight-normal" align ="center">Bienvenido</h5>
-			<h5 style="color:whitesmoke;" align ='center'>@{{user}}</h5>
+			<h5 style="color:whitesmoke;" class="my-0 mr-md-auto font-weight-normal" align ="center">Bienvenido/a:</h5>
+			<h5 style="color:whitesmoke;" align ='center'>{{user.username}} {{user.last_name}}</h5>
 			{% else %}
 			{% endif %}
 
 	        <ul class="list-unstyled components mb-5">
 	          <li class="active">
-	            <a href="#"><span class="fa fa-home mr-3"></span> Clínicas</a>
+	            <a href="{% url 'listar_clinica' %}"><span class="fa fa-home mr-3"></span> Clínicas</a>
 	          </li>
 	          <li class="active">
 	              <a href="#"><span class="fa fa-user mr-3"></span> Pacientes</a>

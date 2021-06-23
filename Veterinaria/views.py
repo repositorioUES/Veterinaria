@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render,get_object_or_404
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, ClinicaForm
+from .models import Clinica
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import Http404
@@ -23,5 +24,31 @@ def registro(request):
             messages.success(request,"Registro exitoso")
             return redirect(to="index")
         data["form"]=formulario
-
     return render(request, 'registration/registro.html',data)
+
+
+def registrar_clinica(request):
+
+    data = {
+        'form' : ClinicaForm()
+    }
+
+    if request.method == 'POST':
+        formulario=ClinicaForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request,"Registro exitoso")
+            return redirect(to="listar_clinica")
+        else:
+            data['form'] = formulario
+    return render(request, 'clinica/agregarClinica.html',data)
+
+
+def listar_clinica(request):
+    clinicas = Clinica.objects.all()
+
+    data = {
+        'clinicas':clinicas
+    }
+
+    return render(request, 'clinica/listarClinica.html',data)

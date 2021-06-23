@@ -1,0 +1,51 @@
+{% extends 'base.html'%}
+
+{% block title %}<title>Listado de Clinicas</title>{% endblock title%}
+
+{% block content %}
+
+
+<div class="d-flex justify-content-end">
+    <a class="btn btn-success" href="{% url 'registrar_clinica' %}">Registrar Clínica</a>
+</div>&nbsp;
+<div class="row">
+<div class="card">
+    <div class="card-body">
+    <h2 align ="center">Clínicas asociadas</h2>
+    <table class="table table-sm table-bordered ">
+        <tr class="bg-info text-light" >
+            <th>#</th>
+            <th>Dueño de la Veterinaria</th>
+            <th>Nombre de la Clinica</th>
+            <th>Dirección</th>
+            <th>Horarios</th>
+            <th>Teléfono</th>
+            <th>Servicios</th>
+            <th>Consultorios</th>
+            <th>Gestionar</th>
+        </tr>
+
+    {%for c in clinicas %}
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.dueño }}</td>
+            <td>{{ c.nombre }}</td>
+            <td>{{ c.direccion }}</td>
+            <td>{{ c.horarios }}</td>
+            <td>{{ c.telefono }}</td>
+            <td>{{ c.servicios }}</td>
+            <td></td>
+            <td></td>
+        </tr>
+    {%endfor%}
+    </table>
+    </div>
+</div>
+</div>
+&nbsp;
+<div class="d-flex justify-content-center">
+    <a class="btn btn-danger" href="{% url 'index' %}">Regresar</a>
+</div>
+
+
+{% endblock content%} 
