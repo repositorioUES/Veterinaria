@@ -31,6 +31,8 @@ urlpatterns = [
     path('detallePropietario/<str:pk>', DetallePropietario.as_view(), name='detalle_propietario'),
     path('buscarPaciente/', BuscarPaciente, name='buscar_paciente'),
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT,}),
+    path('accounts/', include('django.contrib.auth.urls')),
+
 ]
 
 if settings.DEBUG:

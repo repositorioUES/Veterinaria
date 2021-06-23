@@ -8,7 +8,6 @@ from django.core.exceptions import ValidationError
 
 # Modelo del PACIENTE -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
-
 class Paciente(models.Model):
     id = models.AutoField(primary_key=True)
     foto = models.ImageField(upload_to='fotos', null = True)
@@ -69,3 +68,15 @@ class Municipio(models.Model):
     def __str__(self):
         return self.nombre	
 #FIN MUNICIPIO
+
+class Clinica(models.Model):
+    dueño = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=60)
+    direccion = models.TextField()
+    horarios = models.CharField(max_length=50)
+    telefono = models.CharField(max_length=9)
+    servicios = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
+    

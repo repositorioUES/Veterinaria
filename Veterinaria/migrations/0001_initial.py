@@ -58,4 +58,16 @@ class Migration(migrations.Migration):
                 ('propietario', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='Veterinaria.propietario')),
             ],
         ),
+        migrations.CreateModel(
+            name='Clinica',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('dueño', models.CharField(max_length=30)),
+                ('nombre', models.CharField(max_length=30)),
+                ('direccion', models.TextField()),
+                ('horarios', models.CharField(max_length=20)),
+                ('telefono', models.CharField(max_length=9)),
+                ('servicios', models.CharField(max_length=20)),
+            ],
+        ),
     ]
