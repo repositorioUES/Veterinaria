@@ -46,9 +46,18 @@ def registrar_clinica(request):
 
 def listar_clinica(request):
     clinicas = Clinica.objects.all()
+    page = request.GET.get('page',1)
+
+    try:
+        paginator = Paginator(clinicas,5)
+        clinicas = paginator.page(page)
+
+    except:
+        raise Http404
 
     data = {
-        'clinicas':clinicas
+        'entity': clinicas,
+        'paginator': paginator
     }
 
     return render(request, 'clinica/listarClinica.html',data)
