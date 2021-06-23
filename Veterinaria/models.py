@@ -19,7 +19,7 @@ class Paciente(models.Model):
     especie = models.CharField(max_length=50, help_text="")
     raza = models.CharField(max_length=50,help_text="")
     color = models.CharField(max_length=50,help_text="")
-    fechaNacim = models.DateField(null=False, blank=True)
+    fechaNacimPac = models.DateField(null=False, blank=True)
     observaciones = models.CharField(max_length=500, null = True, blank=True)
 
     # Booleano para determinar su el paciente esta activo o no

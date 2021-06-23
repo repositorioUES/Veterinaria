@@ -1,4 +1,3 @@
-from django.shortcuts import render, redirect
 from django import forms
 from django.views.generic.edit import View, UpdateView, CreateView, DeleteView
 from django.views.generic.list import ListView
@@ -9,11 +8,8 @@ from Veterinaria.models import *
 from Veterinaria.forms import *
 from datetime import *
 from django.views.generic import TemplateView
-from django.urls import reverse_lazy, reverse
 from django.db.models import Q
-
-
-from django.shortcuts import redirect, render,get_object_or_404
+from django.shortcuts import render, redirect, render,get_object_or_404
 from .forms import CustomUserCreationForm, ClinicaForm
 from .models import Clinica
 from django.contrib import messages
@@ -112,7 +108,7 @@ class RegistrarPaciente(CreateView):
 class ModificarPaciente(UpdateView):
     model = Paciente
     second_model = Propietario
-    template_name = 'Plantillas/registrarPaciente.html'
+    template_name = 'Plantillas/modificarPaciente.html'
     form_class = PacienteForm
     second_form_class = PropietarioForm
     success_url = reverse_lazy('listado_pacientes')
@@ -139,11 +135,11 @@ class ModificarPaciente(UpdateView):
         if form.is_valid() and form2.is_valid():
             form.save()
             form2.save()
-            paciente.save()
+            #paciente.save()
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.render_to_response(self.get_context_data(form = form, form2 = form2))
-
+    
 # Vista DETALLE DE PACIENTES -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
 class DetallePaciente(DetailView):

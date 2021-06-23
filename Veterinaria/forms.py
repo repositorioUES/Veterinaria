@@ -1,16 +1,21 @@
 from django import forms
+from .models import *
 from Veterinaria.models import Paciente, Propietario
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from .models import Clinica
 
 class DateInput(forms.DateInput):
 	input_type = 'date'
+
 
 class PacienteForm(forms.ModelForm):
 	class Meta:
 		model = Paciente
 		fields = [
-			'foto','nombrePac','sexo', 'especie','raza','color','fechaNacim','observaciones',
+			'foto','nombrePac','sexo', 'especie','raza','color','fechaNacimPac','observaciones',
 		]
 		labels = {
 			'foto':'Foto*',
@@ -19,12 +24,12 @@ class PacienteForm(forms.ModelForm):
 		    'especie':'Especie*',
 		    'raza':'Raza*',
 		    'color':'Color*',
-		    'fechaNacim':'Fecha de Nacimiento*',
+		    'fechaNacimPac':'Fecha de Nacimiento*',
             'observaciones':'Observaciones',
 		}
 		widgets = {
 			'observaciones':forms.Textarea(attrs={'class':'form-contol'}),
-			'fechaNacim': DateInput(),
+			'fechaNacimPac': DateInput(format=('%Y-%m-%d'),attrs={'class':'form-control',}),
 		}
 
 
@@ -48,11 +53,8 @@ class PropietarioForm(forms.ModelForm):
             'correo':'Correo Electrónico*',
 		}
 		widgets = {
-			'fechaNacim': DateInput(),
+			'fechaNacim': DateInput(format=('%Y-%m-%d'),attrs={'class':'form-control'}),
 		}
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from .models import Clinica
 
 class CustomUserCreationForm(UserCreationForm):
     

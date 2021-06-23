@@ -30,17 +30,24 @@
     <label>Color: </label>    {{paciente.color}}
 </div>
 <div>
-    <label>Fecha de Nacimiento: </label>    {{paciente.fechaNacim}}
+    <label>Fecha de Nacimiento: </label>    {{paciente.fechaNacimPac}}
 </div>
 <div>
-    <label>Observaciones: </label>    {{paciente.observaciones}}
+    <label>Observaciones: </label><br>  
+    <table>  
+        <tr>
+            <td width="800">
+                <p>{{paciente.observaciones}}</p>
+            </td>
+        </tr>
+    </table>
 </div>
       
 <br>
 <div>   
     <a href="{% url 'modificar_paciente' paciente.pk %}" class="btn btn-success" style="color:white; background-color:blue">Modificar Datos</a>
     
-    <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
+    <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
 </div>      
 
 {% endblock content%}

@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
                 ('especie', models.CharField(max_length=50)),
                 ('raza', models.CharField(max_length=50)),
                 ('color', models.CharField(max_length=50)),
-                ('fechaNacim', models.DateField(blank=True)),
+                ('fechaNacimPac', models.DateField(blank=True)),
                 ('observaciones', models.CharField(blank=True, max_length=500, null=True)),
                 ('activo', models.IntegerField(blank=True, default=1, max_length=1)),
                 ('propietario', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='Veterinaria.propietario')),
