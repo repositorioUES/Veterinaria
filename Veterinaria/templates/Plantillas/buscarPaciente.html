@@ -1,0 +1,51 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+<div>
+<h3>Buscar Paciente</h3>
+</div>
+
+<div>
+    <form role="form" method="get" >
+        <div>
+            <label> Introduzca el Nombre del Paciente </label>
+            <input type="text" class="form-control" placeholder="Nombre del Paciente" name="buscar" value="{{ request.GET.buscar }}">
+
+            <div>
+                <button type="submit" class="btn" style="color:white; background-color:blue">Buscar</button>
+                <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
+            </div>
+        </div>
+            <table  class="table table-sm">
+                <tr style="text-align: center">
+                    <th style="text-align: center">Paciente</th>
+                    <th style="text-align: center">Propietario</th>
+                </tr>
+                    {% for p in pacientes %}
+                        {% if p.activo == 1 %}
+                        <tr>
+                            <td style="text-align: center">
+                                <div><img src=" {{ p.foto.url }}"/></div>
+                                <div>{{p.nombrePac}}</div>
+                            </td>
+                            <td style="text-align: center">{{p.propietario.nombre}}</td>
+
+                            <td style="text-align:center;">
+                                <a href="{% url 'detalle_paciente' p.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {%endfor%}
+                </tr>
+            </table>    
+    </form>
+    
+</div> 
+
+ <script>
+    //document.getElementById("id_propietario").value = "a"; // deshabilitar
+    //document.getElementById("id_fechaNacim").type = "date"; // 
+    
+</script>
+
+{% endblock content%}

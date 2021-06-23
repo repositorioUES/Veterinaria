@@ -1,40 +1,52 @@
 from django import forms
-from Veterinaria.models import *
+from Veterinaria.models import Paciente, Propietario
+from django.contrib.admin.widgets import AdminDateWidget
+from django.forms.fields import DateField
 
+class DateInput(forms.DateInput):
+	input_type = 'date'
 
 class PacienteForm(forms.ModelForm):
 	class Meta:
 		model = Paciente
-		fields = {
-			'foto','nombre','propietario','sexo', 'especie','raza','color','fechaNacim','observaciones',
-		}
+		fields = [
+			'foto','nombrePac','sexo', 'especie','raza','color','fechaNacim','observaciones',
+		]
 		labels = {
-			'foto':'Foto',
-			'nombre':'Paciente',
-            'propietario':'Propietario',
-		    'sexo':'Sexo',
-		    'especie':'Especie',
-		    'raza':'Raza',
-		    'color':'Color',
-		    'fechaNacim':'Fecha de Nacimiento',
+			'foto':'Foto*',
+			'nombrePac':'Paciente*',
+		    'sexo':'Sexo*',
+		    'especie':'Especie*',
+		    'raza':'Raza*',
+		    'color':'Color*',
+		    'fechaNacim':'Fecha de Nacimiento*',
             'observaciones':'Observaciones',
-		}	
+		}
+		widgets = {
+			'observaciones':forms.Textarea(attrs={'class':'form-contol'}),
+			'fechaNacim': DateInput(),
+		}
+
 
 		
 class PropietarioForm(forms.ModelForm):
 	class Meta:
 		model = Propietario
-		fields = {
+		fields = [
 			'dui','nombre', 'apellido','fechaNacim','edad','direccion','departamento','municipio','telefono','correo',
-		}
+		]
 		labels = {
-			'dui':'Número de DUI',
-			'nombre':'Nombre',
-		    'fechaNacim':'Fecha de Nacimiento',
-            'edad':'Edad',
-            'direccion':'Dirección',
-            'departamento':'Departamento',
-            'municipio':'Municipio',
-            'telefono':'Telefono',
-            'correo':'Correo Electrónico',
+			'dui':'Número de DUI*',
+			'nombre':'Nombre*',
+			'apellido':'Apellido*',
+		    'fechaNacim':'Fecha de Nacimiento*',
+            'edad':'Edad*',
+            'direccion':'Dirección*',
+            'departamento':'Departamento*',
+            'municipio':'Municipio*',
+            'telefono':'Telefono*',
+            'correo':'Correo Electrónico*',
+		}
+		widgets = {
+			'fechaNacim': DateInput(),
 		}

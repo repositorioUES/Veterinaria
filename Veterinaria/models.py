@@ -11,17 +11,17 @@ from django.core.exceptions import ValidationError
 
 class Paciente(models.Model):
     id = models.AutoField(primary_key=True)
-    foto = models.ImageField(upload_to='images')
-    nombre = models.CharField(max_length=50,help_text="Nombre del paciente")
+    foto = models.ImageField(upload_to='fotos', null = True)
+    nombrePac = models.CharField(max_length=50,help_text="")
 
     SEXO = (('m','Macho'),('h', 'Hembra'))# Estructura para la selección del sexo del paciente
-    sexo = models.CharField(max_length=10, choices=SEXO, blank=True, help_text='Sexo del paciente')
+    sexo = models.CharField(max_length=10, choices=SEXO, blank=True, help_text='')
 
-    especie = models.CharField(max_length=50, help_text="Especie del paciente")
-    raza = models.CharField(max_length=50,help_text="Raza del paciente")
-    color = models.CharField(max_length=50,help_text="Color del paciente")
+    especie = models.CharField(max_length=50, help_text="")
+    raza = models.CharField(max_length=50,help_text="")
+    color = models.CharField(max_length=50,help_text="")
     fechaNacim = models.DateField(null=False, blank=True)
-    observaciones = models.CharField(max_length=500,help_text="Las que considere peertinentes")
+    observaciones = models.CharField(max_length=500, null = True, blank=True)
 
     # Booleano para determinar su el paciente esta activo o no
     activo = models.IntegerField(max_length=1, blank=True,  default=1)
@@ -29,26 +29,26 @@ class Paciente(models.Model):
     propietario = models.ForeignKey('Propietario', on_delete = models.SET_NULL, null=True)
     
     def __str__(self): #Para que retorne el nombre y no el Id
-        return self.nombre
+        return self.nombrePac
 #FIN PACIENTE
 
 # Modelo del PROPIETARIO -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
 
 class Propietario(models.Model):
-    dui = models.CharField(max_length=10, help_text="Número de DUI", primary_key=True)
-    nombre = models.CharField(max_length=100,)
+    dui = models.CharField(max_length=10, help_text="########-#", primary_key=True)
+    nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
-    fechaNacim = models.DateField(null=False, blank=True)
+    fechaNacim = models.DateField()
     edad = models.IntegerField(help_text="Se calculará automaticamente")
     direccion = models.CharField(max_length=100,help_text="Calle, Colonia, Cantón ...")
     departamento = models.ForeignKey('Departamento', on_delete = models.SET_NULL, null=True)
     municipio = models.ForeignKey('Municipio', on_delete = models.SET_NULL, null=True)
-    correo = models.CharField(max_length=50,help_text="Correo Electrónico")
-    telefono = models.CharField(max_length=50,help_text="Telefono de contacto")
+    correo = models.CharField(max_length=50,help_text="")
+    telefono = models.CharField(max_length=9,help_text="####-####")
 
     def __str__(self): #Para que retorne el nombre y no el Id
-        return self.nombre
+        return self.nombre + " " + self.apellido
 #FIN PROPIETARIO
 
 # Modelo de DPARTAMENTO -------------------------------------------------------------------

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+<div>
+    <h3>Datos del Propietario</h3>
+</div> 
+
+<br>
+<div>
+    <label>Nombre: </label>    {{prop}}
+</div>
+<div>
+    <label>DUI: </label>    {{prop.dui}}
+</div>
+<div>
+    <label>Fecha de Nacimiento: </label>    {{prop.fechaNacim}}
+</div>
+<div>
+    <label>Edad: </label>    {{prop.edad}}
+</div>
+<div>
+    <label>Dirección: </label>    {{prop.direccion}}, {{prop.municipio}}, {{prop.departamento}}
+</div>
+<div>
+    <label>Correo Electónico: </label>    {{prop.correo}}
+</div>
+<div>
+    <label>Teléfono: </label>    {{prop.telefono}}
+</div>
+      
+<br>
+<div>       
+    <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Listado de Pacientes</a>
+</div>      
+
+{% endblock content%}

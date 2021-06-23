@@ -1,0 +1,46 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+<div>
+    <h3>Datos de Paciente</h3>
+</div> 
+
+<br>
+
+<div>
+    <img src=" {{ paciente.foto.url }}"/>
+</div>
+<div>
+    <label>Nombre: </label>    {{paciente.nombrePac}}
+</div>
+<div>
+    <label>Propiertario: </label>    {{paciente.propietario}}
+    <a href="{% url 'detalle_propietario' paciente.propietario_id %}" class="btn btn-success" style="color:white; background-color:blue">Detalle</a>
+</div>
+<div>
+    <label>Especie: </label>    {{paciente.especie}}
+</div>
+<div>
+    <label>Sexo: </label>    {% if paciente.sexo == 'h' %}Hembra{%else%}Macho{%endif%}
+</div>
+<div>
+    <label>Raza: </label>    {{paciente.raza}}
+</div>
+<div>
+    <label>Color: </label>    {{paciente.color}}
+</div>
+<div>
+    <label>Fecha de Nacimiento: </label>    {{paciente.fechaNacim}}
+</div>
+<div>
+    <label>Observaciones: </label>    {{paciente.observaciones}}
+</div>
+      
+<br>
+<div>   
+    <a href="{% url 'modificar_paciente' paciente.pk %}" class="btn btn-success" style="color:white; background-color:blue">Modificar Datos</a>
+    
+    <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
+</div>      
+
+{% endblock content%}
