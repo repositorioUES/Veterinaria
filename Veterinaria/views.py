@@ -217,7 +217,10 @@ class CrearSolicitud(CreateView):
     model = Solicitudes
     template_name = 'Plantillas/crearSolicitud.html'
     form_class = SolicitudForm
-    success_url = reverse_lazy('listado_solicitudes')
+    success_url = reverse_lazy('solicitud_enviada')
+
+def SolicitudEnviada(request):
+    return render(request, 'Plantillas/solicitudEnviada.html')
 
 class ListarSolicitudes(ListView):
     model = Solicitudes

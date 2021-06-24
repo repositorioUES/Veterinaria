@@ -39,6 +39,7 @@ urlpatterns = [
     path('listadoEmpleados/', login_required(ListarEmpleados.as_view()), name='listado_empleados'),
     path('detalleEmpleado/<str:pk>', login_required(DetalleEmpleado.as_view()), name='detalle_empleado'),
     path('solicitudIngreso/', CrearSolicitud.as_view(), name='crear_solicitud'),
+    path('solicitudEnviada/', SolicitudEnviada, name='solicitud_enviada'),
     path('listadoSolicitudes/', login_required(ListarSolicitudes.as_view()), name='listado_solicitudes'),
     path('detalleSolicitud/<int:pk>', login_required(DetalleSolicitud.as_view()), name='detalle_solicitud'),
 
