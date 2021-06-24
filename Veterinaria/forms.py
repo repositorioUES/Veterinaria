@@ -1,6 +1,6 @@
 from django import forms
 from .models import *
-from Veterinaria.models import Paciente, Propietario
+from Veterinaria.models import Paciente, Propietario, Empleado, Solicitudes
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
 from django.contrib.auth.forms import UserCreationForm
@@ -67,3 +67,39 @@ class ClinicaForm(forms.ModelForm):
     class Meta:
         model = Clinica
         fields = '__all__'
+
+
+class EmpleadoForm(forms.ModelForm):
+	class Meta:
+		model = Empleado
+		fields = [
+			'duiEmp','nombreEmp', 'apellidoEmp','telefonoEmp','cargo','salario','clinica',
+		]
+		labels = {
+			'duiEmp':'Número de DUI*',
+			'nombreEmp':'Nombre*',
+			'apellidoEmp':'Apellido*',
+            'telefonoEmp':'Telefono*',
+            'cargo':'Crgo que Desempeña*',
+			'salario':'Salario*',
+			'clinica':'Clinica en que Trabaja*',
+		}
+
+class SolicitudForm(forms.ModelForm):
+	class Meta:
+		model = Solicitudes
+		fields = [
+			'solicitante','nombreClinica', 'direccionClinica', 'horariosClinica', 'telefonoClinica','serviciosClinica',
+		]
+		labels = {
+			'solicitabte':'Nonbre del Dueño*',
+			'nombreClinica':'Nombre de la Clínica*',
+			'direccionClinica':'Dirección*',
+            'horariosClinica':'Horarios*',
+            'telefonoClinica':'Telefono*',
+			'serviciosClinica':'Servicios que Presta*',
+		}
+		widgets = {
+			'horariosClinica':forms.Textarea(attrs={'class':'form-contol'}),
+			'serviciosClinica':forms.Textarea(attrs={'class':'form-contol'}),
+		}

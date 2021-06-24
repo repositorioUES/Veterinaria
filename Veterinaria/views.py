@@ -189,3 +189,43 @@ class DetallePropietario(DetailView):
     template_name = 'Plantillas/detallePropietario.html'
     form_class = PropietarioForm
     context_object_name = 'prop'
+
+
+
+
+
+class CrearEmpleado(CreateView):
+    model = Empleado
+    template_name = 'Plantillas/crearEmpleado.html'
+    form_class = EmpleadoForm
+    success_url = reverse_lazy('listado_empleados')
+
+class ListarEmpleados(ListView):
+    model = Empleado
+    template_name = 'Plantillas/listadoEmpleados.html'
+    context_object_name = 'empleados'
+
+class DetalleEmpleado(DetailView):
+    model = Empleado
+    template_name = 'Plantillas/detalleEmpleado.html'
+    form_class = EmpleadoForm
+    context_object_name = 'empleado'
+
+
+
+class CrearSolicitud(CreateView):
+    model = Solicitudes
+    template_name = 'Plantillas/crearSolicitud.html'
+    form_class = SolicitudForm
+    success_url = reverse_lazy('listado_solicitudes')
+
+class ListarSolicitudes(ListView):
+    model = Solicitudes
+    template_name = 'Plantillas/listadoSolicitudes.html'
+    context_object_name = 'solicitudes'
+
+class DetalleSolicitud(DetailView):
+    model = Solicitudes
+    template_name = 'Plantillas/detalleSolicitud.html'
+    form_class = SolicitudForm
+    context_object_name = 'solicitud'

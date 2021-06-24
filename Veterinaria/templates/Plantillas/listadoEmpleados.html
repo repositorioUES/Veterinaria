@@ -1,0 +1,40 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+<div class="container">
+<h3>Listado de Empleados</h3>
+</div>
+<div class="container">
+	<div>
+		<a href="{% url 'crear_empleado' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
+  		 Nuevo Empleado</a>     
+	</div>
+</div>
+<br>
+<div class="container">
+	<table  class="table table-sm">
+		<tr style="text-align: center">
+			<th style="text-align: center">Empleado</th>
+			<th style="text-align: center">Clínica</th>
+			<th style="text-align: center">Cargo</th>
+		</tr>
+		{% for p in empleados %}
+			
+			<tr>
+				<td style="text-align: center">
+					<div>{{p.nombreEmp}}</div>
+				</td>
+				<td style="text-align: center">
+					{{p.clinica}}
+				</td>
+				<td style="text-align: center">
+					{{p.cargo}}
+				</td>
+				<td style="text-align: center">
+    				<a href="{% url 'detalle_empleado' p.duiEmp %}" class="btn btn-success" style="color:white; background-color:blue">Detalle</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock content%}

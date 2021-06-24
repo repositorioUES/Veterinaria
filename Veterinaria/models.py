@@ -82,3 +82,26 @@ class Clinica(models.Model):
     def __str__(self):
         return self.nombre
 #FIN CLINICA
+
+class Empleado(models.Model):
+    duiEmp = models.CharField(max_length=10, help_text="########-#",primary_key=True, validators=[solo_Numeros])
+    nombreEmp = models.CharField(max_length=100, validators=[solo_Letras])
+    apellidoEmp = models.CharField(max_length=100, validators=[solo_Letras])
+    telefonoEmp = models.CharField(max_length=10, help_text="####-####", validators=[solo_Numeros])
+    cargo = models.CharField(max_length=50)
+    salario = models.CharField(max_length=9, validators=[solo_Numeros])
+    clinica = models.ForeignKey('Clinica', on_delete = models.CASCADE)
+
+    def __str__(self):
+        return self.nombreEmp + " " + self.apellidoEmp
+
+class Solicitudes(models.Model):
+    solicitante = models.CharField(max_length=100, validators=[solo_Letras])
+    nombreClinica = models.CharField(max_length=100, validators=[solo_Letras])
+    direccionClinica = models.CharField(max_length=500)
+    horariosClinica = models.CharField(max_length=500)
+    telefonoClinica = models.CharField(max_length=10, help_text="####-####", validators=[solo_Numeros])
+    serviciosClinica = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.solicitante + ": " + self.nombreClinica

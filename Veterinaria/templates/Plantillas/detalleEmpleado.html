@@ -1,0 +1,35 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+<div>
+    <h3>Datos del Empleado</h3>
+</div> 
+
+<br>
+
+<div>
+    <label>Nombre: </label>    {{empleado}}
+</div>
+<div>
+    <label>DUI: </label>    {{empleado.duiEmp}}
+</div>
+<div>
+    <label>Telefono: </label>    {{empleado.telefonoEmp}}
+</div>
+<div>
+    <label>Clínica en que Trabaja: </label>    {{empleado.clinica}}
+</div>
+<div>
+    <label>Cargo que Desempeña: </label>    {{empleado.cargo}}
+</div>
+<div>
+    <label>Salario: </label>    {{empleado.salario}}
+</div>
+
+      
+<br>
+<div>       
+    <a href="{% url 'listado_empleados' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
+</div>      
+
+{% endblock content%}

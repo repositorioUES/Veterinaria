@@ -35,6 +35,12 @@ urlpatterns = [
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT,}),
     path('accounts/', include('django.contrib.auth.urls')),
     path('ajax/load_Municipio/', load_Municipios, name='load_Municipio'),
+    path('registrarEmpleado/', login_required(CrearEmpleado.as_view()), name='crear_empleado'),
+    path('listadoEmpleados/', login_required(ListarEmpleados.as_view()), name='listado_empleados'),
+    path('detalleEmpleado/<str:pk>', login_required(DetalleEmpleado.as_view()), name='detalle_empleado'),
+    path('solicitudIngreso/', CrearSolicitud.as_view(), name='crear_solicitud'),
+    path('listadoSolicitudes/', login_required(ListarSolicitudes.as_view()), name='listado_solicitudes'),
+    path('detalleSolicitud/<int:pk>', login_required(DetalleSolicitud.as_view()), name='detalle_solicitud'),
 
 ]
 
