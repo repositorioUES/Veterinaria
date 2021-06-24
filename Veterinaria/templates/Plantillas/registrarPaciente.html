@@ -30,10 +30,64 @@
     </form>
 </div> 
 
- <script>
-    //document.getElementById("id_propietario").value = "a"; // deshabilitar
-    //document.getElementById("id_fechaNacim").type = "date"; // 
+<script type="text/javascript">
+
+// SELECT DEPENDIENTE PARA LOS MUNICIPIOS====================================
+    $(document).ready(function(){
+        $("#id_departamento").on("change", getMunicipios);    
+    });
+
+    function getMunicipios(){
+        var departamentoId = $("#id_departamento").val();
+        if (departamentoId){
+            $("#id_municipio").html("");
+            var request = $.ajax({
+                type: "GET",
+                url: "{% url 'load_Municipio' %}",
+                data: {
+                    "depId":departamentoId
+                },
+            });
+            request.done(function(response){
+                $("#id_municipio").html(response);
+               
+            });
     
+        }else{
+            $("#id_municipio").html('<option value="" selected = "selected">-----------</option>');      
+            $("#id_municipio").trigger("change");
+        }
+    }
+//===========================================================================
+
+// PARA CALCULAR LA EDAD A PARTIR DE LA FECHA DE NACIMIENTO==================
+    window.onload=deshabilitarEdad;//Al cargar la página deactivar el input de la edad
+
+    function deshabilitarEdad(){
+        document.getElementById("id_edad").diabled = true;
+    }
+
+    // Y ahora si .... a calcular
+    $(document).ready(function(){
+            $("#id_fechaNacim").on("change", getEdad);    
+    });
+
+    function getEdad() {
+        var dateString = $("#id_fechaNacim").val();
+        let hoy = new Date()
+        let fechaNacimiento = new Date(dateString)
+        let edad = hoy.getFullYear() - fechaNacimiento.getFullYear()
+        let diferenciaMeses = hoy.getMonth() - fechaNacimiento.getMonth()
+        if (
+            diferenciaMeses < 0 ||
+            (diferenciaMeses === 0 && hoy.getDate() < fechaNacimiento.getDate())
+        ) {
+            edad--
+        }
+
+        document.getElementById("id_edad").value = edad;
+        return edad
+    }
 </script>
 
 {% endblock content%}

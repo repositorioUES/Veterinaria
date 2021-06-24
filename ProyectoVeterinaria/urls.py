@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve
 from Veterinaria.views import *
+from Veterinaria.ajax import load_Municipios
 
 app_name = 'Veterinaria'
 urlpatterns = [
@@ -32,6 +33,7 @@ urlpatterns = [
     path('buscarPaciente/', BuscarPaciente, name='buscar_paciente'),
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT,}),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('ajax/load_Municipio/', load_Municipios, name='load_Municipio'),
 
 ]
 

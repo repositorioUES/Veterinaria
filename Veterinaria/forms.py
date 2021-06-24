@@ -53,6 +53,7 @@ class PropietarioForm(forms.ModelForm):
             'correo':'Correo Electrónico*',
 		}
 		widgets = {
+			'edad':forms.TextInput(attrs={'class':'form-contol', 'disabled':'True'}),
 			'fechaNacim': DateInput(format=('%Y-%m-%d'),attrs={'class':'form-control'}),
 		}
 
