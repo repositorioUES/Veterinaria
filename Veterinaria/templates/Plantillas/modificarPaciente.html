@@ -64,6 +64,7 @@
 
 // PARA CALCULAR LA EDAD A PARTIR DE LA FECHA DE NACIMIENTO==================
     window.onload=deshabilitarEdad;//Al cargar la página deactivar el input de la edad
+    window.onload=getEdad;//Al cargar la página deactivar el input de la edad
 
     function deshabilitarEdad(){
         document.getElementById("id_edad").diabled = true;
@@ -90,7 +91,7 @@
         document.getElementById("id_edad").value = edad;
         return edad
     }
-    
+
 </script>
 
 {% endblock content%}
