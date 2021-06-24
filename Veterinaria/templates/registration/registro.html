@@ -1,4 +1,5 @@
 {% extends 'base.html' %}   
+{% load static%}
 
 {% block title %}<title>Registro</title>{% endblock title%}
 
@@ -8,6 +9,9 @@
     <div class="row">
         <div class="col-12 col-md-6 offset-md-3">
             <div class="card bg-light text-dark">
+                <div class="contenedor_logo" align="center">
+                    <img  class="logo"  src="{% static 'images/registro.png'%}" alt="logo">
+                </div>
                 <div class="card-body">
                     <h2>Registro de Usuario</h2>
                     <hr>

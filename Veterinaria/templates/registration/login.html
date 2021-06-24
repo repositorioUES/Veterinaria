@@ -1,5 +1,5 @@
 {% extends 'base.html' %}   
-
+{% load static %}
 {% block title %}<title>Iniciar sesion</title>{% endblock title%}
 
 {% block content %}
@@ -8,6 +8,9 @@
     <div class="row">
         <div class="col-12 col-md-6 offset-md-3">
             <div class="card bg-light text-dark">
+                <div class="contenedor_logo" align="center">
+                    <img  class="logo"  src="{% static 'images/login.png'%}" alt="logo">
+                </div>
                 <div class="card-body">
                     <h2>Ingresa tus credenciales</h2>
                     <hr>

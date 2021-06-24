@@ -20,17 +20,18 @@ from django.conf.urls.static import static
 from django.views.static import serve
 from Veterinaria.views import *
 from Veterinaria.ajax import load_Municipios
+from django.contrib.auth.decorators import login_required
 
 app_name = 'Veterinaria'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Veterinaria.urls')),
-    path('registrarPaciente/', RegistrarPaciente.as_view(), name='registrar_paciente'),
-    path('modificarPaciente/<int:pk>', ModificarPaciente.as_view(), name='modificar_paciente'),
-    path('detallePaciente/<int:pk>', DetallePaciente.as_view(), name='detalle_paciente'),
-    path('listadoPacientes/', ListadoPacientes.as_view(), name='listado_pacientes'),
-    path('detallePropietario/<str:pk>', DetallePropietario.as_view(), name='detalle_propietario'),
-    path('buscarPaciente/', BuscarPaciente, name='buscar_paciente'),
+    path('registrarPaciente/', login_required(RegistrarPaciente.as_view()), name='registrar_paciente'),
+    path('modificarPaciente/<int:pk>', login_required(ModificarPaciente.as_view()), name='modificar_paciente'),
+    path('detallePaciente/<int:pk>', login_required(DetallePaciente.as_view()), name='detalle_paciente'),
+    path('listadoPacientes/', login_required(ListadoPacientes.as_view()), name='listado_pacientes'),
+    path('detallePropietario/<str:pk>', login_required(DetallePropietario.as_view()), name='detalle_propietario'),
+    path('buscarPaciente/', login_required(BuscarPaciente), name='buscar_paciente'),
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT,}),
     path('accounts/', include('django.contrib.auth.urls')),
     path('ajax/load_Municipio/', load_Municipios, name='load_Municipio'),

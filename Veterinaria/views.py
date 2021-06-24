@@ -16,11 +16,14 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.contrib.auth import authenticate,login
+from django.contrib.auth.decorators import login_required, permission_required
 
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
 
+# Vista REGISTRAR USUARIO -------------------------------------------------------------------
+#Programador y Analista: Christian Garcia
 def registro(request):
     data={
         'form': CustomUserCreationForm()
@@ -37,7 +40,9 @@ def registro(request):
         data["form"]=formulario
     return render(request, 'registration/registro.html',data)
 
-
+# Vista REGISTRAR CLINICA -------------------------------------------------------------------
+#Programador y Analista: Christian Garcia
+@login_required
 def registrar_clinica(request):
 
     data = {
@@ -54,7 +59,9 @@ def registrar_clinica(request):
             data['form'] = formulario
     return render(request, 'clinica/agregarClinica.html',data)
 
-
+# Vista LISTAR CLINICA  -------------------------------------------------------------------
+#Programador y Analista: Christian Garcia
+@login_required
 def listar_clinica(request):
     clinicas = Clinica.objects.all()
     page = request.GET.get('page',1)

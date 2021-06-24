@@ -23,7 +23,7 @@ class Paciente(models.Model):
     observaciones = models.CharField(max_length=500, null = True, blank=True)
 
     # Booleano para determinar su el paciente esta activo o no
-    activo = models.IntegerField(max_length=1, blank=True,  default=1)
+    activo = models.IntegerField(blank=True,  default=1)
     
     propietario = models.ForeignKey('Propietario', on_delete = models.SET_NULL, null=True)
     
@@ -69,6 +69,8 @@ class Municipio(models.Model):
         return self.nombre	
 #FIN MUNICIPIO
 
+# Modelo de CLINICA -------------------------------------------------------------------
+#Programador y Analista: Christian Garcia
 class Clinica(models.Model):
     dueño = models.CharField(max_length=50, validators=[solo_Letras])
     nombre = models.CharField(max_length=60, validators=[solo_Letras])
@@ -79,4 +81,4 @@ class Clinica(models.Model):
 
     def __str__(self):
         return self.nombre
-    
+#FIN CLINICA
