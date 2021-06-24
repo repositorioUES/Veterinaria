@@ -3,10 +3,10 @@
 {% block title %}<title>Listado de Clinicas</title>{% endblock title%}
 
 {% block content %}
-
-
 <div class="d-flex justify-content-end">
     <a class="btn btn-success" href="{% url 'registrar_clinica' %}">Registrar Clínica</a>
+    &nbsp;
+    <a class="btn btn-success" href="#">Registrar Consultorio</a>
 </div>&nbsp;
 <div class="row">
 <div class="card">
@@ -34,8 +34,8 @@
             <td>{{ c.horarios }}</td>
             <td>{{ c.telefono }}</td>
             <td>{{ c.servicios }}</td>
-            <td></td>
-            <td></td>
+            <td><a  href="#" >Ver Consultorios</a></td>
+            <td> <i class="fa fa-pencil fa-2x" aria-hidden="true" style="font-size:24px;color:rgb(238, 204, 9);text-shadow:2px 2px 4px #000000;"></i> &nbsp;&nbsp;<i class="fa fa-trash-o fa-2x" aria-hidden="true" style="font-size:24px;color:rgb(212, 10, 10);text-shadow:2px 2px 4px #000000;"></i></td>
         </tr>
     {%endfor%}
     </table>
