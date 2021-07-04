@@ -80,7 +80,7 @@ class EmpleadoForm(forms.ModelForm):
 			'nombreEmp':'Nombre*',
 			'apellidoEmp':'Apellido*',
             'telefonoEmp':'Telefono*',
-            'cargo':'Crgo que Desempeña*',
+            'cargo':'Cargo que Desempeña*',
 			'salario':'Salario*',
 			'clinica':'Clinica en que Trabaja*',
 		}
