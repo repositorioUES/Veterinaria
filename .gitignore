@@ -7,9 +7,9 @@
 *.pyc
 __pycache__/
 local_settings.py
-db.sqlite3
+/db.sqlite3/
 db.sqlite3-journal
-
+db.sqlite3
 # Environments
 .env
 .venv
@@ -19,4 +19,3 @@ ENV/
 env.bak/
 venv.bak/
 db.sqlite3
-Veterinaria/__pycache__/forms.cpython-38.pyc
