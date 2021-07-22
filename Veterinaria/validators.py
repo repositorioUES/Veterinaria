@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 
 def solo_Letras(value):
 	
-	letras = " abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóú"
+	letras = " 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóú"
 
 	for i in value:
 		if i not in letras:

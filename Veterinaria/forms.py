@@ -1,11 +1,10 @@
 from django import forms
-from .models import *
-from Veterinaria.models import Paciente, Propietario, Empleado, Solicitudes
+from django.contrib.admin import widgets
+from Veterinaria.models import *
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Clinica
 
 class DateInput(forms.DateInput):
 	input_type = 'date'
@@ -62,12 +61,13 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username',"first_name","last_name", "email", "password1","password2"]
-class ClinicaForm(forms.ModelForm):
 
+class ClinicaForm(forms.ModelForm):
     class Meta:
         model = Clinica
-        fields = '__all__'
-
+        fields = [
+			'propietario','nombreClinica','direccion', 'horarios', 'telefono', 'correoElectronico', 'servicios', 'estado',
+		]
 
 class EmpleadoForm(forms.ModelForm):
 	class Meta:

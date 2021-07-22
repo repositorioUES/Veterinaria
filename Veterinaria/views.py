@@ -11,7 +11,6 @@ from django.views.generic import TemplateView
 from django.db.models import Q
 from django.shortcuts import render, redirect, render,get_object_or_404
 from .forms import CustomUserCreationForm, ClinicaForm
-from .models import Clinica
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import Http404
@@ -35,10 +34,10 @@ def registro(request):
             formulario.save()
             user=authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
             login(request,user)
-            messages.success(request,"Registro exitoso")
+            messages.success(request, "Registro exitoso")
             return redirect(to="index")
         data["form"]=formulario
-    return render(request, 'registration/registro.html',data)
+    return render(request, 'registration/registro.html', data)
 
 # Vista REGISTRAR CLINICA -------------------------------------------------------------------
 #Programador y Analista: Christian Garcia
@@ -53,7 +52,7 @@ def registrar_clinica(request):
         formulario=ClinicaForm(data=request.POST)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request,"Registro exitoso")
+            messages.success(request,"Clinica registrada exitosamente")
             return redirect(to="listar_clinica")
         else:
             data['form'] = formulario
@@ -67,7 +66,7 @@ def listar_clinica(request):
     page = request.GET.get('page',1)
 
     try:
-        paginator = Paginator(clinicas,5)
+        paginator = Paginator(clinicas,10)
         clinicas = paginator.page(page)
 
     except:
@@ -78,7 +77,36 @@ def listar_clinica(request):
         'paginator': paginator
     }
 
-    return render(request, 'clinica/listarClinica.html',data)
+    return render(request, 'clinica/listarClinica.html', data)
+
+# Vista MODIFICAR CLINICA  -------------------------------------------------------------------
+#Programador y Analista: Christian Garcia
+@login_required
+def modificar_clinica(request, id):
+
+    clinica = get_object_or_404(Clinica, id=id)
+    data ={
+        'form' : ClinicaForm(instance=clinica)
+    }
+
+    if request.method == 'POST':
+        formulario = ClinicaForm(data=request.POST, instance=clinica)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request," Modificado correctamente")
+            return redirect(to="listar_clinica")
+        data['form'] = formulario
+    return render(request, 'clinica/modificarClinica.html', data)
+
+# Vista ELIMINAR CLINICA  -------------------------------------------------------------------
+#Programador y Analista: Christian Garcia
+@login_required
+def eliminar_clinica(request, id):
+    clinica = get_object_or_404(Clinica, id=id)
+    clinica.delete()
+    messages.success(request," Clinica eliminada correctamente")
+    return redirect(to="listar_clinica")
+
 
 # Vista REGISTRAR PACIENTE -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
@@ -108,7 +136,6 @@ class RegistrarPaciente(CreateView):
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.render_to_response(self.get_context_data(form = form, form2 = form2))
-
 
 # Vista MODIFICAR PACIENTE -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez

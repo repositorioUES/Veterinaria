@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-mjkv2w%vx1t8#!@fb(mbswkxk*q+h7^#9#6dn)=(3ms_!me)jy
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = '/'

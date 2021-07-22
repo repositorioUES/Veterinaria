@@ -72,12 +72,17 @@ class Municipio(models.Model):
 # Modelo de CLINICA -------------------------------------------------------------------
 #Programador y Analista: Christian Garcia
 class Clinica(models.Model):
-    dueño = models.CharField(max_length=50, validators=[solo_Letras])
-    nombre = models.CharField(max_length=60, validators=[solo_Letras])
+    id = models.IntegerField(primary_key = True)
+    propietario = models.CharField(max_length=50, validators=[solo_Letras])
+    nombreClinica = models.CharField(max_length=60)
     direccion = models.TextField()
     horarios = models.CharField(max_length=50)
-    telefono = models.CharField(max_length=9, validators=[solo_Numeros])
+    telefono = models.CharField(max_length=9)
     servicios = models.CharField(max_length=100)
+    fechaIngreso = models.DateField(auto_now_add=True, null=True)
+    correoElectronico = models.CharField(max_length=200, null=True)
+    ESTADO = (('Activa','Activa'),('Inactiva', 'Inactiva'))
+    estado = models.CharField(max_length=10, choices=ESTADO)
 
     def __str__(self):
         return self.nombre
