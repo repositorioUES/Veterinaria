@@ -19,10 +19,11 @@
 
                         {%csrf_token%}
                         {{ form|crispy}}
+
                         <div class="d-flex justify-content-end">
-                            <a class="btn btn-danger" href="{% url 'listar_clinica' %}">Cancelar</a>
+                            <a class="btn btn-danger" href="{% url 'listar_clinica' %}"><i class="fa fa-ban" aria-hidden="true"></i> Cancelar</a>
                             &nbsp;
-                            <input type="submit" value="Guardar" class="btn btn-success float-right">
+                            <button  type="submit" class="btn btn-success float-right"><i class="fa fa-check" aria-hidden="true"></i> Guardar</button>
                         </div>
                             
 

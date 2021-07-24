@@ -66,7 +66,7 @@ class ClinicaForm(forms.ModelForm):
     class Meta:
         model = Clinica
         fields = [
-			'propietario','nombreClinica','direccion', 'horarios', 'telefono', 'correoElectronico', 'servicios', 'estado',
+			'propietario','nombre','direccion', 'horarios', 'telefono', 'correoElectronico', 'servicios', 'estado',
 		]
 
 class EmpleadoForm(forms.ModelForm):
