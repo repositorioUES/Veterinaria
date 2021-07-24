@@ -107,6 +107,29 @@ def eliminar_clinica(request, id):
     messages.success(request," Clinica eliminada correctamente")
     return redirect(to="listar_clinica")
 
+# Vista REGISTRAR CLINICA -------------------------------------------------------------------
+#Programador y Analista: Christian Garcia
+
+# Vista LISTAR CLINICA  -------------------------------------------------------------------
+#Programador y Analista: Christian Garcia
+@login_required
+def listar_consultorio(request,id):
+    clinica = Clinica.objects.get(id=id)
+
+
+    data = {
+        'clinica' : clinica
+    }
+
+    
+    return render(request, 'consultorio/listarConsultorio.html', data)
+
+
+# Vista MODIFICAR CLINICA  -------------------------------------------------------------------
+#Programador y Analista: Christian Garcia
+
+# Vista ELIMINAR CLINICA  -------------------------------------------------------------------
+#Programador y Analista: Christian Garcia
 
 # Vista REGISTRAR PACIENTE -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez

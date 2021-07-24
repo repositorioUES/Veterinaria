@@ -117,28 +117,32 @@
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script> 
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+	<!-- Funcion del SLIDER  -->
+	<script>
+		$(document).ready(function() {
+		  $('.slider').bxSlider({
+			  mode: 'fade',//horizontal, vertical, fade
+			  auto: true,
+			  infiniteLoop: true,
+			  pause: 2000,
+			  slideWidth: 900,
+			  adaptiveHeight:false,
+			  responsive : true
+		  });
+		});
+	</script>
+
+
 	<!-- Funcion para imprimir mensajes  -->
 		{% if messages%}
 			{% for m in messages%}
 			<script>
-				const Toast = Swal.mixin({
-					toast: true,
-					position: 'top-end',
-					showConfirmButton: false,
-					timer: 3000,
-					timerProgressBar: true,
-					width: 400,
-					background: '#F2F2F2',
-					didOpen: (toast) => {
-						toast.addEventListener('mouseenter', Swal.stopTimer)
-						toast.addEventListener('mouseleave', Swal.resumeTimer)
-					}
-					})
-
-					Toast.fire({
+				Swal.fire({
 					icon: 'success',
 					title: 'Felicitaciones',
 					text: '{{ m }}',
+					timer: 3000,
 					})
 			</script>
 			{%endfor%}
