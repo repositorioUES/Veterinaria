@@ -1,0 +1,126 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+<div>
+    <h3>Paciente: {{exp.pacienteId.nombrePac}}</h3>
+</div> 
+
+<div>
+    <h5>Expediente Nº: 
+    {% if exp.id <= 9 %}
+        00000{{exp.id}}
+    {% endif %}
+    {% if exp.id >= 10 %}
+        {% if exp.id <= 99 %}
+            0000{{exp.id}}
+        {% endif %}
+    {% endif %}
+    {% if exp.id >= 100 %}
+        {% if exp.id <= 999 %}
+            000{{exp.id}}
+        {% endif %}
+    {% endif %}
+    {% if exp.id >= 1000 %}
+        {% if exp.id <= 9999 %}
+            00{{exp.id}}
+        {% endif %}
+    {% endif %}
+    </h5>
+</div>
+
+<div>   
+    <a href="{% url 'registrar_consulta' %}" class="btn btn-success" style="color:white; background-color:33CC00">Agregar Consulta</a>    
+    <a href="javascript: history.go(-1)" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
+</div>  
+<br>
+    <div>
+            <img src=" {{ exp.pacienteId.foto.url }}"/>
+    </div>
+
+    <table class = "table table-bordered">
+        <tr>
+            <td>
+                <div>
+                    <B><label>Propietario : </label></B>    {{exp.pacienteId.propietario}}
+                </div>
+                <div>
+                    <B><label>Fecha de Nacimiento: </label></B>    {{exp.pacienteId.fechaNacimPac}}
+                </div>
+                <div>
+                <B><label>Especie: </label></B>    {{exp.pacienteId.especie}}
+                </div>
+                <div>
+                    <B><label>Sexo: </label></B>    {% if exp.pacienteId.sexo == 'h' %}Hembra{%else%}Macho{%endif%}
+                </div>
+                <div>
+                    <B><label>Raza: </label></B>    {{exp.pacienteId.raza}}
+                </div>
+                <div>
+                    <B><label>Color: </label></B>    {{exp.pacienteId.color}}
+                </div>
+            </td>
+      
+            <td style="text-align: top">    
+                 <div >
+                    <B><label>Incrito en Clinica: </label></B>    {{exp.clinica}}
+                </div>
+                <div>
+                    <B><label>Fecha de Inscripción: </label></B> 
+                </div>
+                <div>
+                   {{exp.pacienteId.fechaInscrip}}
+                </div>
+                <div>
+                    <B><label>Persona que Inscribió: </label></B>  
+                </div>
+                <div>
+                    {{exp.pacienteId.personaInscrip}}
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div>
+        <B><label>Observaciones: </label></B><br>  
+        <table>  
+            <tr>
+                <td width="800">
+                    {% if exp.pacienteId.observaciones == None %}
+                        -
+                    {%else%}
+                        <p>{{exp.pacienteId.observaciones}}</p>
+                    {%endif%}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+<div>
+    <h5>Historial de Consultas: </h5> 
+</div>
+<table  class="table table-sm">
+		<tr style="text-align: center">
+			<th style="text-align: center">Fecha de Consulta</th>
+            <th style="text-align: center">Hora</th>
+			<th style="text-align: center">Médico</th>
+		</tr>
+		{% for c in cons %}
+		<tr>
+			<td style="text-align: center">
+				{{c.fechaConsulta}}
+			</td>
+			<td style="text-align: center">
+                {{c.hora}}
+            </td>
+            <td style="text-align: center">
+                {{c.medico}}
+            </td>
+			<td style="text-align:center;">
+					<a href="{% url 'detalle_consulta' c.pk %}" class="btn"  style="color:white; background-color:blue"><span class="glyphicon glyphicon-pencil">Detalles</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+
+
+{% endblock content%}

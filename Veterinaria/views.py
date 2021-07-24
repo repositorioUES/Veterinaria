@@ -87,6 +87,7 @@ class RegistrarPaciente(CreateView):
     template_name = 'Plantillas/registrarPaciente.html'
     form_class = PacienteForm
     second_form_class = PropietarioForm
+    third_form_class = ExpedienteForm
     success_url = reverse_lazy('listado_pacientes')
 
     def get_context_data (self , **kwargs):
@@ -95,19 +96,25 @@ class RegistrarPaciente(CreateView):
             context['form'] = self.form_class(self.request.GET)
         if 'form2' not in context:
             context['form2'] = self.second_form_class(self.request.GET)
+        if 'form3' not in context:
+            context['form3'] = self.third_form_class(self.request.GET)
         return context
     
     def post (self, request, *args, **kwargs):
         self.object = self.get_object
         form = self.form_class(request.POST, request.FILES)
         form2 = self.second_form_class(request.POST, request.FILES or None)
-        if form.is_valid() and form2.is_valid():
+        form3 = self.third_form_class(request.POST)
+        if form.is_valid() and form2.is_valid() and form3.is_valid():
             paciente = form.save(commit=False)
             paciente.propietario = form2.save()
-            paciente.save()
+            paciente.activo = 1
+            expediente = form3.save(commit=False)
+            expediente.pacienteId = form.save()
+            expediente.save()
             return HttpResponseRedirect(self.get_success_url())
         else:
-            return self.render_to_response(self.get_context_data(form = form, form2 = form2))
+            return self.render_to_response(self.get_context_data(form = form, form2 = form2, form3 = form3))
 
 
 # Vista MODIFICAR PACIENTE -------------------------------------------------------------------
@@ -173,9 +180,10 @@ def BuscarPaciente(request):
             context = {'pacientes':pacientes}
             print(pacientes)
         else:
-            p = Propietario.objects.filter(Q(nombre__icontains=queryset) | Q(apellido__icontains=queryset) | Q(dui=queryset)).first()
+            p = Propietario.objects.filter(Q(nombre__icontains=queryset) | Q(apellido__icontains=queryset) | Q(dui=queryset))
             if p:
-                pacientes = Paciente.objects.filter(propietario_id=p.dui)
+                for prop in p:
+                    pacientes |= Paciente.objects.filter(propietario_id=prop.dui)
                 context = {'pacientes':pacientes}
                 print(p)
                 print(pacientes)
@@ -232,3 +240,167 @@ class DetalleSolicitud(DetailView):
     template_name = 'Plantillas/detalleSolicitud.html'
     form_class = SolicitudForm
     context_object_name = 'solicitud'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def TipoRegistro(request):
+    return render(request, 'Plantillas/tipoRegistro.html')
+
+class RegistrarSoloPaciente(CreateView):
+    model = Paciente
+    template_name = 'Plantillas/registrarSoloPaciente.html'
+    form_class = SoloPacienteForm
+    second_form_class = ExpedienteForm
+    success_url = reverse_lazy('listado_pacientes')
+
+    def get_context_data (self , **kwargs):
+        context = super(RegistrarSoloPaciente, self).get_context_data(**kwargs)
+        if 'form' not in context:
+            context['form'] = self.form_class(self.request.GET)
+        if 'form2' not in context:
+            context['form2'] = self.second_form_class(self.request.GET)
+        return context
+    
+    def post (self, request, *args, **kwargs):
+        self.object = self.get_object
+        form = self.form_class(request.POST, request.FILES)
+        form2 = self.second_form_class(request.POST, request.FILES or None)
+        if form.is_valid() and form2.is_valid():
+            expediente = form2.save(commit=False)
+            form.activo = 1
+            expediente.pacienteId = form.save()
+            expediente.save()
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return self.render_to_response(self.get_context_data(form = form, form2 = form2))
+
+##  CITAS-------------------------------------------------------------------------------
+class CrearCita(CreateView):
+    model = Cita
+    template_name = 'Plantillas/crearCita.html'
+    form_class = CitaForm
+    success_url = reverse_lazy('listado_citas')
+
+class ModificarCita(UpdateView):
+    model = Cita
+    template_name = 'Plantillas/modificarCita.html'
+    form_class = CitaForm
+    success_url = reverse_lazy('listado_citas')
+
+class ListadoCitas(ListView):
+    model = Cita
+    template_name = 'Plantillas/listadoCitas.html'
+    context_object_name = 'citas'
+
+class DetalleCita(DetailView):
+    model = Cita
+    template_name = 'Plantillas/detalleCita.html'
+    form_class = CitaForm
+    context_object_name = 'cita'
+
+class CancelarCita(DeleteView):
+    template_name = 'Plantillas/cancelarCita.html'
+    model = Cita
+    success_url = reverse_lazy('listado_citas')
+
+## HORARIOS-------------------------------------------------------------------------------
+class CrearHorario(CreateView):
+    model = Horario
+    template_name = 'Plantillas/crearHorario.html'
+    form_class = HorarioForm
+    success_url = reverse_lazy('listado_horarios')
+
+class ModificarHorario(UpdateView):
+    model = Horario
+    template_name = 'Plantillas/crearHorario.html'
+    form_class = HorarioForm
+    success_url = reverse_lazy('listado_horarios')
+
+class ListadoHorarios(ListView):
+    model = Horario
+    template_name = 'Plantillas/listadoHorarios.html'
+    context_object_name = 'horarios'
+
+## CONSULTA-------------------------------------------------------------------------------
+class RegistrarConsulta(CreateView):
+    model = Consulta
+    template_name = 'Plantillas/registrarConsulta.html'
+    form_class = ConsultaForm
+    success_url = reverse_lazy('listado_pacientes')
+
+class DetalleConsulta(DetailView):
+    model = Consulta
+    template_name = 'Plantillas/detalleConsulta.html'
+    form_class = ConsultaForm
+    context_object_name = 'consulta'
+
+## EXPEDIENTE-------------------------------------------------------------------------------
+
+def DetalleExpediente (request, pk):
+    if request.method == 'GET':
+        exp = Expediente.objects.filter(pacienteId_id = pk).first()
+        consultas = Consulta.objects.filter(pacienteId_id = pk)
+
+    return render(request, 'Plantillas/detalleExpediente.html', {'exp':exp,'cons':consultas})

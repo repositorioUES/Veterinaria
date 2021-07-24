@@ -1,0 +1,60 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+
+<h5>Listado de Citas Pendientes</h5>
+
+<div class="container">
+	<div>
+		<a href="{% url 'crear_cita' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
+  		 Nueva Cita</a> 
+		<a href="{% url 'listado_horarios' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
+  		 Gestion de Horarios</a>    
+	</div>
+</div>
+<br>
+	<table  class="table table-sm">
+		<tr style="text-align: center">
+			<th style="text-align: center">Fecha y Hora</th>
+			<th style="text-align: center">Paciente</th>
+			<th style="text-align: center">Propietario</th>
+		</tr>
+		{% for c in citas %}
+			{% if c.pendiente == 1 %}
+			<tr>
+				<td style="text-align: center">
+					<div><P>{{c.fechaCita}}</P> <P>{{c.horaCita}}</P></div>
+				</td>
+				<td style="text-align: center">{{c.pacienteId.nombrePac}}</td>
+				
+				<td style="text-align: center">{{c.pacienteId.propietario}}</td>
+
+				<td style="text-align:center;">
+					<a href="{% url 'detalle_cita' c.pk %}" class="btn"  style="color:white; background-color:blue"><span class="glyphicon glyphicon-pencil">Detalles</a>
+				</td>
+				<td style="text-align:center;">
+					<button onclick="return abrir_modal('{% url 'cancelar_cita' c.pk %}')"  style="color:white; background-color:red" class="btn btn-successtn">Cancelar</button>
+				</td>
+			</tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+</div>
+<div class="modal fade" id="popup" role="dialog">
+
+</div>
+
+<script type="text/javascript">
+
+jQuery.noConflict();
+
+function abrir_modal(url)
+{
+    $('#popup').load(url, function(){
+		$(this).modal('show');
+	});
+}
+
+</script>
+
+{% endblock content%}

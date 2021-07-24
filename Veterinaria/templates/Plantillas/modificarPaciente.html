@@ -11,7 +11,7 @@
         <table>
             <tr>
                 <td width="200">
-                    <h6>Datos del Paciente</h6>
+                    <h6><B>Datos del Paciente</B></h6>
                     {{form.as_table}}
                 </td>
                 <td width="200">
@@ -26,7 +26,7 @@
         <div>   
         <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Guardar">
 
-        <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
+        <a href="javascript: history.go(-1)" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
         </div>  
       
     </form>

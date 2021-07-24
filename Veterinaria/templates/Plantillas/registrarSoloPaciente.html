@@ -1,0 +1,177 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+<div>
+<h3> Registrar un Paciente Nuevo</h3>
+</div>
+
+<div>
+    <form role="form" method="POST" enctype ="multipart/form-data" >
+        {% csrf_token %}
+    
+        <h5>Datos del Paciente</h5>
+        
+            <tr>
+                <td  width="150">
+                    <!--<B><label for="{{form.activo.name}}">{{form.activo.label}}</label></B>-->
+                </td>
+                <td>
+                    {{form.activo}}
+                </td>
+            </tr>
+        <table>
+            <tr>
+                <td  width="150">
+                    <B><label for="{{form.foto.name}}">{{form.foto.label}}</label></B>
+                </td>
+                <td>
+                    {{form.foto}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="150">
+                    <B><label for="{{form.nombrePac.name}}">{{form.nombrePac.label}}</label></B>
+                </td>
+                <td>
+                    {{form.nombrePac}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="150">
+                    <B><label for="{{form.sexo.name}}">{{form.sexo.label}}</label></B>
+                </td>
+                <td>
+                    {{form.sexo}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="150">
+                    <B><label for="{{form.especie.name}}">{{form.especie.label}}</label></B>
+                </td>
+                <td>
+                    {{form.especie}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="150">
+                    <B><label for="{{form.raza.name}}">{{form.raza.label}}</label></B>
+                </td>
+                <td>
+                    {{form.raza}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="150">
+                    <B><label for="{{form.color.name}}">{{form.color.label}}</label></B>
+                </td>
+                <td>
+                    {{form.color}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="150">
+                    <B><label for="{{form.fechaNacimPac.name}}">{{form.fechaNacimPac.label}}</label></B>
+                </td>
+                <td>
+                    {{form.fechaNacimPac}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="150">
+                    <B><label for="{{form.observaciones.name}}">{{form.observaciones.label}}</label></B>
+                </td>
+                <td>
+                    {{form.observaciones}}
+                </td>
+            </tr>
+        </table>
+
+        <div>
+            <B><label>Para seleccionar al Propietario introduzca el Nombre o DUI (########-#)</label></B>
+        </div>
+        <!--<button onclick="getPropietario()" style="color:white; background-color:blue">Buscar</button>-->
+        
+        <table>
+            <tr>
+                <td  width="200">
+
+                </td>
+                <td>
+                    <input type="text" placeholder="Nombre o DUI" id="id_buscar" name="buscar" value="{{ request.GET.buscar }}">
+                </td>
+            </tr>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form.propietario.name}}">{{form.propietario.label}}</label></B>
+                </td>
+                <td>
+                    {{form.propietario}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form.personaInscrip.name}}">{{form.personaInscrip.label}}</label></B>
+                </td>
+                <td>
+                    {{form.personaInscrip}}
+                </td>
+            </tr>
+        </table>
+
+        <h5>Dato para el Expediente</h5>
+        <table>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form2.clinica.name}}">{{form2.clinica.label}}</label></B>
+                </td>
+                <td>
+                    {{form2.clinica}}
+                </td>
+            </tr>
+            <tr>
+        </table>
+
+        <br>
+        <div>   
+        <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Guardar">
+
+        <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
+        </div>      
+    </form>
+</div> 
+
+<script type="text/javascript">
+
+    document.getElementById("id_activo").type ="hidden"; // deshabilitar
+
+// SELECT DEPENDIENTE PARA LOS MUNICIPIOS====================================
+
+    $(document).ready(function(){
+        $("#id_buscar").on("change", getPropietario);    
+    });
+
+    function getPropietario(){
+        var propietarioId = $("#id_buscar").val();
+        if (propietarioId){
+            $("#id_propietario").html("");
+            var request = $.ajax({
+                type: "GET",
+                url: "{% url 'load_Propietario' %}",
+                data: {
+                    "propId":propietarioId
+                },
+            });
+            request.done(function(response){
+                $("#id_propietario").html(response);
+               
+            });
+    
+        }else{
+            $("#id_propietario").html('<option value="" selected = "selected">-----------</option>');      
+            $("#id_propietario").trigger("change");
+        }
+    }
+
+</script>
+
+{% endblock content%}

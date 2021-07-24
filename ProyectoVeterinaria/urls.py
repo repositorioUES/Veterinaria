@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve
 from Veterinaria.views import *
-from Veterinaria.ajax import load_Municipios
+from Veterinaria.ajax import load_Municipios, load_Propietario, load_Paciente
 from django.contrib.auth.decorators import login_required
 
 app_name = 'Veterinaria'
@@ -42,7 +42,21 @@ urlpatterns = [
     path('solicitudEnviada/', SolicitudEnviada, name='solicitud_enviada'),
     path('listadoSolicitudes/', login_required(ListarSolicitudes.as_view()), name='listado_solicitudes'),
     path('detalleSolicitud/<int:pk>', login_required(DetalleSolicitud.as_view()), name='detalle_solicitud'),
-
+    path('listadoCitas/', login_required(ListadoCitas.as_view()), name='listado_citas'),
+    path('crearCita/', login_required(CrearCita.as_view()), name='crear_cita'),
+    path('detalleCita/<int:pk>', login_required(DetalleCita.as_view()), name='detalle_cita'),
+    path('modificarCita/<int:pk>', login_required(ModificarCita.as_view()), name='modificar_cita'),
+    path('cancelarCita/<int:pk>/', login_required(CancelarCita.as_view()), name = 'cancelar_cita'),
+    path('listadoHorarios/', login_required(ListadoHorarios.as_view()), name='listado_horarios'),
+    path('crearHorario/', login_required(CrearHorario.as_view()), name='crear_horario'),
+    path('modificarHorario/<int:pk>', login_required(ModificarHorario.as_view()), name='modificar_horario'),
+    path('tipoRegistro/', login_required(TipoRegistro), name = 'tipo_registro'),
+    path('registrarSoloPaciente/', login_required(RegistrarSoloPaciente.as_view()), name='registrar_solo_paciente'),
+    path('registrarConsulta/', login_required(RegistrarConsulta.as_view()), name='registrar_consulta'),
+    path('detalleConsulta/<int:pk>', login_required(DetalleConsulta.as_view()), name='detalle_consulta'),
+    path('expediente/<int:pk>', login_required(DetalleExpediente), name='expediente'),
+    path('ajax/load_Propietario/', load_Propietario, name='load_Propietario'),
+    path('ajax/load_Paciente/', load_Paciente, name='load_Paciente'),
 ]
 
 if settings.DEBUG:

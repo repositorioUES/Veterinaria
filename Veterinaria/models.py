@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import *
 from django.utils import timezone
-from .validators import solo_Letras, solo_Numeros, validar_Fecha
+from .validators import solo_Letras, solo_Numeros, validar_Fecha, fecha_mayor
 from django.core.exceptions import ValidationError
 
 # Create your models here.
@@ -21,14 +21,16 @@ class Paciente(models.Model):
     color = models.CharField(max_length=50,help_text="", validators=[solo_Letras])
     fechaNacimPac = models.DateField(null=False, blank=True, validators=[validar_Fecha])
     observaciones = models.CharField(max_length=500, null = True, blank=True)
+    fechaInscrip = models.DateField(auto_now_add = True)# fecha de inscripcion del paciente
+    personaInscrip = models.CharField(max_length=70,help_text="", validators=[solo_Letras])
 
     # Booleano para determinar su el paciente esta activo o no
-    activo = models.IntegerField(blank=True,  default=1)
+    activo = models.BooleanField(blank=True,  default=1)
     
     propietario = models.ForeignKey('Propietario', on_delete = models.SET_NULL, null=True)
     
     def __str__(self): #Para que retorne el nombre y no el Id
-        return self.nombrePac
+        return self.nombrePac + " (" + self.propietario.nombre + ")"
 #FIN PACIENTE
 
 # Modelo del PROPIETARIO -------------------------------------------------------------------
@@ -105,3 +107,142 @@ class Solicitudes(models.Model):
 
     def __str__(self):
         return self.solicitante + ": " + self.nombreClinica
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Modelo del HORARIO DE CONSULTA -------------------------------------------------------------------
+#Programador y Analista: Ruddy Alfredo Pérez
+class Horario(models.Model):
+    id = models.AutoField(primary_key = True)
+    hora = models.CharField(max_length=5)
+    
+    INDICADOR = (('am','AM'),('pm', 'PM'))# Estructura para la selección del indicador de la hora
+    indicador = models.CharField(max_length=2, choices=INDICADOR, blank=True, help_text='')
+
+    def __str__(self):
+        return self.hora + " " + self.indicador
+#FIN ORARIO DE CONSULTA
+
+# Modelo de CITA -------------------------------------------------------------------
+#Programador y Analista: Ruddy Alfredo Pérez
+class Cita (models.Model):
+    id = models.AutoField(primary_key = True)
+    pacienteId = models.ForeignKey('Paciente', on_delete = models.PROTECT, null=True)
+    fechaCita = models.DateField(null=True, verbose_name="Fecha de Cita", validators=[fecha_mayor])# Fecha de la consulta
+    horaCita = models.ForeignKey('Horario', null=True, on_delete=models.PROTECT, verbose_name="Hora de Cita")
+    pendiente = models.BooleanField(default = 1, blank=True)
+    fechaCreacion = models.DateField(auto_now_add = True)# fecha de creación de la cita
+    
+    def __str__(self):
+        return self.pacienteId
+
+    class Meta:
+        unique_together =['fechaCita', 'horaCita']
+    
+    def unique_error_message(self, model_class, unique_check):
+        if len(unique_check) != 1:
+            return 'Esta HORA en esta FECHA ya esta ocupada, seleccione otra hora y/o fecha'
+#FIN CITA
+
+# Modelo de CONSULTA -------------------------------------------------------------------
+#Programador y Analista: Ruddy Alfredo Pérez
+class Consulta (models.Model):
+    id = models.AutoField(primary_key = True)
+    medico = models.CharField(max_length=70,null=False, validators=[solo_Letras])
+    pacienteId = models.ForeignKey('Paciente', on_delete = models.PROTECT, null=True)
+    edad = models.CharField(max_length=2, null=False, validators=[solo_Numeros])
+    peso = models.CharField(max_length=10, null=False)
+    fechaConsulta = models.DateField(auto_now_add = True)# fecha de creación de la consulta
+    hora = models.ForeignKey('Horario', null=True, on_delete=models.PROTECT, verbose_name="Hora de Cita")
+    observaciones = models.CharField(max_length=100, null = True, blank=True)
+    medicamento = models.CharField(max_length=200, null = True, blank=True)
+    examenes = models.CharField(max_length=200, null = True, blank=True)
+    proximoCont = models.DateField(null=True, validators=[fecha_mayor])
+
+#FIN CONSULTA
+
+# Modelo de EXPEDIENTE -------------------------------------------------------------------
+#Programador y Analista: Ruddy Alfredo Pérez
+class Expediente (models.Model):
+    id = models.AutoField(primary_key = True)
+    pacienteId = models.ForeignKey('Paciente', on_delete = models.PROTECT, null=True)
+    clinica = models.ForeignKey('Clinica', on_delete = models.PROTECT, null=True)
+    
+    def __str__(self):
+        i = str(id)
+        return i
+#FIN CONSULTA

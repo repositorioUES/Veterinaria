@@ -15,20 +15,22 @@ class PacienteForm(forms.ModelForm):
 	class Meta:
 		model = Paciente
 		fields = [
-			'foto','nombrePac','sexo', 'especie','raza','color','fechaNacimPac','observaciones',
+			 'activo','foto','nombrePac','sexo', 'especie','raza','color','fechaNacimPac','observaciones','personaInscrip',
 		]
 		labels = {
-			'foto':'Foto*',
-			'nombrePac':'Paciente*',
-		    'sexo':'Sexo*',
-		    'especie':'Especie*',
-		    'raza':'Raza*',
-		    'color':'Color*',
-		    'fechaNacimPac':'Fecha de Nacimiento*',
+			'activo': 'Activo',
+			'foto':'Foto *',
+			'nombrePac':'Nombre de Paciente *',
+		    'sexo':'Sexo *',
+		    'especie':'Especie *',
+		    'raza':'Raza *',
+		    'color':'Color *',
+		    'fechaNacimPac':'Fecha de Nacimiento *',
             'observaciones':'Observaciones',
+			'personaInscrip':'Persona que Inscribió *'
 		}
 		widgets = {
-			'observaciones':forms.Textarea(attrs={'class':'form-contol'}),
+			'observaciones':forms.Textarea(attrs={'class':'form-contol','rows':'4'}),
 			'fechaNacimPac': DateInput(format=('%Y-%m-%d'),attrs={'class':'form-control',}),
 		}
 
@@ -100,6 +102,177 @@ class SolicitudForm(forms.ModelForm):
 			'serviciosClinica':'Servicios que Presta*',
 		}
 		widgets = {
-			'horariosClinica':forms.Textarea(attrs={'class':'form-contol'}),
-			'serviciosClinica':forms.Textarea(attrs={'class':'form-contol'}),
+			'horariosClinica':forms.Textarea(attrs={'class':'form-contol','rows':'4'}),
+			'serviciosClinica':forms.Textarea(attrs={'class':'form-contol','rows':'4'}),
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class HorarioForm(forms.ModelForm):
+	class Meta:
+		model = Horario
+		fields = [
+			 'hora','indicador',
+		]
+		labels = {
+			'hora': 'Hora*',
+			'indicador':' ',
+		}
+
+class CitaForm(forms.ModelForm):
+	class Meta:
+		model = Cita
+		fields = [
+			 'pendiente','pacienteId','fechaCita','horaCita',
+		]
+		labels = {
+			'pendiente': 'Pendiente',
+			'pacienteId':'Paciente*',
+			'fechaCita':'Fecha de Cita*',
+		    'horaCita':'Hora de Cita*',
+		}
+		widgets = {
+			'fechaCita': DateInput(format=('%Y-%m-%d'),attrs={'class':'form-control',}),
+		}
+
+class SoloPacienteForm(forms.ModelForm):
+	class Meta:
+		model = Paciente
+		fields = [
+			 'activo','foto','nombrePac','sexo', 'especie','raza','color','fechaNacimPac','observaciones','propietario','personaInscrip',
+		]
+		labels = {
+			'activo': 'Activo',
+			'foto':'Foto *',
+			'nombrePac':'Paciente *',
+		    'sexo':'Sexo *',
+		    'especie':'Especie *',
+		    'raza':'Raza *',
+		    'color':'Color *',
+		    'fechaNacimPac':'Fecha de Nacimiento *',
+            'observaciones':'Observaciones',
+			'propietario':'Propietario *',
+			'personaInscrip':'Persona que Inscribió *'
+		}
+		widgets = {
+			'observaciones':forms.Textarea(attrs={'class':'form-contol','rows':'4'}),
+			'fechaNacimPac': DateInput(format=('%Y-%m-%d'),attrs={'class':'form-control',}),
+		}
+
+class ConsultaForm(forms.ModelForm):
+	class Meta:
+		model = Consulta
+		fields = [
+			 'medico','pacienteId','edad','peso','hora','observaciones','medicamento','examenes','proximoCont',
+		]
+		labels = {
+			'medico': 'Medico Veterinario *',
+			'pacienteId':'Paciente *',
+			'edad':'Edad *',
+			'peso':'Peso *',
+			'hora':'Hora *',
+			'observaciones':'Observaciones',
+			'medicamento':'Medicamentos',
+			'examenes':'Exámenes',
+			'proximoCont':'Proximo Control *',
+		}
+		widgets = {
+			'observaciones':forms.Textarea(attrs={'class':'form-contol','rows':'4'}),
+			'medicamento':forms.Textarea(attrs={'class':'form-contol','rows':'4'}),
+			'examenes':forms.Textarea(attrs={'class':'form-contol','rows':'4'}),
+			'proximoCont': DateInput(format=('%Y-%m-%d'),attrs={'class':'form-control',}),
+		}
+
+class ExpedienteForm(forms.ModelForm):
+	class Meta:
+		model = Expediente
+		fields = [
+			 'clinica',
+		]
+		labels = {
+			'clinica':'Clínica *',
 		}

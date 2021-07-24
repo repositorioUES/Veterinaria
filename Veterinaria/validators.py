@@ -35,3 +35,9 @@ def validar_Fecha(f):
 	if f < bottom: # Si es una fecha MENOR que HACE 100 AÑOS (36500 DIAS)--> mala
 		raise ValidationError('La fecha NO debe ser muy antigua')
 
+def fecha_mayor(f):
+
+	hoy = datetime.now().date() #Definimos la fecha dehoy
+
+	if f <= hoy: # Si es una fecha MENOR que HOY --> mala
+		raise ValidationError('La fecha NO debe ser menor o igual que la de hoy')

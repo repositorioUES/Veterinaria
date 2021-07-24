@@ -17,6 +17,7 @@
 			<th style="text-align: center">Empleado</th>
 			<th style="text-align: center">Clínica</th>
 			<th style="text-align: center">Cargo</th>
+			<th style="text-align: center">Salario</th>
 		</tr>
 		{% for p in empleados %}
 			
@@ -29,6 +30,9 @@
 				</td>
 				<td style="text-align: center">
 					{{p.cargo}}
+				</td>
+				<td style="text-align: center">
+					$ {{p.salario }}
 				</td>
 				<td style="text-align: center">
     				<a href="{% url 'detalle_empleado' p.duiEmp %}" class="btn btn-success" style="color:white; background-color:blue">Detalle</a>

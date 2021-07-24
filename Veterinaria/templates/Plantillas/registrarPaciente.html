@@ -14,13 +14,106 @@
                     <h5>Datos del Paciente</h5>
                     {{form.as_table}}
                 </td>
-                <td width="200">
-                    <h5>Datos del Propietario</h5>
-                    {{form2.as_table}}
+            </tr>
+        </table> 
+
+        <h5>Datos del Propietario</h5>
+        <table>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form2.dui.name}}">{{form2.dui.label}}</label></B>
+                </td>
+                <td>
+                    {{form2.dui}}
                 </td>
             </tr>
-  
-        </table>   
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form2.nombre.name}}">{{form2.nombre.label}}</label></B>
+                </td>
+                <td>
+                    {{form2.nombre}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form2.apellido.name}}">{{form2.apellido.label}}</label></B>
+                </td>
+                <td>
+                    {{form2.apellido}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form2.fechaNacim.name}}">{{form2.fechaNacim.label}}</label></B>
+                </td>
+                <td>
+                    {{form2.fechaNacim}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form2.edad.name}}">{{form2.edad.label}}</label></B>
+                </td>
+                <td>
+                    {{form2.edad}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form2.direccion.name}}">{{form2.direccion.label}}</label></B>
+                </td>
+                <td>
+                    {{form2.direccion}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form2.departamento.name}}">{{form2.departamento.label}}</label></B>
+                </td>
+                <td>
+                    {{form2.departamento}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form2.municipio.name}}">{{form2.municipio.label}}</label></B>
+                </td>
+                <td>
+                    {{form2.municipio}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form2.telefono.name}}">{{form2.telefono.label}}</label></B>
+                </td>
+                <td>
+                    {{form2.telefono}}
+                </td>
+            </tr>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form2.correo.name}}">{{form2.correo.label}}</label></B>
+                </td>
+                <td>
+                    {{form2.correo}}
+                </td>
+            </tr>
+        </table>
+
+        <h5>Dato para el Expediente</h5>
+        <table>
+            <tr>
+                <td  width="200">
+                    <B><label for="{{form3.clinica.name}}">{{form3.clinica.label}}</label></B>
+                </td>
+                <td>
+                    {{form3.clinica}}
+                </td>
+            </tr>
+            <tr>
+        </table>
+          
         <br>
         <div>   
         <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Guardar">
@@ -31,6 +124,8 @@
 </div> 
 
 <script type="text/javascript">
+
+    document.getElementById("id_activo").type ="hidden"; // deshabilitar
 
 // SELECT DEPENDIENTE PARA LOS MUNICIPIOS====================================
     $(document).ready(function(){
@@ -61,10 +156,10 @@
 //===========================================================================
 
 // PARA CALCULAR LA EDAD A PARTIR DE LA FECHA DE NACIMIENTO==================
-    window.onload=deshabilitarEdad;//Al cargar la página deactivar el input de la edad
+    //window.onload=deshabilitarEdad;//Al cargar la página deactivar el input de la edad
 
     function deshabilitarEdad(){
-        document.getElementById("id_edad").diabled = true;
+        document.getElementById("id_edad").disabled = true;
     }
 
     // Y ahora si .... a calcular

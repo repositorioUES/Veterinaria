@@ -6,8 +6,7 @@
 
 <div class="container">
 	<div>
-		<a href="{% url 'registrar_paciente' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
-  		 Registrar Paciente</a>     
+		<button onclick="return abrir_modal('{% url 'tipo_registro'%}')"  style="color:white; background-color:#33CC00" class="btn btn-successtn">Registrar Paciente</button>    
 		<a href="{% url 'buscar_paciente' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
   		 Buscar Paciente</a>
 	</div>
@@ -18,24 +17,50 @@
 	<table  class="table table-sm">
 		<tr style="text-align: center">
 			<th style="text-align: center">Paciente</th>
+			<th style="text-align: center">Especie</th>
 			<th style="text-align: center">Propietario</th>
 		</tr>
 		{% for p in pacientes %}
 			{% if p.activo == 1 %}
 			<tr>
 				<td style="text-align: center">
-					<div><img src=" {{ p.foto.url }}"/></div>
+					<!--<div><img src=" {{ p.foto.url }}"/></div>-->
 					<div>{{p.nombrePac}}</div>
 				</td>
-				<td style="text-align: center">{{p.propietario.nombre}}</td>
-
+				<td style="text-align: center">
+					{{p.especie}}
+				</td>
+				<td style="text-align: center">
+					{{p.propietario.nombre}}
+					{{p.propietario.apellido}}
+				</td>
+				
 				<td style="text-align:center;">
-					<a href="{% url 'detalle_paciente' p.pk %}" class="btn"  style="color:white; background-color:lightblue"><span class="glyphicon glyphicon-pencil">Detalles</a>
+					<a href="{% url 'detalle_paciente' p.pk %}" class="btn"  style="color:white; background-color:blue"><span class="glyphicon glyphicon-pencil">Detalles</a>
+				</td>
+				<td style="text-align:center;">
+					<a href="{% url 'expediente' p.pk %}" class="btn"  style="color:white; background-color:blue"><span class="glyphicon glyphicon-pencil">Expediente</a>
 				</td>
 			</tr>
 			{% endif %}
 		{% endfor %}
 	</table>
 
+<div class="modal fade" id="popup" role="dialog">
+
+</div>
+
+<script type="text/javascript">
+
+	jQuery.noConflict();
+
+	function abrir_modal(url)
+	{
+		$('#popup').load(url, function(){
+			$(this).modal('show');
+		});
+	}
+
+</script>
 
 {% endblock content%}

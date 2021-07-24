@@ -8,33 +8,40 @@
 <div>
     <form role="form" method="get" >
         <div>
+            
             <label> Introduzca el Nombre del Paciente, el Nombre del Propietario o su DUI </label>
-            <input type="text" class="form-control" placeholder="Nombre del Paciente" name="buscar" value="{{ request.GET.buscar }}">
-
+            <input type="text"  placeholder="Nombre del Paciente" name="buscar" value="{{ request.GET.buscar }}">
+            <button type="submit" class="btn" style="color:white; background-color:blue">Buscar</button>
+        
+            <br>
             <div>
-                <button type="submit" class="btn" style="color:white; background-color:blue">Buscar</button>
                 <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
             </div>
         </div>
             <table  class="table table-sm">
                 <tr style="text-align: center">
                     <th style="text-align: center">Paciente</th>
+                    <th style="text-align: center">Especie</th>
                     <th style="text-align: center">Propietario</th>
                 </tr>
                     {% for p in pacientes %}
-                        {% if p.activo == 1 %}
+                        
                         <tr>
                             <td style="text-align: center">
-                                <div><img src=" {{ p.foto.url }}"/></div>
+                                <!--<div><img src=" {{ p.foto.url }}"/></div>-->
                                 <div>{{p.nombrePac}}</div>
                             </td>
+                            <td style="text-align: center">{{p.especie}}</td>
                             <td style="text-align: center">{{p.propietario.nombre}}</td>
 
                             <td style="text-align:center;">
                                 <a href="{% url 'detalle_paciente' p.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
                             </td>
+                            <td style="text-align:center;">
+                                <a href="{% url 'expediente' p.pk %}" class="btn"  style="color:white; background-color:blue">Expediente</a>
+                            </td>
                         </tr>
-                        {% endif %}
+                        
                     {%endfor%}
                     {% if pacientes == None %}
                         <h3>No hay Resultados</h3>

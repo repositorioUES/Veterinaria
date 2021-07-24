@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="{% static 'css/style.css ' %}">
         <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 
+
   </head>
   <body>
 		{% block navbar %}
@@ -62,7 +63,7 @@
 	              <a href="{% url 'listado_pacientes' %}"><span class="fa fa-user mr-3"></span> Pacientes</a>
 	          </li>
 	          <li class="active">
-              <a href="#"><span class="fa fa-address-book mr-3"></span> Citas</a>
+              <a href="{% url 'listado_citas' %}"><span class="fa fa-address-book mr-3"></span> Citas</a>
 	          </li>
 	          <li class="active">
               <a href="{% url 'listado_empleados' %}"><span class="fa fa-users mr-3"></span> Empleados</a>
@@ -104,11 +105,11 @@
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/popper.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    
     <script src="{% static 'js/main.js' %}"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script> 
-
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
 
   </body>
 </html>
