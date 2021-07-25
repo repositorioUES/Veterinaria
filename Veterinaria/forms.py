@@ -69,11 +69,19 @@ class ClinicaForm(forms.ModelForm):
 			'propietario','nombre','direccion', 'horarios', 'telefono', 'correoElectronico', 'servicios', 'estado',
 		]
 
+
+class ConsultorioForm(forms.ModelForm):
+
+    class Meta:
+        model = Consultorio
+        fields = '__all__'
+
+
 class EmpleadoForm(forms.ModelForm):
 	class Meta:
 		model = Empleado
 		fields = [
-			'duiEmp','nombreEmp', 'apellidoEmp','telefonoEmp','cargo','salario','clinica',
+			'duiEmp','nombreEmp', 'apellidoEmp','telefonoEmp','cargo','salario','consultorio',
 		]
 		labels = {
 			'duiEmp':'Número de DUI*',
@@ -82,7 +90,7 @@ class EmpleadoForm(forms.ModelForm):
             'telefonoEmp':'Telefono*',
             'cargo':'Cargo que Desempeña*',
 			'salario':'Salario*',
-			'clinica':'Clinica en que Trabaja*',
+			'consultorio':'Consultorio en que Trabaja*',
 		}
 
 class SolicitudForm(forms.ModelForm):

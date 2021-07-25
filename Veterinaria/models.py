@@ -88,6 +88,26 @@ class Clinica(models.Model):
         return self.nombre
 #FIN CLINICA
 
+# Modelo de CONSULTORIO -------------------------------------------------------------------
+#Programador y Analista: Christian Garcia
+class Consultorio(models.Model):
+    clinica = models.ForeignKey('Clinica', on_delete = models.CASCADE)
+    nombre = models.CharField(max_length=60)
+    direccion = models.TextField()
+    longitud = models.FloatField(blank=True, null=True)
+    latitud = models.FloatField(blank=True, null=True)
+    horarios = models.CharField(max_length=50)
+    telefono = models.CharField(max_length=9)
+    servicios = models.CharField(max_length=100)
+    fechaIngreso = models.DateField(auto_now_add=True, null=True)
+    correoElectronico = models.CharField(max_length=200, null=True)
+    ESTADO = (('Activa','Activa'),('Inactiva', 'Inactiva'))
+    estado = models.CharField(max_length=10, choices=ESTADO)
+
+    def __str__(self):
+        return self.nombre
+#FIN CLINICA
+
 class Empleado(models.Model):
     duiEmp = models.CharField(max_length=10, help_text="########-#",primary_key=True, validators=[solo_Numeros])
     nombreEmp = models.CharField(max_length=100, validators=[solo_Letras])
@@ -95,7 +115,7 @@ class Empleado(models.Model):
     telefonoEmp = models.CharField(max_length=10, help_text="####-####", validators=[solo_Numeros])
     cargo = models.CharField(max_length=50)
     salario = models.CharField(max_length=9, validators=[solo_Numeros])
-    clinica = models.ForeignKey('Clinica', on_delete = models.CASCADE)
+    consultorio = models.ForeignKey('Consultorio', on_delete = models.CASCADE)
 
     def __str__(self):
         return self.nombreEmp + " " + self.apellidoEmp

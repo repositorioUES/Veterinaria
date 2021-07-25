@@ -15,6 +15,7 @@ urlpatterns = [
     path('modificar_clinica/<id>/',modificar_clinica, name="modificar_clinica"),
     path('eliminar_clinica/<id>/',eliminar_clinica, name="eliminar_clinica"),
     path('listar_consultorio/<id>/',listar_consultorio, name="listar_consultorio"),
+    path('registrar_consultorio/<id>/',registrar_consultorio, name="registrar_consultorio"),
 
 ]
 

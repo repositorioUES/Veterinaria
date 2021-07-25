@@ -107,28 +107,43 @@ def eliminar_clinica(request, id):
     messages.success(request," Clinica eliminada correctamente")
     return redirect(to="listar_clinica")
 
-# Vista REGISTRAR CLINICA -------------------------------------------------------------------
+# Vista REGISTRAR CONSULTORIO -------------------------------------------------------------------
 #Programador y Analista: Christian Garcia
+@login_required
+def registrar_consultorio(request, id):
+    clinica = Clinica.objects.get(id=id)
+    data = {
+        'form' : ConsultorioForm(initial={'clinica': clinica})
+    }
 
-# Vista LISTAR CLINICA  -------------------------------------------------------------------
+    if request.method == 'POST':
+        formulario=ConsultorioForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request,"Consultorio registrado exitosamente")
+            return redirect('listar_consultorio', clinica.id )
+        else:
+            data['form'] = formulario
+    return render(request, 'consultorio/agregarConsultorio.html',data)
+# Vista LISTAR CONSULTORIO  -------------------------------------------------------------------
 #Programador y Analista: Christian Garcia
 @login_required
 def listar_consultorio(request,id):
     clinica = Clinica.objects.get(id=id)
-
+    consultorios = clinica.consultorio_set.all()
 
     data = {
-        'clinica' : clinica
+        'clinica' : clinica,
+        'consultorios' : consultorios
     }
-
     
     return render(request, 'consultorio/listarConsultorio.html', data)
 
 
-# Vista MODIFICAR CLINICA  -------------------------------------------------------------------
+# Vista MODIFICAR CONSULTORIO  -------------------------------------------------------------------
 #Programador y Analista: Christian Garcia
 
-# Vista ELIMINAR CLINICA  -------------------------------------------------------------------
+# Vista ELIMINAR CONSULTORIO  -------------------------------------------------------------------
 #Programador y Analista: Christian Garcia
 
 # Vista REGISTRAR PACIENTE -------------------------------------------------------------------

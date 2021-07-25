@@ -26,13 +26,13 @@
 					<div>{{p.nombreEmp}}</div>
 				</td>
 				<td style="text-align: center">
-					{{p.clinica}}
+					{{p.consultorio}}
 				</td>
 				<td style="text-align: center">
 					{{p.cargo}}
 				</td>
 				<td style="text-align: center">
-    				<a href="{% url 'detalle_empleado' p.duiEmp %}" class="btn btn-success" style="color:white; background-color:blue">Detalle</a>
+    				<a href="{% url 'detalle_empleado' p.duiEmp %}" class="btn btn-primary" style="color:white;">Detalle</a>
 				</td>
 			</tr>
 		{% endfor %}

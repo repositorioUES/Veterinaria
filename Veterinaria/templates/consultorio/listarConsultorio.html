@@ -10,8 +10,9 @@
 			<h4>Nombre: {{clinica.nombre}}</h4>
             <h4>Miembro desde: {{clinica.fechaIngreso}}</h4>
 			<hr>
-			<a class="btn btn-success  btn-sm btn-block" href=""><i class="fa fa-plus" aria-hidden="true"></i> Agregar Consultorio</a>
-
+			<!--
+			<a class="btn btn-success  btn-sm btn-block" href="{% url 'registrar_consultorio' clinica.id %}"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Consultorio</a>
+			-->
 		</div>
 	</div>
 
@@ -41,42 +42,55 @@
 	<div class="col">
 		<div class="card card-body">
 			<form method="get">
-
-		    <button class="btn btn-primary" type="submit">Search</button>
+		    <button class="btn btn-primary" type="submit">Buscar</button>
 		  </form>
 		</div>
 	</div>
 	
 </div>
 <br>
+<div class="d-flex justify-content-end">
+    <a class="btn btn-success" href="{% url 'registrar_consultorio' clinica.id %}" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Consultorio</a>
+</div>&nbsp;
 
 <div class="row">
 	<div class="col-md">
 		<div class="card card-body">
-			<table class="table table-sm">
-				<tr>
-					<th># Order</th>
-					<th>Product</th>
-					<th>Category</th>
-					<th>Price</th>
-					<th>Date Ordered</th>
-					<th>Status</th>
-					<th>Update</th>
-					<th>Remove</th>
+			<h2 align ="center">Consultorios</h2>
+			<table class="table  table-bordered ">
+				<tr style="text-align: center; background-color: #393c7f; color:whitesmoke;" >
+					<th>Nombre del consultorio</th>
+					<th>direccion</th>
+					<th>Horarios</th>
+					<th>Telefono</th>
+					<th>Fecha de Ingreso</th>
+					<th>Correo Electronico</th>
+					<th>Estado</th>
+					<th>Actualizar</th>
+					<th>Borrar</th>
 				</tr>
-				{% for order in orders %}
+				{% for consultorio in consultorios %}
 				<tr>
-					<th>{{ order.id }}</th>
-					<th>{{ order.product.name}}</th>
-					<th>{{ order.product.category}}</th>
-					<th>$ {{ order.product.price}}</th>
-					<th>{{ order.date_created}}</th>
-					<th>{{ order.status}}</th>
-					<th><a class="btn btn-sm btn-warning" href="#">Update</a></th>
-					<th><a class="btn btn-sm btn-danger" href="#">Remove</a></th>
+					<th>{{ consultorio.nombre }}</th>
+					<th>{{ consultorio.direccion}}</th>
+					<th>{{ consultorio.horarios }}</th>
+					<th>{{ consultorio.telefono }}</th>
+					<th>{{ consultorio.fechaIngreso }}</th>
+					<th>{{ consultorio.correoElectronico }}</th>
+					<th>{{ consultorio.estado }}</th>
+					<th><a class="btn btn-sm btn-warning" href="#">Actualizar</a></th>
+					<th><a class="btn btn-sm btn-danger" href="#">Borrar</a></th>
 				</tr>
 				{% endfor %}
 			</table>
+		</div>
+	</div>
+</div>
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<div id='map' style='width: 1000px; height: 400px; margin:0px auto;'></div>
 		</div>
 	</div>
 </div>
@@ -85,4 +99,27 @@
     <a class="btn btn-danger" href="{% url 'listar_clinica' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
 </div>
 
+
 {% endblock content%} 
+
+{%block js%}
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoia3JpejEwOTEiLCJhIjoiY2tyaTBtazYyMGkxaTMwcGUzb2s5cjRpZyJ9.C5B7uLancPuRuJRZqaa-Dw';
+	var map = new mapboxgl.Map({
+	container: 'map',
+	style: 'mapbox://styles/mapbox/streets-v11',
+	center: [-88.9167000, 13.8333000],
+	zoom: 8
+	});
+	map.addControl(new mapboxgl.NavigationControl());
+	{% for consultorio in consultorios %}
+	var marker = new mapboxgl.Marker({
+		color: "#FF0000"
+	}).setLngLat([{{consultorio.longitud|safe}}, {{consultorio.latitud|safe}}])
+	  .setPopup(new mapboxgl.Popup().setHTML("{{consultorio.nombre|safe}}"))
+	  .addTo(map);
+	  {% endfor %}
+	</script>
+	
+
+	{%endblock js%}
