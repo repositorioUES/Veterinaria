@@ -82,7 +82,7 @@ class Clinica(models.Model):
     fechaIngreso = models.DateField(auto_now_add=True, null=True)
     correoElectronico = models.CharField(max_length=200, null=True)
     ESTADO = (('Activa','Activa'),('Inactiva', 'Inactiva'))
-    estado = models.CharField(max_length=10, choices=ESTADO)
+    estado = models.CharField(max_length=10, choices=ESTADO, default="Activa")
 
     def __str__(self):
         return self.nombre
@@ -102,7 +102,7 @@ class Consultorio(models.Model):
     fechaIngreso = models.DateField(auto_now_add=True, null=True)
     correoElectronico = models.CharField(max_length=200, null=True)
     ESTADO = (('Activa','Activa'),('Inactiva', 'Inactiva'))
-    estado = models.CharField(max_length=10, choices=ESTADO)
+    estado = models.CharField(max_length=10, choices=ESTADO, default="Activa")
 
     def __str__(self):
         return self.nombre

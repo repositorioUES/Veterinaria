@@ -6,10 +6,11 @@
 
 <div class="row">
 	<div class="col-md">
-		<div class="card card-body">
-			<h4>Nombre: {{clinica.nombre}}</h4>
-            <h4>Miembro desde: {{clinica.fechaIngreso}}</h4>
-			<hr>
+		<div class="card card-body" style="background-color: #09a5b9; color:rgb(255, 255, 255);">
+			<h4 style="color:rgb(255, 255, 255);">Nombre: {{clinica.nombre}}</h4>
+			<hr style="color:rgb(255, 255, 255);">
+            <h4 style="color:rgb(255, 255, 255);">Miembro desde: {{clinica.fechaIngreso}}</h4>
+			
 			<!--
 			<a class="btn btn-success  btn-sm btn-block" href="{% url 'registrar_consultorio' clinica.id %}"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Consultorio</a>
 			-->
@@ -17,8 +18,8 @@
 	</div>
 
 	<div class="col-md">
-		<div class="card card-body">
-			<h5 >Informacion general</h5>
+		<div class="card card-body" style="background-color: #09a5b9; color:rgb(255, 255, 255);">
+			<h5 style="color:rgb(255, 255, 255);">Informacion general</h5>
 			<hr>
 			<p>Dueño: {{clinica.propietario}}</p>
             <p>Direccion: {{clinica.direccion}}</p>
@@ -28,10 +29,10 @@
 	</div>
 
 	<div class="col-md">
-		<div class="card card-body">
-			<h5 style="text-align: center;padding: 10px">Estado</h5>
+		<div class="card card-body" style="background-color: #09a5b9; color:rgb(255, 255, 255);">
+			<h3 style="text-align: center;padding: 10px; color:rgb(255, 255, 255);">Estado</h5>
 			<hr>
-			<h3 style="text-align: center;padding: 10px">{{clinica.estado}}</h3>
+			<h1 style="text-align: center;padding: 10px; color:rgb(255, 255, 255);">{{clinica.estado}}</h3>
 		</div>
 	</div>
 </div>
@@ -66,8 +67,7 @@
 					<th>Fecha de Ingreso</th>
 					<th>Correo Electronico</th>
 					<th>Estado</th>
-					<th>Actualizar</th>
-					<th>Borrar</th>
+					<th>Gestionar</th>
 				</tr>
 				{% for consultorio in consultorios %}
 				<tr>
@@ -78,8 +78,9 @@
 					<th>{{ consultorio.fechaIngreso }}</th>
 					<th>{{ consultorio.correoElectronico }}</th>
 					<th>{{ consultorio.estado }}</th>
-					<th><a class="btn btn-sm btn-warning" href="#">Actualizar</a></th>
-					<th><a class="btn btn-sm btn-danger" href="#">Borrar</a></th>
+					<td> <a href="{% url 'modificar_consultorio' consultorio.id %}"><i class="fa fa-pencil fa-2x" aria-hidden="true" style="font-size:24px;color:rgb(238, 204, 9);text-shadow:2px 2px 4px #000000;"></i></a>&nbsp;&nbsp;
+						<a href="#" onclick="eliminarConsultorio({{ consultorio.id }})"><i class="fa fa-trash-o fa-2x" aria-hidden="true" style="font-size:24px;color:rgb(212, 10, 10);text-shadow:2px 2px 4px #000000;"></i></a>
+				   </td>
 				</tr>
 				{% endfor %}
 			</table>
@@ -120,6 +121,25 @@
 	  .addTo(map);
 	  {% endfor %}
 	</script>
+
+<script>
+    function eliminarConsultorio(id){
+        Swal.fire({
+            title: 'Estas seguro de eliminar este Consultorio?',
+            showCancelButton: true,
+            confirmButtonText: 'Si, Eliminar',
+            confirmButtonColor: '#FF0000',
+            cancelButtonText: 'No, Cancelar',
+            reverseButtons: true,
+
+    }).then(function(result) {
+
+        if (result.isConfirmed) {
+            window.location.href = "/eliminar_consultorio/"+id+"/"
+            } 
+        }) 
+    }
+</script>
 	
 
 	{%endblock js%}

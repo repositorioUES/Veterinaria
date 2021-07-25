@@ -16,7 +16,8 @@ urlpatterns = [
     path('eliminar_clinica/<id>/',eliminar_clinica, name="eliminar_clinica"),
     path('listar_consultorio/<id>/',listar_consultorio, name="listar_consultorio"),
     path('registrar_consultorio/<id>/',registrar_consultorio, name="registrar_consultorio"),
-
+    path('modificar_consultorio/<id>/',modificar_consultorio, name="modificar_consultorio"),
+    path('eliminar_consultorio/<id>/',eliminar_consultorio, name="eliminar_consultorio"),
 ]
 
 urlpatterns += [

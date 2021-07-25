@@ -139,13 +139,32 @@ def listar_consultorio(request,id):
     
     return render(request, 'consultorio/listarConsultorio.html', data)
 
-
 # Vista MODIFICAR CONSULTORIO  -------------------------------------------------------------------
 #Programador y Analista: Christian Garcia
+@login_required
+def modificar_consultorio(request, id):
 
+    consultorio = get_object_or_404(Consultorio, id=id)
+    data ={
+        'form' : ConsultorioForm(instance=consultorio)
+    }
+
+    if request.method == 'POST':
+        formulario = ConsultorioForm(data=request.POST, instance=consultorio)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request," Consultorio modificado correctamente")
+            return redirect('listar_consultorio', consultorio.clinica.id)
+        data['form'] = formulario
+    return render(request, 'consultorio/modificarConsultorio.html', data)
 # Vista ELIMINAR CONSULTORIO  -------------------------------------------------------------------
 #Programador y Analista: Christian Garcia
-
+@login_required
+def eliminar_consultorio(request, id):
+    consultorio = get_object_or_404(Consultorio, id=id)
+    consultorio.delete()
+    messages.success(request," Consultorio eliminado correctamente")
+    return redirect('listar_consultorio', consultorio.clinica.id)
 # Vista REGISTRAR PACIENTE -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
 class RegistrarPaciente(CreateView):
