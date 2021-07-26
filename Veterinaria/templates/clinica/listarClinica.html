@@ -6,6 +6,19 @@
 <div class="d-flex justify-content-end">
     <a class="btn btn-success" href="{% url 'registrar_clinica' %}" ><i class="fa fa-plus" aria-hidden="true"></i> Registrar Clínica</a>
 </div>&nbsp;
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<form method="GET">
+		    <button class="btn btn-primary" type="submit">Buscar</button>
+            {{filter.form}}
+		  </form>
+		</div>
+	</div>
+</div>&nbsp;
+
 <div class="row">
     <div class="col-md">
         <div class="card">

@@ -11,6 +11,7 @@ from django.views.generic import TemplateView
 from django.db.models import Q
 from django.shortcuts import render, redirect, render,get_object_or_404
 from .forms import CustomUserCreationForm, ClinicaForm
+from .filters import *
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import Http404
@@ -65,6 +66,9 @@ def listar_clinica(request):
     clinicas = Clinica.objects.all()
     page = request.GET.get('page',1)
 
+    filter = ClinicaFilter(request.GET, queryset=clinicas)
+    clinicas = filter.qs
+
     try:
         paginator = Paginator(clinicas,10)
         clinicas = paginator.page(page)
@@ -74,7 +78,8 @@ def listar_clinica(request):
 
     data = {
         'entity': clinicas,
-        'paginator': paginator
+        'paginator': paginator,
+        'filter' : filter
     }
 
     return render(request, 'clinica/listarClinica.html', data)
@@ -125,6 +130,7 @@ def registrar_consultorio(request, id):
         else:
             data['form'] = formulario
     return render(request, 'consultorio/agregarConsultorio.html',data)
+
 # Vista LISTAR CONSULTORIO  -------------------------------------------------------------------
 #Programador y Analista: Christian Garcia
 @login_required
@@ -132,9 +138,13 @@ def listar_consultorio(request,id):
     clinica = Clinica.objects.get(id=id)
     consultorios = clinica.consultorio_set.all()
 
+    filter = ConsultorioFilter(request.GET, queryset=consultorios)
+    consultorios = filter.qs
+
     data = {
         'clinica' : clinica,
-        'consultorios' : consultorios
+        'consultorios' : consultorios,
+        'filter' : filter
     }
     
     return render(request, 'consultorio/listarConsultorio.html', data)
@@ -157,6 +167,7 @@ def modificar_consultorio(request, id):
             return redirect('listar_consultorio', consultorio.clinica.id)
         data['form'] = formulario
     return render(request, 'consultorio/modificarConsultorio.html', data)
+
 # Vista ELIMINAR CONSULTORIO  -------------------------------------------------------------------
 #Programador y Analista: Christian Garcia
 @login_required
@@ -165,6 +176,7 @@ def eliminar_consultorio(request, id):
     consultorio.delete()
     messages.success(request," Consultorio eliminado correctamente")
     return redirect('listar_consultorio', consultorio.clinica.id)
+
 # Vista REGISTRAR PACIENTE -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
 class RegistrarPaciente(CreateView):

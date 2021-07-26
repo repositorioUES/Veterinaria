@@ -7,9 +7,9 @@
 <div class="row">
 	<div class="col-md">
 		<div class="card card-body" style="background-color: #09a5b9; color:rgb(255, 255, 255);">
-			<h4 style="color:rgb(255, 255, 255);">Nombre: {{clinica.nombre}}</h4>
+			<h4 style="color:rgb(255, 255, 255);"><b>Nombre:</b> {{clinica.nombre}}</h4>
 			<hr style="color:rgb(255, 255, 255);">
-            <h4 style="color:rgb(255, 255, 255);">Miembro desde: {{clinica.fechaIngreso}}</h4>
+            <h4 style="color:rgb(255, 255, 255);"><b>Miembro desde:</b> {{clinica.fechaIngreso}}</h4>
 			
 			<!--
 			<a class="btn btn-success  btn-sm btn-block" href="{% url 'registrar_consultorio' clinica.id %}"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Consultorio</a>
@@ -19,7 +19,7 @@
 
 	<div class="col-md">
 		<div class="card card-body" style="background-color: #09a5b9; color:rgb(255, 255, 255);">
-			<h5 style="color:rgb(255, 255, 255);">Informacion general</h5>
+			<h4 style="color:rgb(255, 255, 255);"><b>Informacion general</b></h4>
 			<hr>
 			<p>Dueño: {{clinica.propietario}}</p>
             <p>Direccion: {{clinica.direccion}}</p>
@@ -30,28 +30,27 @@
 
 	<div class="col-md">
 		<div class="card card-body" style="background-color: #09a5b9; color:rgb(255, 255, 255);">
-			<h3 style="text-align: center;padding: 10px; color:rgb(255, 255, 255);">Estado</h5>
+			<h3 style="text-align: center;padding: 10px; color:rgb(255, 255, 255);"><b>Estado</b></h5>
 			<hr>
 			<h1 style="text-align: center;padding: 10px; color:rgb(255, 255, 255);">{{clinica.estado}}</h3>
 		</div>
 	</div>
-</div>
+</div>&nbsp;
 
+<div class="d-flex justify-content-end">
+    <a class="btn btn-success" href="{% url 'registrar_consultorio' clinica.id %}" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Consultorio</a>
+</div>&nbsp;
 
 <br>
 <div class="row">
 	<div class="col">
 		<div class="card card-body">
-			<form method="get">
+			<form method="GET">
 		    <button class="btn btn-primary" type="submit">Buscar</button>
+            {{filter.form}}
 		  </form>
 		</div>
 	</div>
-	
-</div>
-<br>
-<div class="d-flex justify-content-end">
-    <a class="btn btn-success" href="{% url 'registrar_consultorio' clinica.id %}" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Consultorio</a>
 </div>&nbsp;
 
 <div class="row">
@@ -122,24 +121,24 @@
 	  {% endfor %}
 	</script>
 
-<script>
-    function eliminarConsultorio(id){
-        Swal.fire({
-            title: 'Estas seguro de eliminar este Consultorio?',
-            showCancelButton: true,
-            confirmButtonText: 'Si, Eliminar',
-            confirmButtonColor: '#FF0000',
-            cancelButtonText: 'No, Cancelar',
-            reverseButtons: true,
+	<script>
+		function eliminarConsultorio(id){
+			Swal.fire({
+				title: 'Estas seguro de eliminar este Consultorio?',
+				showCancelButton: true,
+				confirmButtonText: 'Si, Eliminar',
+				confirmButtonColor: '#FF0000',
+				cancelButtonText: 'No, Cancelar',
+				reverseButtons: true,
 
-    }).then(function(result) {
+		}).then(function(result) {
 
-        if (result.isConfirmed) {
-            window.location.href = "/eliminar_consultorio/"+id+"/"
-            } 
-        }) 
-    }
-</script>
+			if (result.isConfirmed) {
+				window.location.href = "/eliminar_consultorio/"+id+"/"
+				} 
+			}) 
+		}
+	</script>
 	
 
 	{%endblock js%}

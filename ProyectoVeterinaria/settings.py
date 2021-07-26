@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Veterinaria',
     'crispy_forms',
+    'django_filters',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
