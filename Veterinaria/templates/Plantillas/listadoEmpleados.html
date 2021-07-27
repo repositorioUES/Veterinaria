@@ -15,8 +15,10 @@
 	<table  class="table table-sm">
 		<tr style="text-align: center">
 			<th style="text-align: center">Empleado</th>
-			<th style="text-align: center">Clínica</th>
+			<th style="text-align: center">Clinica</th>
+			<th style="text-align: center">Consultorio</th>
 			<th style="text-align: center">Cargo</th>
+			<th></th>
 
 		</tr>
 		{% for p in empleados %}
@@ -24,6 +26,9 @@
 			<tr>
 				<td style="text-align: center">
 					<div>{{p.nombreEmp}}</div>
+				</td>
+				<td style="text-align: center">
+					<div>{{p.consultorio.clinica.nombre}}</div>
 				</td>
 				<td style="text-align: center">
 					{{p.consultorio}}

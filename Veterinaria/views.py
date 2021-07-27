@@ -66,6 +66,8 @@ def listar_clinica(request):
     clinicas = Clinica.objects.all()
     page = request.GET.get('page',1)
 
+    empleados = Empleado.objects.all()
+
     filter = ClinicaFilter(request.GET, queryset=clinicas)
     clinicas = filter.qs
 
@@ -79,7 +81,8 @@ def listar_clinica(request):
     data = {
         'entity': clinicas,
         'paginator': paginator,
-        'filter' : filter
+        'filter' : filter,
+        'empleados' : empleados
     }
 
     return render(request, 'clinica/listarClinica.html', data)
