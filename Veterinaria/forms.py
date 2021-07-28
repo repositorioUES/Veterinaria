@@ -78,13 +78,13 @@ class EmpleadoForm(forms.ModelForm):
 			'duiEmp','nombreEmp', 'apellidoEmp','telefonoEmp','cargo','salario','clinica',
 		]
 		labels = {
-			'duiEmp':'Número de DUI*',
-			'nombreEmp':'Nombre*',
-			'apellidoEmp':'Apellido*',
-            'telefonoEmp':'Telefono*',
-            'cargo':'Crgo que Desempeña*',
-			'salario':'Salario*',
-			'clinica':'Clinica en que Trabaja*',
+			'duiEmp':'Número de DUI *',
+			'nombreEmp':'Nombre *',
+			'apellidoEmp':'Apellido *',
+            'telefonoEmp':'Telefono *',
+            'cargo':'Puesto de Trabajo *',
+			'salario':'Salario *',
+			'clinica':'Clinica en que Trabaja *',
 		}
 
 class SolicitudForm(forms.ModelForm):
@@ -196,24 +196,26 @@ class HorarioForm(forms.ModelForm):
 	class Meta:
 		model = Horario
 		fields = [
-			 'hora','indicador',
+			 'clinica','hora','indicador','activo',
 		]
 		labels = {
-			'hora': 'Hora*',
-			'indicador':' ',
+			'clinica':'Clínca *',
+			'hora':'Hora *',
+			'indicador':'Indicador *',
+			'activo':'Activo ',
 		}
 
 class CitaForm(forms.ModelForm):
 	class Meta:
 		model = Cita
 		fields = [
-			 'pendiente','pacienteId','fechaCita','horaCita',
+			 'pacienteId','clinica','fechaCita','horaCita',
 		]
 		labels = {
-			'pendiente': 'Pendiente',
-			'pacienteId':'Paciente*',
-			'fechaCita':'Fecha de Cita*',
-		    'horaCita':'Hora de Cita*',
+			'pacienteId':'Paciente *',
+			'clinica':'Clínica *',
+			'fechaCita':'Fecha de Cita *',
+		    'horaCita':'Hora de Cita *',
 		}
 		widgets = {
 			'fechaCita': DateInput(format=('%Y-%m-%d'),attrs={'class':'form-control',}),

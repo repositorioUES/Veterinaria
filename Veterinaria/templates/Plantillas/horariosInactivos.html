@@ -2,19 +2,13 @@
 
 {% block content %}
 
-<h5>Listado de Horarios para Citas</h5>
+<h5>Listado de Horarios Inactivos</h5>
 
 <div class="container">
-	<div>
-		<a href="{% url 'crear_horario' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
-  		 Nuevo Horario</a>   
-		<a href="{% url 'horarios_inactivos' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
-  		 Horarios Inactivos</a>  
-		<a href="{% url 'listado_citas' %}" class="btn btn-success" style="color:white; background-color:red">
-  		 Regresar</a> 
-		
+	<div>   
+		<a href="{% url 'listado_horarios' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
+  		 Horarios Activos</a> 
 	</div>
-
 </div>
 <br>
 	<table  class="table table-sm">
@@ -23,7 +17,7 @@
 			<th style="text-align: center"></th>
 		</tr>
 		{% for h in horarios %}
-			{% if h.activo == 1%}
+			
 			<tr>
 				<td style="text-align: center">{{h.hora}} {% if h.indicador == 'am' %} AM{%else%} PM{%endif%}</td>
 				
@@ -32,7 +26,7 @@
 					<a href="{% url 'modificar_horario' h.pk %}" class="btn"  style="color:white; background-color:blue"><span class="glyphicon glyphicon-pencil">Modificar</a>
 				</td>
 			</tr>
-			{% endif %}
+		
 		{% endfor %}
 	</table>
 

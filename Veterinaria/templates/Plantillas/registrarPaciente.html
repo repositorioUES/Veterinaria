@@ -9,7 +9,7 @@
     <form role="form" method="POST" enctype ="multipart/form-data" >
         {% csrf_token %}
         <table>
-            <tr>
+            <tr>    
                 <td width="200">
                     <h5>Datos del Paciente</h5>
                     {{form.as_table}}
@@ -125,7 +125,8 @@
 
 <script type="text/javascript">
 
-    document.getElementById("id_activo").type ="hidden"; // deshabilitar
+    document.getElementById("id_activo").type ="hidden"; // deshabilitar.
+    document.getElementById("id_edad").readOnly = true;
 
 // SELECT DEPENDIENTE PARA LOS MUNICIPIOS====================================
     $(document).ready(function(){
@@ -156,11 +157,6 @@
 //===========================================================================
 
 // PARA CALCULAR LA EDAD A PARTIR DE LA FECHA DE NACIMIENTO==================
-    //window.onload=deshabilitarEdad;//Al cargar la página deactivar el input de la edad
-
-    function deshabilitarEdad(){
-        document.getElementById("id_edad").disabled = true;
-    }
 
     // Y ahora si .... a calcular
     $(document).ready(function(){

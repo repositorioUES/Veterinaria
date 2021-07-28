@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import *
 from django.utils import timezone
-from .validators import solo_Letras, solo_Numeros, validar_Fecha, fecha_mayor
+from .validators import solo_Letras, solo_Numeros, validar_Fecha, fecha_mayor, formato_Dui, formato_Telefono
 from django.core.exceptions import ValidationError
 
 # Create your models here.
@@ -37,7 +37,7 @@ class Paciente(models.Model):
 #Programador y Analista: Ruddy Alfredo Pérez
 
 class Propietario(models.Model):
-    dui = models.CharField(max_length=10, help_text="########-#", primary_key=True,validators=[solo_Numeros])
+    dui = models.CharField(max_length=10, help_text="########-#", primary_key=True,validators=[formato_Dui])
     nombre = models.CharField(max_length=100, validators=[solo_Letras])
     apellido = models.CharField(max_length=100, validators=[solo_Letras])
     fechaNacim = models.DateField(validators=[validar_Fecha])
@@ -46,7 +46,7 @@ class Propietario(models.Model):
     departamento = models.ForeignKey('Departamento', on_delete = models.SET_NULL, null=True)
     municipio = models.ForeignKey('Municipio', on_delete = models.SET_NULL, null=True)
     correo = models.CharField(max_length=50,help_text="")
-    telefono = models.CharField(max_length=9,help_text="####-####",validators=[solo_Numeros])
+    telefono = models.CharField(max_length=9,help_text="####-####",validators=[formato_Telefono])
 
     def __str__(self): #Para que retorne el nombre y no el Id
         return self.nombre + " " + self.apellido
@@ -78,7 +78,7 @@ class Clinica(models.Model):
     nombre = models.CharField(max_length=60, validators=[solo_Letras])
     direccion = models.TextField()
     horarios = models.CharField(max_length=50)
-    telefono = models.CharField(max_length=9, validators=[solo_Numeros])
+    telefono = models.CharField(max_length=9, validators=[formato_Telefono])
     servicios = models.CharField(max_length=100)
 
     def __str__(self):
@@ -86,10 +86,10 @@ class Clinica(models.Model):
 #FIN CLINICA
 
 class Empleado(models.Model):
-    duiEmp = models.CharField(max_length=10, help_text="########-#",primary_key=True, validators=[solo_Numeros])
+    duiEmp = models.CharField(max_length=10, verbose_name="DUI", help_text="########-#",primary_key=True, validators=[formato_Dui])
     nombreEmp = models.CharField(max_length=100, validators=[solo_Letras])
     apellidoEmp = models.CharField(max_length=100, validators=[solo_Letras])
-    telefonoEmp = models.CharField(max_length=10, help_text="####-####", validators=[solo_Numeros])
+    telefonoEmp = models.CharField(max_length=10, help_text="####-####", validators=[formato_Telefono])
     cargo = models.CharField(max_length=50)
     salario = models.CharField(max_length=9, validators=[solo_Numeros])
     clinica = models.ForeignKey('Clinica', on_delete = models.CASCADE)
@@ -102,7 +102,7 @@ class Solicitudes(models.Model):
     nombreClinica = models.CharField(max_length=100, validators=[solo_Letras])
     direccionClinica = models.CharField(max_length=500)
     horariosClinica = models.CharField(max_length=500)
-    telefonoClinica = models.CharField(max_length=10, help_text="####-####", validators=[solo_Numeros])
+    telefonoClinica = models.CharField(max_length=10, help_text="####-####", validators=[formato_Telefono])
     serviciosClinica = models.CharField(max_length=500)
 
     def __str__(self):
@@ -189,7 +189,8 @@ class Solicitudes(models.Model):
 class Horario(models.Model):
     id = models.AutoField(primary_key = True)
     hora = models.CharField(max_length=5)
-    
+    clinica = models.ForeignKey('Clinica', on_delete = models.PROTECT)
+    activo = models.BooleanField(blank=True,  default=1)
     INDICADOR = (('am','AM'),('pm', 'PM'))# Estructura para la selección del indicador de la hora
     indicador = models.CharField(max_length=2, choices=INDICADOR, blank=True, help_text='')
 
@@ -202,18 +203,15 @@ class Horario(models.Model):
 class Cita (models.Model):
     id = models.AutoField(primary_key = True)
     pacienteId = models.ForeignKey('Paciente', on_delete = models.PROTECT, null=True)
+    clinica = models.ForeignKey('Clinica', on_delete = models.PROTECT)
     fechaCita = models.DateField(null=True, verbose_name="Fecha de Cita", validators=[fecha_mayor])# Fecha de la consulta
     horaCita = models.ForeignKey('Horario', null=True, on_delete=models.PROTECT, verbose_name="Hora de Cita")
-    pendiente = models.BooleanField(default = 1, blank=True)
     fechaCreacion = models.DateField(auto_now_add = True)# fecha de creación de la cita
-    
-    def __str__(self):
-        return self.pacienteId
 
     class Meta:
         unique_together =['fechaCita', 'horaCita']
-    
-    def unique_error_message(self, model_class, unique_check):
+
+    def unique_error_message(self, Cita, unique_check):
         if len(unique_check) != 1:
             return 'Esta HORA en esta FECHA ya esta ocupada, seleccione otra hora y/o fecha'
 #FIN CITA
@@ -227,7 +225,7 @@ class Consulta (models.Model):
     edad = models.CharField(max_length=2, null=False, validators=[solo_Numeros])
     peso = models.CharField(max_length=10, null=False)
     fechaConsulta = models.DateField(auto_now_add = True)# fecha de creación de la consulta
-    hora = models.ForeignKey('Horario', null=True, on_delete=models.PROTECT, verbose_name="Hora de Cita")
+    hora = models.CharField(max_length=10, null=False)
     observaciones = models.CharField(max_length=100, null = True, blank=True)
     medicamento = models.CharField(max_length=200, null = True, blank=True)
     examenes = models.CharField(max_length=200, null = True, blank=True)

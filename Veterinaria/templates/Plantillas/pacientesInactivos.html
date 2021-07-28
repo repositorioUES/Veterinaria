@@ -2,20 +2,15 @@
 
 {% block content %}
 
-<h3>Listado de Pacientes Activos</h3>
+<h5>Listado de Pacientes Inactivos</h5>
 
 <div class="container">
-	<div>
-		<button onclick="return abrir_modal('{% url 'tipo_registro'%}')"  style="color:white; background-color:#33CC00" class="btn btn-successtn">Registrar Paciente</button>    
-		<a href="{% url 'pacientes_inactivos' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
-  		Pacientes Inactivos</a>
-		<a href="{% url 'buscar_paciente' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
-  		 Buscar Paciente</a>
+	<div>   
+		<a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
+  		Pacientes Activos</a> 
 	</div>
 </div>
 <br>
-<br>
-
 	<table  class="table table-sm">
 		<tr style="text-align: center">
 			<th style="text-align: center">Paciente</th>
@@ -23,7 +18,6 @@
 			<th style="text-align: center">Propietario</th>
 		</tr>
 		{% for p in pacientes %}
-			{% if p.activo == 1 %}
 			<tr>
 				<td style="text-align: center">
 					<!--<div><img src=" {{ p.foto.url }}"/></div>-->
@@ -44,25 +38,9 @@
 					<a href="{% url 'expediente' p.pk %}" class="btn"  style="color:white; background-color:blue"><span class="glyphicon glyphicon-pencil">Expediente</a>
 				</td>
 			</tr>
-			{% endif %}
+		
 		{% endfor %}
 	</table>
 
-<div class="modal fade" id="popup" role="dialog">
-
-</div>
-
-<script type="text/javascript">
-
-	jQuery.noConflict();
-
-	function abrir_modal(url)
-	{
-		$('#popup').load(url, function(){
-			$(this).modal('show');
-		});
-	}
-
-</script>
 
 {% endblock content%}

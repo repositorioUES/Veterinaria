@@ -178,15 +178,12 @@ def BuscarPaciente(request):
         pacientes = Paciente.objects.filter(nombrePac__icontains=queryset)
         if pacientes:
             context = {'pacientes':pacientes}
-            print(pacientes)
         else:
             p = Propietario.objects.filter(Q(nombre__icontains=queryset) | Q(apellido__icontains=queryset) | Q(dui=queryset))
             if p:
                 for prop in p:
                     pacientes |= Paciente.objects.filter(propietario_id=prop.dui)
                 context = {'pacientes':pacientes}
-                print(p)
-                print(pacientes)
         
     return render(request,'Plantillas/buscarPaciente.html', context)
 
@@ -336,7 +333,12 @@ class RegistrarSoloPaciente(CreateView):
         else:
             return self.render_to_response(self.get_context_data(form = form, form2 = form2))
 
+def PacientesInactivos(request):
+    pacientes = Paciente.objects.filter(activo = 0)
+    return render(request,'Plantillas/pacientesInactivos.html', {'pacientes':pacientes})
+
 ##  CITAS-------------------------------------------------------------------------------
+#Programador y Analista: Ruddy Alfredo Pérez
 class CrearCita(CreateView):
     model = Cita
     template_name = 'Plantillas/crearCita.html'
@@ -349,14 +351,43 @@ class ModificarCita(UpdateView):
     form_class = CitaForm
     success_url = reverse_lazy('listado_citas')
 
-class ListadoCitas(ListView):
-    model = Cita
-    template_name = 'Plantillas/listadoCitas.html'
-    context_object_name = 'citas'
+def ListadoCitas(request):
+    hoy = datetime.now().date() # Fecha de hoy
+    citasHoy = Cita.objects.filter(fechaCita__contains = hoy) # Citas SOLO de HOY
+    citas = Cita.objects.filter(fechaCita__gt = hoy) # Citas a Futuro
+    return render(request,'Plantillas/listadoCitas.html', {'citasHoy':citasHoy,'citas':citas})
+
+# Vista BUSCAR CITA -------------------------------------------------------------------
+#Programador y Analista: Ruddy Alfredo Pérez
+def BuscarCita(request):
+    pac = request.GET.get('buscar') # Filtro por paciente
+    context={}
+    hoy = datetime.now().date() # Fecha de hoy
+
+    if pac: # Si mandamos info del paceiente
+        paciente = Paciente.objects.filter(nombrePac__iexact=pac).first()
+        if paciente:
+            citasHoy = Cita.objects.filter(fechaCita__contains = hoy).filter(pacienteId=paciente.id) # Cita para Hoy
+            citasFuturo = Cita.objects.filter(fechaCita__gt = hoy).filter(pacienteId=paciente.id) # Citas a Futuro
+            citasPasado = Cita.objects.filter(fechaCita__lt = hoy).filter(pacienteId=paciente.id) # Citas ya Pasadas
+            citaFecha = None
+            context = {'citasHoy':citasHoy, 'citasFuturo':citasFuturo,'citasPasado':citasPasado,'citaFecha':citaFecha}
+        else:
+            citaFecha = Cita.objects.filter(fechaCita__icontains = pac)
+            print(citaFecha)
+            context = {'citaFecha':citaFecha}
+        
+    return render(request,'Plantillas/buscarCita.html', context)
 
 class DetalleCita(DetailView):
     model = Cita
     template_name = 'Plantillas/detalleCita.html'
+    form_class = CitaForm
+    context_object_name = 'cita'
+
+class DetalleCitaPasada(DetailView):
+    model = Cita
+    template_name = 'Plantillas/detalleCitaPasada.html'
     form_class = CitaForm
     context_object_name = 'cita'
 
@@ -366,6 +397,7 @@ class CancelarCita(DeleteView):
     success_url = reverse_lazy('listado_citas')
 
 ## HORARIOS-------------------------------------------------------------------------------
+#Programador y Analista: Ruddy Alfredo Pérez
 class CrearHorario(CreateView):
     model = Horario
     template_name = 'Plantillas/crearHorario.html'
@@ -374,7 +406,7 @@ class CrearHorario(CreateView):
 
 class ModificarHorario(UpdateView):
     model = Horario
-    template_name = 'Plantillas/crearHorario.html'
+    template_name = 'Plantillas/modificarHorario.html'
     form_class = HorarioForm
     success_url = reverse_lazy('listado_horarios')
 
@@ -383,13 +415,18 @@ class ListadoHorarios(ListView):
     template_name = 'Plantillas/listadoHorarios.html'
     context_object_name = 'horarios'
 
+def HorariosInactivos(request):
+    horarios = Horario.objects.filter(activo = 0)
+    return render(request,'Plantillas/horariosInactivos.html', {'horarios':horarios})
+
 ## CONSULTA-------------------------------------------------------------------------------
+#Programador y Analista: Ruddy Alfredo Pérez
 class RegistrarConsulta(CreateView):
     model = Consulta
     template_name = 'Plantillas/registrarConsulta.html'
     form_class = ConsultaForm
-    success_url = reverse_lazy('listado_pacientes')
-
+    success_url = reverse_lazy('listado_pacientes')   
+    
 class DetalleConsulta(DetailView):
     model = Consulta
     template_name = 'Plantillas/detalleConsulta.html'
@@ -397,7 +434,7 @@ class DetalleConsulta(DetailView):
     context_object_name = 'consulta'
 
 ## EXPEDIENTE-------------------------------------------------------------------------------
-
+#Programador y Analista: Ruddy Alfredo Pérez
 def DetalleExpediente (request, pk):
     if request.method == 'GET':
         exp = Expediente.objects.filter(pacienteId_id = pk).first()

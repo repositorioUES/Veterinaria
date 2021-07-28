@@ -115,13 +115,18 @@
 
     function getPaciente(){
         var filtro = $("#id_buscar").val();
+        var valor ="";
         if (filtro){
+            valor = filtro;
+        }else{
+            valor = "-"
+        }
             $("#id_pacienteId").html("");
             var request = $.ajax({
                 type: "GET",
                 url: "{% url 'load_Paciente' %}",
                 data: {
-                    "filtro":filtro
+                    "filtro":valor
                 },
             });
             request.done(function(response){
@@ -129,10 +134,10 @@
                
             });
     
-        }else{
+        /*else{
             $("#id_pacienteId").html('<option value="" selected = "selected">-----------</option>');      
             $("#id_pacienteId").trigger("change");
-        }
+        }*/
     }
 </script>
 {% endblock content%}

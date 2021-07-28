@@ -9,12 +9,6 @@
     <form role="form" method="POST" enctype ="multipart/form-data" >
         {% csrf_token %}
         
-            <tr>
-                <td  width="150">
-                    <!--B><label for="{{form.pendiente.name}}">{{form.pendiente.label}}</label></B-->
-                    {{form.pendiente}}
-                </td>
-            </tr>
           
             <div>
                 <B><label>Buscar Paciente: Introduzca el Nombre del Paciente, Nombre o DUI del Propietario</label></B>
@@ -22,38 +16,19 @@
             
         <table>
             <tr>
-                <td  width="150">
-
+                <td width="150">
                 </td>
-                <td>
+                <td width="150">
                     <input type="text" placeholder="Buscar Paciente" id="id_buscar" name="buscar" value="{{ request.GET.buscar }}">
                 </td>
-            </tr>
-            <tr>
-                <td  width="150">
-                    <B><label for="{{form.pacienteId.name}}">{{form.pacienteId.label}}</label></B>
-                </td>
-                <td>
-                    {{form.pacienteId}}
+
+                <td width="150">
+                    {{form.as_table}}
                 </td>
             </tr>
-            <tr>
-                <td  width="150">
-                    <B><label for="{{form.fechaCita.name}}">{{form.fechaCita.label}}</label></B>
-                </td>
-                <td>
-                    {{form.fechaCita}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="150">
-                    <B><label for="{{form.horaCita.name}}">{{form.horaCita.label}}</label></B>
-                </td>
-                <td>
-                    {{form.horaCita}}
-                </td>
-            </tr>
+  
         </table>   
+        <br>
 
         <br>
         <div>   
@@ -65,32 +40,58 @@
 </div> 
 
 <script>
-    document.getElementById("id_pendiente").type ="hidden"; // deshabilitar
+    //document.getElementById("id_pendiente").type ="hidden"; // deshabilitar
 
     $(document).ready(function(){
         $("#id_buscar").on("change", getPaciente);    
+        $("#id_clinica").on("change", getHorario); 
     });
 
     function getPaciente(){
-        var filtro = $("#id_buscar").val();
-        if (filtro){
-            $("#id_pacienteId").html("");
+        var valor = $("#id_buscar").val();
+        var filtro ="";
+
+        if (valor){
+            filtro = valor;
+        }else{
+            filtro = "-";
+        }
+        
+        $("#id_pacienteId").html("");
+        var request = $.ajax({
+            type: "GET",
+            url: "{% url 'load_Paciente' %}",
+            data: {
+                "filtro":filtro
+            },
+        });
+        request.done(function(response){
+            $("#id_pacienteId").html(response);
+               
+        });
+    }
+
+    function getHorario(){
+        var valor = $("#id_clinica").val();
+        if (valor){
+            $("#id_horaCita").html("");
             var request = $.ajax({
                 type: "GET",
-                url: "{% url 'load_Paciente' %}",
+                url: "{% url 'load_Horario' %}",
                 data: {
-                    "filtro":filtro
+                    "filtro":valor
                 },
             });
             request.done(function(response){
-                $("#id_pacienteId").html(response);
-               
+                $("#id_horaCita").html(response);
+                
             });
-    
+        
         }else{
-            $("#id_pacienteId").html('<option value="" selected = "selected">-----------</option>');      
-            $("#id_pacienteId").trigger("change");
+            $("#id_horaCita").html('<option value="" selected = "selected">-----------</option>');      
+            $("#id_horaCita").trigger("change");
         }
     }
+
 </script>
 {% endblock content%}

@@ -1,0 +1,156 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+<div>
+    <h3>Buscar Citas</h3>
+</div>
+
+<div>
+    <form role="form" method="get" >
+        <div>
+            <label> Introduzca el Nombre del Paciente o Fecha de Cita ( aaaa-mm-dd )</label>
+        </div>
+        <div>    
+            <input type="text"  placeholder="Paciente o aaaa-mm-dd" name="buscar" value="{{ request.GET.buscar }}">
+        
+            <button type="submit" class="btn" style="color:white; background-color:blue">Buscar</button>
+        </div>
+            <br>
+            <div>
+                <a href="{% url 'listado_citas' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar a Listado</a>
+            </div>
+        </div>
+    </form>
+{% if citaFecha == None%} 
+        <!--TABLA DE CITAS DE HOY-->
+        <h5>Cita para Hoy</h5>
+            <table  class="table table-sm">
+                <tr style="text-align: center">
+                    <th style="text-align: center">Fecha</th>
+                    <th style="text-align: center">Hora</th>
+                    <th style="text-align: center">Servicio</th>
+                </tr>
+                    {% for ch in citasHoy %}
+                        <tr>
+                            <td style="text-align: center">{{ch.fechaCita}}</td>
+                            <td style="text-align: center">{{ch.horaCita}}</td>
+                            <td style="text-align: center">{{ch.servicio.nombre}}</td>
+
+                            <td style="text-align:center;">
+                                <a href="{% url 'detalle_cita' ch.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
+                            </td>
+                            <td style="text-align:center;">
+                                <button onclick="return abrir_modal('{% url 'cancelar_cita' ch.pk %}')"  style="color:white; background-color:red" class="btn btn-successtn">Cancelar</button>
+                            </td>
+                        </tr>
+                        
+                    {%endfor%}
+                    {% if citasHoy == None%}  
+                        <h5>No tiene cita para Hoy  
+                    {% endif %}
+                </tr>
+            </table>   
+ <!--TABLA DE CITAS DE FUTURAS-->
+            <h5>Cita Pendiente</h5>
+            <table  class="table table-sm">
+                <tr style="text-align: center">
+                    <th style="text-align: center">Fecha</th>
+                    <th style="text-align: center">Hora</th>
+                    <th style="text-align: center">Servicio</th>
+                </tr>
+                    {% for cf in citasFuturo %}
+                        <tr>
+                            <td style="text-align: center">
+                                <div>{{cf.fechaCita}}</div>
+                            </td>
+                            <td style="text-align: center">{{cf.horaCita}}</td>
+                            <td style="text-align: center">{{cf.servicio.nombre}}</td>
+
+                            <td style="text-align:center;">
+                                <a href="{% url 'detalle_cita' cf.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
+                            </td>
+                            <td style="text-align:center;">
+                                <button onclick="return abrir_modal('{% url 'cancelar_cita' cf.pk %}')"  style="color:white; background-color:red" class="btn btn-successtn">Cancelar</button>
+                            </td>
+                        </tr>
+                        
+                    {%endfor%}
+                    {% if citasFuturo == None%}  
+                        <h5>No tiene cita Pendiente  
+                    {% endif %}
+                </tr>
+            </table>
+        <!--TABLA DE CITAS DE PASADAS-->
+        <h5>Citas Pasadas</h5>
+            <table  class="table table-sm">
+                <tr style="text-align: center">
+                    <th style="text-align: center">Fecha</th>
+                    <th style="text-align: center">Hora</th>
+                    <th style="text-align: center">Servicio</th>
+                </tr>
+                    {% for cp in citasPasado %}
+                        <tr>
+                            <td style="text-align: center">
+                                <div>{{cp.fechaCita}}</div>
+                            </td>
+                            <td style="text-align: center">{{cp.horaCita}}</td>
+                            <td style="text-align: center">{{cp.servicio.nombre}}</td>
+
+                            <td style="text-align:center;">
+                                <a href="{% url 'detalle_cita_pasada' cp.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
+                            </td>
+                        </tr>
+                        
+                    {%endfor%}
+                    {% if citasPasado == None%}  
+                        <h5>No tiene citas Registradas  
+                    {% endif %}
+                </tr>
+            </table>
+{% else %}
+            <!--TABLA DE CITAS POR FECHA-->
+        <h5>Citas Encontradas</h5>
+            <table  class="table table-sm">
+                <tr style="text-align: center">
+                    <th style="text-align: center">Fecha</th>
+                    <th style="text-align: center">Hora</th>
+                    <th style="text-align: center">Servicio</th>
+                </tr>
+                    {% for c in citaFecha %}
+                        <tr>
+                            <td style="text-align: center">
+                                <div>{{c.fechaCita}}</div>
+                            </td>
+                            <td style="text-align: center">{{c.horaCita}}</td>
+                            <td style="text-align: center">{{c.servicio.nombre}}</td>
+
+                            <td style="text-align:center;">
+                                <a href="{% url 'detalle_cita_pasada' c.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
+                            </td>
+                        </tr>
+                        
+                    {%endfor%}
+                   
+                </tr>
+            </table>
+{% endif %} 
+    
+</div> 
+<div class="modal fade" id="popup" role="dialog">
+
+</div>
+
+<script type="text/javascript">
+
+    jQuery.noConflict();
+
+    function abrir_modal(url)
+    {
+        $('#popup').load(url, function(){
+            $(this).modal('show');
+        });
+    }
+
+</script>
+
+{% endblock content%}

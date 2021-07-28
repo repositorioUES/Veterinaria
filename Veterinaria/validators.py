@@ -39,5 +39,35 @@ def fecha_mayor(f):
 
 	hoy = datetime.now().date() #Definimos la fecha dehoy
 
-	if f <= hoy: # Si es una fecha MENOR que HOY --> mala
-		raise ValidationError('La fecha NO debe ser menor o igual que la de hoy')
+	if f < hoy: # Si es una fecha MENOR que HOY --> mala
+		raise ValidationError('La fecha NO debe ser menor que la de hoy')
+
+def formato_Dui(dui):
+	dui = str(dui)
+	numeros = "0123456789"
+
+	if len(dui) == 10:
+		for i in range(10):
+			if i != 8:
+				if dui[i] not in numeros:
+					raise ValidationError('DUI no cumple el formato, debe ser ########-#')
+			else:
+				if dui[i] != "-":
+					raise ValidationError('DUI no cumple el formato, debe ser ########-#')
+	else:
+		raise ValidationError('DUI no cumple el formato, debe ser ########-#')
+
+def formato_Telefono(tel):
+	tel = str(tel)
+	numeros = "0123456789"
+
+	if len(tel) == 9:
+		for i in range(9):
+			if i != 4:
+				if tel[i] not in numeros:
+					raise ValidationError('Teléfono NO cumple el formato, debe ser ####-####')
+			else:
+				if tel[i] != "-":
+					raise ValidationError('Teléfono NO cumple el formato, debe ser ####-####')
+	else:
+		raise ValidationError('Teléfono NO cumple el formato, debe ser ####-####')

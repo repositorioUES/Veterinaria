@@ -6,7 +6,7 @@
 </div>
 
 <div>
-    <form role="form" method="POST" enctype ="multipart/form-data" >
+    <form name="myForm" role="form" method="POST" enctype ="multipart/form-data" >
         {% csrf_token %}
         <table>
             <tr>
@@ -14,8 +14,11 @@
                     {{form.as_table}}
                 </td>
             </tr>
-  
         </table>   
+
+        <input name="pacienteId" value="" type="hidden" id="id_prodId">
+        <input name="clinica" value="" type="hidden" id="id_clinId">
+
         <br>
         <div>   
         <input type="submit" action=" {% url 'detalle_cita' object.pk %}" class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Aceptar">
@@ -24,5 +27,19 @@
         </div>      
     </form>
 </div> 
+
+<script>
+    var pac = document.getElementById("id_pacienteId");
+    var cli = document.getElementById("id_clinica");
+
+    var pacienteOculto = document.getElementById("id_prodId");
+    pacienteOculto.value = $("#id_pacienteId").val();
+    var clinicaOculta = document.getElementById("id_clinId");
+    clinicaOculta.value = $("#id_clinica").val();
+
+    pac.disabled ="disabled"; // deshabilitar
+    cli.disabled ="disabled"; // deshabilitar
+
+</script>
 
 {% endblock content%}

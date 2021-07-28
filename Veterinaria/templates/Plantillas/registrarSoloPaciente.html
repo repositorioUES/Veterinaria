@@ -165,11 +165,27 @@
                 $("#id_propietario").html(response);
                
             });
-    
-        }else{
+        }
+        else{
+            var vacio ="-"
+            $("#id_propietario").html("");
+            var request = $.ajax({
+                type: "GET",
+                url: "{% url 'load_Propietario' %}",
+                data: {
+                    "propId":vacio
+                },
+            });
+            request.done(function(response){
+                $("#id_propietario").html(response);
+               
+            });
+        }
+        
+        /*else{
             $("#id_propietario").html('<option value="" selected = "selected">-----------</option>');      
             $("#id_propietario").trigger("change");
-        }
+        }*/
     }
 
 </script>
