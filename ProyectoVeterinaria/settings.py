@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-mjkv2w%vx1t8#!@fb(mbswkxk*q+h7^#9#6dn)=(3ms_!me)jy
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = '/'
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Veterinaria',
     'crispy_forms',
+    'django_filters',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -114,7 +115,7 @@ TIME_ZONE = 'America/El_Salvador'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 

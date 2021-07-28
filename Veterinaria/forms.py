@@ -1,11 +1,10 @@
 from django import forms
-from .models import *
-from Veterinaria.models import Paciente, Propietario, Empleado, Solicitudes
+from django.contrib.admin import widgets
+from Veterinaria.models import *
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Clinica
 
 class DateInput(forms.DateInput):
 	input_type = 'date'
@@ -60,14 +59,21 @@ class PropietarioForm(forms.ModelForm):
 		}
 
 class CustomUserCreationForm(UserCreationForm):
-    
     class Meta:
         model = User
         fields = ['username',"first_name","last_name", "email", "password1","password2"]
-class ClinicaForm(forms.ModelForm):
 
+class ClinicaForm(forms.ModelForm):
     class Meta:
         model = Clinica
+        fields = [
+			'propietario','nombre','direccion', 'horarios', 'telefono', 'correoElectronico', 'servicios', 'estado',
+		]
+
+class ConsultorioForm(forms.ModelForm):
+
+    class Meta:
+        model = Consultorio
         fields = '__all__'
 
 
@@ -75,16 +81,17 @@ class EmpleadoForm(forms.ModelForm):
 	class Meta:
 		model = Empleado
 		fields = [
-			'duiEmp','nombreEmp', 'apellidoEmp','telefonoEmp','cargo','salario','clinica',
+			'duiEmp','nombreEmp', 'apellidoEmp','telefonoEmp','cargo','salario','clinica','consultorio',
 		]
 		labels = {
-			'duiEmp':'Número de DUI *',
-			'nombreEmp':'Nombre *',
-			'apellidoEmp':'Apellido *',
-            'telefonoEmp':'Telefono *',
-            'cargo':'Puesto de Trabajo *',
-			'salario':'Salario *',
-			'clinica':'Clinica en que Trabaja *',
+			'duiEmp':'Número de DUI*',
+			'nombreEmp':'Nombre*',
+			'apellidoEmp':'Apellido*',
+            'telefonoEmp':'Telefono*',
+            'cargo':'Cargo que Desempeña*',
+			'salario':'Salario*',
+			'clinica':'Clínica *'
+			'consultorio':'Consultorio en que Trabaja*',
 		}
 
 class SolicitudForm(forms.ModelForm):

@@ -74,12 +74,37 @@ class Municipio(models.Model):
 # Modelo de CLINICA -------------------------------------------------------------------
 #Programador y Analista: Christian Garcia
 class Clinica(models.Model):
-    dueño = models.CharField(max_length=50, validators=[solo_Letras])
-    nombre = models.CharField(max_length=60, validators=[solo_Letras])
+    id = models.IntegerField(primary_key = True)
+    propietario = models.CharField(max_length=50, validators=[solo_Letras])
+    nombre = models.CharField(max_length=60)
     direccion = models.TextField()
+    horarios = models.CharField(max_length=50)
+    telefono = models.CharField(max_length=9)
+    servicios = models.CharField(max_length=100)
+    fechaIngreso = models.DateField(auto_now_add=True, null=True)
+    correoElectronico = models.CharField(max_length=200, null=True)
+    ESTADO = (('Activa','Activa'),('Inactiva', 'Inactiva'))
+    estado = models.CharField(max_length=10, choices=ESTADO, default="Activa")
+
+    def __str__(self):
+        return self.nombre
+#FIN CLINICA
+
+# Modelo de CONSULTORIO -------------------------------------------------------------------
+#Programador y Analista: Christian Garcia
+class Consultorio(models.Model):
+    clinica = models.ForeignKey('Clinica', on_delete = models.CASCADE)
+    nombre = models.CharField(max_length=60)
+    direccion = models.TextField()
+    longitud = models.FloatField(blank=True, null=True)
+    latitud = models.FloatField(blank=True, null=True)
     horarios = models.CharField(max_length=50)
     telefono = models.CharField(max_length=9, validators=[formato_Telefono])
     servicios = models.CharField(max_length=100)
+    fechaIngreso = models.DateField(auto_now_add=True, null=True)
+    correoElectronico = models.CharField(max_length=200, null=True)
+    ESTADO = (('Activa','Activa'),('Inactiva', 'Inactiva'))
+    estado = models.CharField(max_length=10, choices=ESTADO, default="Activa")
 
     def __str__(self):
         return self.nombre
@@ -92,7 +117,8 @@ class Empleado(models.Model):
     telefonoEmp = models.CharField(max_length=10, help_text="####-####", validators=[formato_Telefono])
     cargo = models.CharField(max_length=50)
     salario = models.CharField(max_length=9, validators=[solo_Numeros])
-    clinica = models.ForeignKey('Clinica', on_delete = models.CASCADE)
+    clinica = models.ForeignKey('Clinica', on_delete = models.PROTECT)
+    consultorio = models.ForeignKey('Consultorio', on_delete = models.CASCADE)
 
     def __str__(self):
         return self.nombreEmp + " " + self.apellidoEmp
@@ -107,81 +133,6 @@ class Solicitudes(models.Model):
 
     def __str__(self):
         return self.solicitante + ": " + self.nombreClinica
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # Modelo del HORARIO DE CONSULTA -------------------------------------------------------------------

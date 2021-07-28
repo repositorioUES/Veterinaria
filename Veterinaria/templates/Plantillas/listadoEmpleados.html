@@ -6,7 +6,7 @@
 </div>
 <div class="container">
 	<div>
-		<a href="{% url 'crear_empleado' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
+		<a href="{% url 'crear_empleado' %}" class="btn btn-success">
   		 Nuevo Empleado</a>     
 	</div>
 </div>
@@ -15,9 +15,11 @@
 	<table  class="table table-sm">
 		<tr style="text-align: center">
 			<th style="text-align: center">Empleado</th>
-			<th style="text-align: center">Clínica</th>
+			<th style="text-align: center">Clinica</th>
+			<th style="text-align: center">Consultorio</th>
 			<th style="text-align: center">Cargo</th>
-			<th style="text-align: center">Salario</th>
+			<th></th>
+
 		</tr>
 		{% for p in empleados %}
 			
@@ -26,16 +28,16 @@
 					<div>{{p.nombreEmp}}</div>
 				</td>
 				<td style="text-align: center">
-					{{p.clinica}}
+					<div>{{p.consultorio.clinica.nombre}}</div>
+				</td>
+				<td style="text-align: center">
+					{{p.consultorio}}
 				</td>
 				<td style="text-align: center">
 					{{p.cargo}}
 				</td>
 				<td style="text-align: center">
-					$ {{p.salario }}
-				</td>
-				<td style="text-align: center">
-    				<a href="{% url 'detalle_empleado' p.duiEmp %}" class="btn btn-success" style="color:white; background-color:blue">Detalle</a>
+    				<a href="{% url 'detalle_empleado' p.duiEmp %}" class="btn btn-primary" style="color:white;">Detalle</a>
 				</td>
 			</tr>
 		{% endfor %}

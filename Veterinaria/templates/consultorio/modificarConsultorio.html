@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 {%load static%}
 
-{% block title %}<title>Registrar Clinica</title>{% endblock title%}
+{% block title %}<title>Registrar Consultorio</title>{% endblock title%}
 
 {% block content %}
 {% load crispy_forms_tags %}
@@ -13,7 +13,7 @@
                     <div class="contenedor_logo" align="center">
                         <img  class="logo"  src="{% static 'images/registro_clinica.png'%}" alt="logo">
                     </div>
-                    <h2 align ="center">Registro de clinicas</h2>
+                    <h2 align ="center">Editar Consultorio</h2>
                     <hr>
                     <form action="" method="post">
 
@@ -22,7 +22,7 @@
                         <div class="d-flex justify-content-end">
                             <a class="btn btn-danger" href="{% url 'listar_clinica' %}"><i class="fa fa-ban" aria-hidden="true"></i> Cancelar</a>
                             &nbsp;
-                            <button  type="submit" class="btn btn-success float-right"><i class="fa fa-check" aria-hidden="true"></i> Registrar</button>
+                            <button  type="submit" class="btn btn-success float-right"><i class="fa fa-check" aria-hidden="true"></i> Guardar</button>
                         </div>
                             
 
