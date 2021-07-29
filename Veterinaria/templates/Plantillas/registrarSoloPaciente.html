@@ -118,7 +118,7 @@
             </tr>
         </table>
 
-        <h5>Dato para el Expediente</h5>
+        <h5>Datos para el Expediente</h5>
         <table>
             <tr>
                 <td  width="200">
@@ -129,6 +129,13 @@
                 </td>
             </tr>
             <tr>
+                <td  width="200">
+                    <B><label for="{{form2.consultorio.name}}">{{form2.consultorio.label}}</label></B>
+                </td>
+                <td>
+                    {{form2.consultorio}}
+                </td>
+            </tr>
         </table>
 
         <br>
@@ -148,6 +155,8 @@
 
     $(document).ready(function(){
         $("#id_buscar").on("change", getPropietario);    
+
+        $("#id_clinica").on("change", getConsultorios);
     });
 
     function getPropietario(){
@@ -187,6 +196,30 @@
             $("#id_propietario").trigger("change");
         }*/
     }
+
+    // SELECT DEPENDIENTE PARA LOS CONSULTORIOS====================================
+    function getConsultorios(){
+        var valor = $("#id_clinica").val();
+        if (valor){
+            $("#id_consultorio").html("");
+            var request = $.ajax({
+                type: "GET",
+                url: "{% url 'load_consultorio' %}",
+                data: {
+                    "consultId":valor
+                },
+            });
+            request.done(function(response){
+                $("#id_consultorio").html(response);
+                
+            });
+        
+        }else{
+            $("#id_consultorio").html('<option value="" selected = "selected">-----------</option>');      
+            $("#id_consultorio").trigger("change");
+        }
+    }
+//==================================================================================
 
 </script>
 

@@ -47,6 +47,10 @@
         $("#id_clinica").on("change", getHorario); 
     });
 
+    $(document).ready(function(){ 
+        $("#id_clinica").on("change", getConsultorios);
+    });
+
     function getPaciente(){
         var valor = $("#id_buscar").val();
         var filtro ="";
@@ -90,6 +94,28 @@
         }else{
             $("#id_horaCita").html('<option value="" selected = "selected">-----------</option>');      
             $("#id_horaCita").trigger("change");
+        }
+    }
+
+    function getConsultorios(){
+        var valor = $("#id_clinica").val();
+        if (valor){
+            $("#id_consultorio").html("");
+            var request = $.ajax({
+                type: "GET",
+                url: "{% url 'load_consultorio' %}",
+                data: {
+                    "consultId":valor
+                },
+            });
+            request.done(function(response){
+                $("#id_consultorio").html(response);
+                
+            });
+        
+        }else{
+            $("#id_consultorio").html('<option value="" selected = "selected">-----------</option>');      
+            $("#id_consultorio").trigger("change");
         }
     }
 

@@ -294,10 +294,6 @@ class DetallePropietario(DetailView):
     form_class = PropietarioForm
     context_object_name = 'prop'
 
-
-
-
-
 class CrearEmpleado(CreateView):
     model = Empleado
     template_name = 'Plantillas/crearEmpleado.html'
@@ -314,8 +310,6 @@ class DetalleEmpleado(DetailView):
     template_name = 'Plantillas/detalleEmpleado.html'
     form_class = EmpleadoForm
     context_object_name = 'empleado'
-
-
 
 class CrearSolicitud(CreateView):
     model = Solicitudes
@@ -338,69 +332,8 @@ class DetalleSolicitud(DetailView):
     context_object_name = 'solicitud'
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Vista  -------------------------------------------------------------------
+#Programador y Analista: Ruddy Alfredo Pérez
 def TipoRegistro(request):
     return render(request, 'Plantillas/tipoRegistro.html')
 
@@ -460,21 +393,33 @@ def ListadoCitas(request):
 #Programador y Analista: Ruddy Alfredo Pérez
 def BuscarCita(request):
     pac = request.GET.get('buscar') # Filtro por paciente
+    fec = request.GET.get('buscarFecha') # Filtro por fecha
     context={}
     hoy = datetime.now().date() # Fecha de hoy
 
-    if pac: # Si mandamos info del paceiente
+    if pac and fec: # Si mandamos info del paceiente
         paciente = Paciente.objects.filter(nombrePac__iexact=pac).first()
         if paciente:
-            citasHoy = Cita.objects.filter(fechaCita__contains = hoy).filter(pacienteId=paciente.id) # Cita para Hoy
-            citasFuturo = Cita.objects.filter(fechaCita__gt = hoy).filter(pacienteId=paciente.id) # Citas a Futuro
-            citasPasado = Cita.objects.filter(fechaCita__lt = hoy).filter(pacienteId=paciente.id) # Citas ya Pasadas
+            citasHoy = Cita.objects.filter(fechaCita__contains = hoy).filter(pacienteId=paciente.id).filter(fechaCita__contains = fec) # Cita para Hoy
+            citasFuturo = Cita.objects.filter(fechaCita__gt = hoy).filter(pacienteId=paciente.id).filter(fechaCita__contains = fec) # Citas a Futuro
+            citasPasado = Cita.objects.filter(fechaCita__lt = hoy).filter(pacienteId=paciente.id).filter(fechaCita__contains = fec) # Citas ya Pasadas
             citaFecha = None
             context = {'citasHoy':citasHoy, 'citasFuturo':citasFuturo,'citasPasado':citasPasado,'citaFecha':citaFecha}
-        else:
-            citaFecha = Cita.objects.filter(fechaCita__icontains = pac)
-            print(citaFecha)
-            context = {'citaFecha':citaFecha}
+    else:
+        if pac: # Si mandamos info del paceiente
+            paciente = Paciente.objects.filter(nombrePac__iexact=pac).first()
+            if paciente:
+                citasHoy = Cita.objects.filter(fechaCita__contains = hoy).filter(pacienteId=paciente.id) # Cita para Hoy
+                citasFuturo = Cita.objects.filter(fechaCita__gt = hoy).filter(pacienteId=paciente.id) # Citas a Futuro
+                citasPasado = Cita.objects.filter(fechaCita__lt = hoy).filter(pacienteId=paciente.id) # Citas ya Pasadas
+                citaFecha = None
+                context = {'citasHoy':citasHoy, 'citasFuturo':citasFuturo,'citasPasado':citasPasado,'citaFecha':citaFecha}
+        
+        if fec:
+            citaFecha = Cita.objects.filter(fechaCita__icontains = fec).filter(fechaCita__gte=hoy)
+            citaFechaPasada = Cita.objects.filter(fechaCita__icontains=fec).filter(fechaCita__lt=hoy)
+            
+            context = {'citaFecha':citaFecha,'citaFechaPasada':citaFechaPasada}
         
     return render(request,'Plantillas/buscarCita.html', context)
 

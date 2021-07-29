@@ -46,6 +46,12 @@ def load_Clinica(request):
 	
 	return render(request, 'hr/prop_dropdown_list.html', context={'prop': clinicas})
 
+def load_Consultorio(request):
+	consultId = request.GET.get('consultId')
+	consultorios = Consultorio.objects.filter(clinica_id=consultId)
+	
+	return render(request, 'hr/cons_dropdown_list.html', context={'consultorios': consultorios})
+
 def load_Horarios(request):
 	horaId = request.GET.get('filtro')
 	horarios = Horario.objects.filter(clinica_id = horaId).filter(activo=1)

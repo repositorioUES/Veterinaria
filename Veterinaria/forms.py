@@ -90,7 +90,7 @@ class EmpleadoForm(forms.ModelForm):
             'telefonoEmp':'Telefono*',
             'cargo':'Cargo que Desempeña*',
 			'salario':'Salario*',
-			'clinica':'Clínica *'
+			'clinica':'Clínica *',
 			'consultorio':'Consultorio en que Trabaja*',
 		}
 
@@ -114,91 +114,6 @@ class SolicitudForm(forms.ModelForm):
 		}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class HorarioForm(forms.ModelForm):
 	class Meta:
 		model = Horario
@@ -216,11 +131,12 @@ class CitaForm(forms.ModelForm):
 	class Meta:
 		model = Cita
 		fields = [
-			 'pacienteId','clinica','fechaCita','horaCita',
+			 'pacienteId','clinica','consultorio','fechaCita','horaCita',
 		]
 		labels = {
 			'pacienteId':'Paciente *',
 			'clinica':'Clínica *',
+			'consultorio':'Consultorio *',
 			'fechaCita':'Fecha de Cita *',
 		    'horaCita':'Hora de Cita *',
 		}
@@ -245,7 +161,7 @@ class SoloPacienteForm(forms.ModelForm):
 		    'fechaNacimPac':'Fecha de Nacimiento *',
             'observaciones':'Observaciones',
 			'propietario':'Propietario *',
-			'personaInscrip':'Persona que Inscribió *'
+			'personaInscrip':'Persona que Inscribió *',
 		}
 		widgets = {
 			'observaciones':forms.Textarea(attrs={'class':'form-contol','rows':'4'}),
@@ -280,8 +196,9 @@ class ExpedienteForm(forms.ModelForm):
 	class Meta:
 		model = Expediente
 		fields = [
-			 'clinica',
+			 'clinica','consultorio',
 		]
 		labels = {
 			'clinica':'Clínica *',
+			'consultorio':'Consultorio *',
 		}

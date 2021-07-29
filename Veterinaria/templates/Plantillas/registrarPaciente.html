@@ -101,7 +101,7 @@
             </tr>
         </table>
 
-        <h5>Dato para el Expediente</h5>
+        <h5>Datos para el Expediente</h5>
         <table>
             <tr>
                 <td  width="200">
@@ -112,6 +112,13 @@
                 </td>
             </tr>
             <tr>
+                <td  width="200">
+                    <B><label for="{{form3.consultorio.name}}">{{form3.consultorio.label}}</label></B>
+                </td>
+                <td>
+                    {{form3.consultorio}}
+                </td>
+            </tr>
         </table>
           
         <br>
@@ -131,6 +138,9 @@
 // SELECT DEPENDIENTE PARA LOS MUNICIPIOS====================================
     $(document).ready(function(){
         $("#id_departamento").on("change", getMunicipios);    
+    
+        $("#id_clinica").on("change", getConsultorios);
+ 
     });
 
     function getMunicipios(){
@@ -155,6 +165,30 @@
         }
     }
 //===========================================================================
+
+// SELECT DEPENDIENTE PARA LOS CONSULTORIOS====================================
+    function getConsultorios(){
+        var valor = $("#id_clinica").val();
+        if (valor){
+            $("#id_consultorio").html("");
+            var request = $.ajax({
+                type: "GET",
+                url: "{% url 'load_consultorio' %}",
+                data: {
+                    "consultId":valor
+                },
+            });
+            request.done(function(response){
+                $("#id_consultorio").html(response);
+                
+            });
+        
+        }else{
+            $("#id_consultorio").html('<option value="" selected = "selected">-----------</option>');      
+            $("#id_consultorio").trigger("change");
+        }
+    }
+//==================================================================================
 
 // PARA CALCULAR LA EDAD A PARTIR DE LA FECHA DE NACIMIENTO==================
 
