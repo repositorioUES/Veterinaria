@@ -182,6 +182,8 @@ class Consulta (models.Model):
     medicamento = models.CharField(max_length=200, null = True, blank=True)
     examenes = models.CharField(max_length=200, null = True, blank=True)
     proximoCont = models.DateField(null=True, validators=[fecha_mayor])
+    clinica = models.ForeignKey('Clinica', on_delete = models.PROTECT)
+    consultorio = models.ForeignKey('Consultorio', on_delete = models.PROTECT)
 
 #FIN CONSULTA
 

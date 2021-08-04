@@ -71,3 +71,18 @@ def formato_Telefono(tel):
 					raise ValidationError('Teléfono NO cumple el formato, debe ser ####-####')
 	else:
 		raise ValidationError('Teléfono NO cumple el formato, debe ser ####-####')
+
+def formato_Hora(hora):
+	hora = str(hora)
+	charValidos = "0123456789: aApPmM"
+
+	if len(hora) == 9:
+		for i in range(9):
+			if i != 4:
+				if hora[i] not in charValidos:
+					raise ValidationError('Teléfono NO cumple el formato, debe ser ####-####')
+			else:
+				if hora[i] != "-":
+					raise ValidationError('Teléfono NO cumple el formato, debe ser ####-####')
+	else:
+		raise ValidationError('Teléfono NO cumple el formato, debe ser ####-####')

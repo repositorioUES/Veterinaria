@@ -31,6 +31,7 @@
 // SELECT DEPENDIENTE PARA LOS MUNICIPIOS====================================
     $(document).ready(function(){
         $("#id_departamento").on("change", getMunicipios);    
+        $("#id_clinica").on("change", getConsultorios);
     });
 
     function getMunicipios(){
@@ -56,33 +57,26 @@
     }
 //===========================================================================
 
-// PARA CALCULAR LA EDAD A PARTIR DE LA FECHA DE NACIMIENTO==================
-    window.onload=deshabilitarEdad;//Al cargar la página deactivar el input de la edad
-
-    function deshabilitarEdad(){
-        document.getElementById("id_edad").diabled = true;
-    }
-
-    // Y ahora si .... a calcular
-    $(document).ready(function(){
-            $("#id_fechaNacim").on("change", getEdad);    
-    });
-
-    function getEdad() {
-        var dateString = $("#id_fechaNacim").val();
-        let hoy = new Date()
-        let fechaNacimiento = new Date(dateString)
-        let edad = hoy.getFullYear() - fechaNacimiento.getFullYear()
-        let diferenciaMeses = hoy.getMonth() - fechaNacimiento.getMonth()
-        if (
-            diferenciaMeses < 0 ||
-            (diferenciaMeses === 0 && hoy.getDate() < fechaNacimiento.getDate())
-        ) {
-            edad--
+    function getConsultorios(){
+        var valor = $("#id_clinica").val();
+        if (valor){
+            $("#id_consultorio").html("");
+            var request = $.ajax({
+                type: "GET",
+                url: "{% url 'load_consultorio' %}",
+                data: {
+                    "consultId":valor
+                },
+            });
+            request.done(function(response){
+                $("#id_consultorio").html(response);
+                
+            });
+        
+        }else{
+            $("#id_consultorio").html('<option value="" selected = "selected">-----------</option>');      
+            $("#id_consultorio").trigger("change");
         }
-
-        document.getElementById("id_edad").value = edad;
-        return edad
     }
 </script>
 

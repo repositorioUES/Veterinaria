@@ -39,7 +39,7 @@ def load_Paciente(request):
 
 def load_Clinica(request):
 	clinicId = request.GET.get('clinicId')
-	if clinicId:
+	if clinicId != "-":
 		clinicas = Clinica.objects.filter(nombre__icontains=clinicId)
 	else:
 		clinicas = Clinica.objects.all()

@@ -8,7 +8,7 @@
 <div>
     <form role="form" method="get" >
         <div>
-            <label> Puede Buscar po el Nombre del Paciente o Fecha de Cita)</label>
+            <label> Puede Buscar po el Nombre del Paciente o Fecha de Cita</label>
         </div>
         <div>    
             <input type="text"  placeholder="Nombre Paciente" name="buscar" value="{{ request.GET.buscar }}">
@@ -84,7 +84,7 @@
                         
                     {%endfor%}
                     {% if citasFuturo == None%}  
-                        <h5>No tiene cita Pendiente  
+                        <h6>No tiene cita Pendiente</h6>  
                     {% endif %}
                 </tr>
             </table>
@@ -113,7 +113,7 @@
                         
                     {%endfor%}
                     {% if citasPasado == None%}  
-                        <h6>No tiene citas PAsadas Registradas </h6>
+                        <h6>No tiene citas Pasadas Registradas </h6>
                     {% endif %}
                 </tr>
             </table>

@@ -172,7 +172,7 @@ class ConsultaForm(forms.ModelForm):
 	class Meta:
 		model = Consulta
 		fields = [
-			 'medico','pacienteId','edad','peso','hora','observaciones','medicamento','examenes','proximoCont',
+			 'medico','pacienteId','edad','peso','hora','observaciones','medicamento','examenes', 'clinica','consultorio','proximoCont',
 		]
 		labels = {
 			'medico': 'Medico Veterinario *',
@@ -183,6 +183,8 @@ class ConsultaForm(forms.ModelForm):
 			'observaciones':'Observaciones',
 			'medicamento':'Medicamentos',
 			'examenes':'Exámenes',
+			'clinica':'Clínica *',
+			'consultorio':'Consultorio *',
 			'proximoCont':'Proximo Control *',
 		}
 		widgets = {
