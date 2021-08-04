@@ -141,13 +141,16 @@ def listar_consultorio(request,id):
     clinica = Clinica.objects.get(id=id)
     consultorios = clinica.consultorio_set.all()
 
+    empleados = Empleado.objects.all().order_by('-clinica_id')
+
     filter = ConsultorioFilter(request.GET, queryset=consultorios)
     consultorios = filter.qs
 
     data = {
         'clinica' : clinica,
         'consultorios' : consultorios,
-        'filter' : filter
+        'filter' : filter,
+        'empleados' : empleados
     }
     
     return render(request, 'consultorio/listarConsultorio.html', data)
