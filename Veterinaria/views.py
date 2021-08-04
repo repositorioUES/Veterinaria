@@ -331,3 +331,22 @@ class DetalleSolicitud(DetailView):
     template_name = 'Plantillas/detalleSolicitud.html'
     form_class = SolicitudForm
     context_object_name = 'solicitud'
+
+
+
+class CrearServicio(CreateView):
+    model = Servicio
+    template_name = 'Plantillas/crearServicio.html'
+    form_class = ServicioForm
+    success_url = reverse_lazy('listado_servicios')
+
+class ListarServicio(ListView):
+    model = Servicio
+    template_name = 'Plantillas/listadoServicios.html'
+    context_object_name = 'servicios'
+
+class DetalleServicio(DetailView):
+    model = Servicio
+    template_name = 'Plantillas/detalleServicio.html'
+    form_class = ServicioForm
+    context_object_name = 'servicio'

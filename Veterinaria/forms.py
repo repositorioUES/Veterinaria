@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.admin import widgets
+from django.forms import fields
 from Veterinaria.models import *
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
@@ -98,7 +99,7 @@ class SolicitudForm(forms.ModelForm):
 			'solicitante','nombreClinica', 'direccionClinica', 'horariosClinica', 'telefonoClinica','serviciosClinica',
 		]
 		labels = {
-			'solicitabte':'Nonbre del Dueño*',
+			'solicitante':'Nonbre del Dueño*',
 			'nombreClinica':'Nombre de la Clínica*',
 			'direccionClinica':'Dirección*',
             'horariosClinica':'Horarios*',
@@ -107,5 +108,20 @@ class SolicitudForm(forms.ModelForm):
 		}
 		widgets = {
 			'horariosClinica':forms.Textarea(attrs={'class':'form-contol'}),
-			'serviciosClinica':forms.Textarea(attrs={'class':'form-contol'}),
+			'serviciosClinica':forms.CheckboxSelectMultiple(),
+		}
+
+class ServicioForm(forms.ModelForm):
+	class Meta:
+		model = Servicio
+		fields = [
+			'nombreServicio','descServicio','catServicio',
+		]
+		labels = {
+			'nombreServicio':'Nombre del servicio',
+			'descServicio':'Descripción',
+			'catServicio':'Categoria',
+		}
+		widgets = {
+			'descServicio':forms.Textarea(attrs={'class':'form-control', 'rows':'4'}),
 		}

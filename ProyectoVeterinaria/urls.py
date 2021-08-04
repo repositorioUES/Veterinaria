@@ -42,7 +42,9 @@ urlpatterns = [
     path('solicitudEnviada/', SolicitudEnviada, name='solicitud_enviada'),
     path('listadoSolicitudes/', login_required(ListarSolicitudes.as_view()), name='listado_solicitudes'),
     path('detalleSolicitud/<int:pk>', login_required(DetalleSolicitud.as_view()), name='detalle_solicitud'),
-
+    path('listadoServicios/',login_required(ListarServicio.as_view()), name='listado_servicios'),
+    path('detalleServicio/<int:pk>',login_required(DetalleServicio.as_view()),name='detalle_servicios'),
+    path('crearServicio/',login_required(CrearServicio.as_view()),name='crear_servicio'),
 ]
 
 if settings.DEBUG:

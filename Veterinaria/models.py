@@ -78,7 +78,7 @@ class Clinica(models.Model):
     direccion = models.TextField()
     horarios = models.CharField(max_length=50)
     telefono = models.CharField(max_length=9)
-    servicios = models.CharField(max_length=100)
+    servicios = models.ManyToManyField('Servicio')
     fechaIngreso = models.DateField(auto_now_add=True, null=True)
     correoElectronico = models.CharField(max_length=200, null=True)
     ESTADO = (('Activa','Activa'),('Inactiva', 'Inactiva'))
@@ -98,7 +98,7 @@ class Consultorio(models.Model):
     latitud = models.FloatField(blank=True, null=True)
     horarios = models.CharField(max_length=50)
     telefono = models.CharField(max_length=9)
-    servicios = models.CharField(max_length=100)
+    servicio = models.ManyToManyField('Servicio')
     fechaIngreso = models.DateField(auto_now_add=True, null=True)
     correoElectronico = models.CharField(max_length=200, null=True)
     ESTADO = (('Activa','Activa'),('Inactiva', 'Inactiva'))
@@ -130,3 +130,16 @@ class Solicitudes(models.Model):
 
     def __str__(self):
         return self.solicitante + ": " + self.nombreClinica
+
+#Modelo de SERVICIO
+#Programador: Bryan Marín
+class Servicio(models.Model):
+    idServicio = models.IntegerField(primary_key=True)
+    nombreServicio = models.CharField(max_length=50)
+    descServicio = models.CharField(max_length=200)
+    catServicio = models.CharField(max_length=30)
+    ESTADOServicio = (('Activa', 'Activa'),('Inactiva','Inactiva'))
+    estadoServicio = models.CharField(max_length=10, choices=ESTADOServicio, default="Activa")
+
+    def __str__(self):
+        return self.nombreServicio
