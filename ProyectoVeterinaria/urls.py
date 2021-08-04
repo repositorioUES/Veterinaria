@@ -64,6 +64,9 @@ urlpatterns = [
     path('ajax/load_Clinica/', load_Clinica, name='load_Clinica'),
     path('ajax/load_Horario/', load_Horarios, name='load_Horario'),
     path('ajax/load_Consultorio/', load_Consultorio, name='load_consultorio'),
+    path('listadoServicios/',login_required(ListarServicio.as_view()), name='listado_servicios'),
+    path('detalleServicio/<int:pk>',login_required(DetalleServicio.as_view()),name='detalle_servicios'),
+    path('crearServicio/',login_required(CrearServicio.as_view()),name='crear_servicio'),
 ]
 
 if settings.DEBUG:

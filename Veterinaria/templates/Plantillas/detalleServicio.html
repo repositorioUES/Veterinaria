@@ -1,0 +1,25 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+<div>
+    <h3>Detalle del Servicio</h3>
+</div> 
+
+<br>
+
+<div>
+    <label>Nombre del servicio: </label>    {{servicio.nombreServicio}}
+</div>
+<div>
+    <label>Descripcion del servicio: </label>    {{servicio.descServicio}}
+</div>
+<div>
+    <label>Categoria: </label>    {{servicio.catServicio}}
+</div>
+
+<br>
+<div>       
+    <a href="{% url 'listado_servicios' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
+</div>      
+
+{% endblock content%}
