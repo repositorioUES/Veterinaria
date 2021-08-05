@@ -59,7 +59,7 @@ def load_Horarios(request):
 	return render(request, 'hr/hor_dropdown_list.html', context={'horarios': horarios})
 
 def load_Servicios(request):
-	servId = request.GET.get('servId')
-	servicios = Servicio.objects.filter(_id = servId)
+	consId = request.GET.get('consId')
+	serv = Servicio.objects.filter(consultorio__id = consId)
 	
-	return render(request, 'hr/serv_dropdown_list.html', context={'serv': servicios})
+	return render(request, 'hr/serv_dropdown_list.html', context={'serv': serv})

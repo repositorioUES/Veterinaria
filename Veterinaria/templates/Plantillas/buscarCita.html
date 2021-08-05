@@ -137,7 +137,7 @@
                             <td style="text-align: center">{{c.servicio.nombre}}</td>
 
                             <td style="text-align:center;">
-                                <a href="{% url 'detalle_cita_pasada' c.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
+                                <a href="{% url 'detalle_cita' c.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
                             </td>
                             <td style="text-align:center;">
                                 <button onclick="return abrir_modal('{% url 'cancelar_cita' c.pk %}')"  style="color:white; background-color:red" class="btn btn-successtn">Cancelar</button>

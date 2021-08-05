@@ -47,6 +47,7 @@
         $("#id_clinica").on("change", getHorario); 
 
         $("#id_clinica").on("change", getConsultorios);
+        $("#id_consultorio").on("change", getServicios);
     });
 
     function getPaciente(){
@@ -114,6 +115,28 @@
         }else{
             $("#id_consultorio").html('<option value="" selected = "selected">-----------</option>');      
             $("#id_consultorio").trigger("change");
+        }
+    }
+
+    function getServicios(){
+        var valor = $("#id_consultorio").val();
+        if (valor){
+            $("#id_servicio").html("");
+            var request = $.ajax({
+                type: "GET",
+                url: "{% url 'load_servicio' %}",
+                data: {
+                    "consId":valor
+                },
+            });
+            request.done(function(response){
+                $("#id_servicio").html(response);
+                
+            });
+        
+        }else{
+            $("#id_servicio").html('<option value="" selected = "selected">-----------</option>');      
+            $("#id_servicio").trigger("change");
         }
     }
 

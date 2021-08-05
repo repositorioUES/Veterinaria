@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve
 from Veterinaria.views import *
-from Veterinaria.ajax import load_Municipios, load_Propietario, load_Paciente, load_Clinica, load_Horarios, load_Consultorio
+from Veterinaria.ajax import load_Municipios, load_Propietario, load_Paciente, load_Clinica, load_Horarios, load_Consultorio, load_Servicios
 from django.contrib.auth.decorators import login_required
 
 app_name = 'Veterinaria'
@@ -64,6 +64,7 @@ urlpatterns = [
     path('ajax/load_Clinica/', load_Clinica, name='load_Clinica'),
     path('ajax/load_Horario/', load_Horarios, name='load_Horario'),
     path('ajax/load_Consultorio/', load_Consultorio, name='load_consultorio'),
+    path('ajax/load_Servicios/', load_Servicios, name='load_servicio'),
     path('listadoServicios/',login_required(ListarServicio.as_view()), name='listado_servicios'),
     path('detalleServicio/<int:pk>',login_required(DetalleServicio.as_view()),name='detalle_servicios'),
     path('crearServicio/',login_required(CrearServicio.as_view()),name='crear_servicio'),
