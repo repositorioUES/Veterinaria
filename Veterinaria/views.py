@@ -502,3 +502,14 @@ class DetalleServicio(DetailView):
     template_name = 'Plantillas/detalleServicio.html'
     form_class = ServicioForm
     context_object_name = 'servicio'
+
+class ModificarServicio(UpdateView):
+    model = Servicio
+    template_name = 'Plantillas/modificarServicio.html'
+    form_class= ServicioForm
+    success_url = reverse_lazy('listado_servicios')
+
+class BorrarServicio(DeleteView):
+    model = Servicio
+    template_name = 'Plantillas/borrarServicio.html'
+    success_url = reverse_lazy('listado_servicios')

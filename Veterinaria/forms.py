@@ -218,5 +218,5 @@ class ServicioForm(forms.ModelForm):
 			'catServicio':'Categoria',
 		}
 		widgets = {
-			'descServicio':forms.Textarea(attrs={'class':'form-control', 'rows':'4'}),
+			'descServicio':forms.Textarea(attrs={'rows':'4'}),
 		}

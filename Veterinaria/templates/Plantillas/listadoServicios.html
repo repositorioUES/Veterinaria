@@ -23,8 +23,32 @@
 				<td style="text-align: center">
     				<a href="{% url 'detalle_servicios' p.idServicio  %}" class="btn btn-success" style="color:white; background-color:blue">Detalles</a>
 				</td>
+				<td style="text-align: center">
+    				<a href="{% url 'modificar_servicio' p.idServicio %}" class="btn btn-success" style="color:white; background-color:blue">Modificar</a>
+				</td>
+				<td style="text-align: center">
+    				<button onclick="return abrir_modal('{% url 'borrar_servicio' p.pk %}')"  style="color:white; background-color:red" class="btn btn-successtn">Borrar</button>
+				</td>
+				
 		{% endfor %}
 	</table>
 </div>
+
+<div class="modal fade" id="popup" role="dialog">
+
+</div>
+
+<script type="text/javascript">
+
+jQuery.noConflict();
+
+function abrir_modal(url)
+{
+    $('#popup').load(url, function(){
+		$(this).modal('show');
+	});
+}
+
+</script>
 
 {% endblock content%}

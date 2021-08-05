@@ -1,0 +1,30 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+<div>
+<h3> Modificar servicios</h3>
+</div>
+
+<div>
+    <form role="form" method="POST" enctype ="multipart/form-data" >
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td width="200">
+                    <h6><B>Datos del servicio</B></h6>
+                    {{form.as_table}}
+                </td>
+            </tr>
+
+        </table>   
+        <br>
+        <div>   
+        <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Guardar">
+
+        <a href="javascript: history.go(-1)" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
+        </div>  
+      
+    </form>
+</div> 
+
+{% endblock content%}
