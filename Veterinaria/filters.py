@@ -19,3 +19,12 @@ class ConsultorioFilter(django_filters.FilterSet):
     class Meta:
         model = Consultorio
         fields = ['estado', 'nombre']
+
+class EmpleadoFilter(django_filters.FilterSet):
+    nombreEmp = CharFilter(field_name='nombreEmp', lookup_expr='icontains', label='Nombre')
+    clinica = CharFilter(field_name='clinica', lookup_expr='icontains', label='Clinica')
+    consultorio = CharFilter(field_name='consultorio', lookup_expr='icontains', label='Consultorio')
+
+    class Meta:
+        model = Empleado 
+        fields = ['nombreEmp', 'clinica', 'consultorio']

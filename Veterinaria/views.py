@@ -71,6 +71,9 @@ def listar_clinica(request):
     filter = ClinicaFilter(request.GET, queryset=clinicas)
     clinicas = filter.qs
 
+    filter2 = EmpleadoFilter(request.GET, queryset=empleados)
+    empleados = filter2.qs
+
     try:
         paginator = Paginator(clinicas,10)
         clinicas = paginator.page(page)
@@ -82,6 +85,7 @@ def listar_clinica(request):
         'entity': clinicas,
         'paginator': paginator,
         'filter' : filter,
+        'filter2' : filter2,
         'empleados' : empleados
     }
 

@@ -77,12 +77,15 @@ class ConsultorioForm(forms.ModelForm):
                 queryset = Servicio.objects.all()
             )
 
+		
+
         class Meta:
             model = Consultorio
             fields = '__all__'
-            
-        
-
+		    
+        direccion = forms.Textarea(
+			#widget=forms.Textarea(attrs={'rows':3}),
+		)
 
 class EmpleadoForm(forms.ModelForm):
 	class Meta:
