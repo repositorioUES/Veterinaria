@@ -41,6 +41,7 @@
     <a class="btn btn-success" href="{% url 'registrar_consultorio' clinica.id %}" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Consultorio</a>
 </div>&nbsp;
 
+
 <div class="row">
 	<div class="col">
 		<div class="card card-body">
@@ -64,6 +65,7 @@
 					<th>Telefono</th>
 					<th>Fecha de Ingreso</th>
 					<th>Correo Electronico</th>
+					<th>Servicios</th>
 					<th>Estado</th>
 					<th>Gestionar</th>
 				</tr>
@@ -75,6 +77,7 @@
 					<th>{{ consultorio.telefono }}</th>
 					<th>{{ consultorio.fechaIngreso }}</th>
 					<th>{{ consultorio.correoElectronico }}</th>
+					<th>{% for serv in consultorio.servicios.all %}  ✓{{ serv}}{% endfor %}</th>
 					<th>{{ consultorio.estado }}</th>
 					<td> <a href="{% url 'modificar_consultorio' consultorio.id %}"><i class="fa fa-pencil fa-2x" aria-hidden="true" style="font-size:24px;color:rgb(238, 204, 9);text-shadow:2px 2px 4px #000000;"></i></a>&nbsp;&nbsp;
 						<a href="#" onclick="eliminarConsultorio({{ consultorio.id }})"><i class="fa fa-trash-o fa-2x" aria-hidden="true" style="font-size:24px;color:rgb(212, 10, 10);text-shadow:2px 2px 4px #000000;"></i></a>
@@ -108,7 +111,7 @@
 	container: 'map',
 	style: 'mapbox://styles/mapbox/streets-v11',
 	center: [-88.9167000, 13.8333000],
-	zoom: 8
+	zoom: 7.60
 	});
 	map.addControl(new mapboxgl.NavigationControl());
 	{% for consultorio in consultorios %}
