@@ -55,7 +55,7 @@
 
 			{% if request.user.is_authenticated %}
 			<h5 style="color:whitesmoke;" class="my-0 mr-md-auto font-weight-normal" allign ="center">Bienvenido/a:</h5>
-			<h5 style="color:whitesmoke;" allign ='center'>{{user.username}} {{user.last_name}}</h5>
+			<h5 style="color:whitesmoke;" allign ='center'>{{user.first_name}} {{user.last_name}}</h5>
 			{% else %}
 			{% endif %}
 
@@ -76,7 +76,7 @@
               	<a href="{% url 'listado_solicitudes' %}"><span class="fa fa-paper-plane mr-3"></span> Solicitudes de ingreso</a>
 	          </li>
 			  			  <li class="active">
-              	<a href="{% url 'listado_servicios' %}"><span class="fa fa-paper-plane mr-3"></span> Servicios</a>
+              	<a href="{% url 'listado_servicios' %}"><span class="fa fa-medkit mr-3"></span> Servicios</a>
 	          </li>
 			</ul>
 			

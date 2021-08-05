@@ -67,6 +67,9 @@ urlpatterns = [
     path('listadoServicios/',login_required(ListarServicio.as_view()), name='listado_servicios'),
     path('detalleServicio/<int:pk>',login_required(DetalleServicio.as_view()),name='detalle_servicios'),
     path('crearServicio/',login_required(CrearServicio.as_view()),name='crear_servicio'),
+    path('modificarServicio/<int:pk>',login_required(ModificarServicio.as_view()), name='modificar_servicio'),
+    path('borrarServicio/<int:pk>',login_required(BorrarServicio.as_view()),name='borrar_servicio'),
+
 ]
 
 if settings.DEBUG:

@@ -71,6 +71,9 @@ def listar_clinica(request):
     filter = ClinicaFilter(request.GET, queryset=clinicas)
     clinicas = filter.qs
 
+    filter2 = EmpleadoFilter(request.GET, queryset=empleados)
+    empleados = filter2.qs
+
     try:
         paginator = Paginator(clinicas,10)
         clinicas = paginator.page(page)
@@ -82,6 +85,7 @@ def listar_clinica(request):
         'entity': clinicas,
         'paginator': paginator,
         'filter' : filter,
+        'filter2' : filter2,
         'empleados' : empleados
     }
 
@@ -141,13 +145,16 @@ def listar_consultorio(request,id):
     clinica = Clinica.objects.get(id=id)
     consultorios = clinica.consultorio_set.all()
 
+    empleados = Empleado.objects.all().order_by('-clinica_id')
+
     filter = ConsultorioFilter(request.GET, queryset=consultorios)
     consultorios = filter.qs
 
     data = {
         'clinica' : clinica,
         'consultorios' : consultorios,
-        'filter' : filter
+        'filter' : filter,
+        'empleados' : empleados
     }
     
     return render(request, 'consultorio/listarConsultorio.html', data)
@@ -502,3 +509,14 @@ class DetalleServicio(DetailView):
     template_name = 'Plantillas/detalleServicio.html'
     form_class = ServicioForm
     context_object_name = 'servicio'
+
+class ModificarServicio(UpdateView):
+    model = Servicio
+    template_name = 'Plantillas/modificarServicio.html'
+    form_class= ServicioForm
+    success_url = reverse_lazy('listado_servicios')
+
+class BorrarServicio(DeleteView):
+    model = Servicio
+    template_name = 'Plantillas/borrarServicio.html'
+    success_url = reverse_lazy('listado_servicios')

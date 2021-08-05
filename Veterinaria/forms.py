@@ -68,15 +68,24 @@ class ClinicaForm(forms.ModelForm):
     class Meta:
         model = Clinica
         fields = [
-			'propietario','nombre','direccion', 'horarios', 'telefono', 'correoElectronico', 'servicios', 'estado',
+			'propietario','nombre','direccion', 'horarios', 'telefono', 'correoElectronico', 'estado',
 		]
 
 class ConsultorioForm(forms.ModelForm):
+        servicios = forms.ModelMultipleChoiceField(
+                widget = forms.CheckboxSelectMultiple(attrs={'rows':3}),
+                queryset = Servicio.objects.all()
+            )
 
-    class Meta:
-        model = Consultorio
-        fields = '__all__'
+		
 
+        class Meta:
+            model = Consultorio
+            fields = '__all__'
+		    
+        direccion = forms.Textarea(
+			#widget=forms.Textarea(attrs={'rows':3}),
+		)
 
 class EmpleadoForm(forms.ModelForm):
 	class Meta:

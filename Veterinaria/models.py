@@ -35,7 +35,6 @@ class Paciente(models.Model):
 
 # Modelo del PROPIETARIO -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
-
 class Propietario(models.Model):
     dui = models.CharField(max_length=10, help_text="########-#", primary_key=True,validators=[formato_Dui])
     nombre = models.CharField(max_length=100, validators=[solo_Letras])
@@ -80,7 +79,6 @@ class Clinica(models.Model):
     direccion = models.TextField()
     horarios = models.CharField(max_length=50)
     telefono = models.CharField(max_length=9)
-    servicios = models.ManyToManyField('Servicio')
     fechaIngreso = models.DateField(auto_now_add=True, null=True)
     correoElectronico = models.CharField(max_length=200, null=True)
     ESTADO = (('Activa','Activa'),('Inactiva', 'Inactiva'))
@@ -98,17 +96,17 @@ class Consultorio(models.Model):
     direccion = models.TextField()
     longitud = models.FloatField(blank=True, null=True)
     latitud = models.FloatField(blank=True, null=True)
+    correoElectronico = models.CharField(max_length=200, null=True)
     horarios = models.CharField(max_length=50)
     telefono = models.CharField(max_length=9, validators=[formato_Telefono])
-    servicios = models.CharField(max_length=100)
+    servicios = models.ManyToManyField('Servicio')
     fechaIngreso = models.DateField(auto_now_add=True, null=True)
-    correoElectronico = models.CharField(max_length=200, null=True)
     ESTADO = (('Activa','Activa'),('Inactiva', 'Inactiva'))
     estado = models.CharField(max_length=10, choices=ESTADO, default="Activa")
 
     def __str__(self):
         return self.nombre
-#FIN CLINICA
+#FIN CONSULTORIO
 
 class Empleado(models.Model):
     duiEmp = models.CharField(max_length=10, verbose_name="DUI", help_text="########-#",primary_key=True, validators=[formato_Dui])
