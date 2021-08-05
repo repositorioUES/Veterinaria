@@ -132,12 +132,13 @@ class CitaForm(forms.ModelForm):
 	class Meta:
 		model = Cita
 		fields = [
-			 'pacienteId','clinica','consultorio','fechaCita','horaCita',
+			 'pacienteId','clinica','consultorio','servicio','fechaCita','horaCita',
 		]
 		labels = {
 			'pacienteId':'Paciente *',
 			'clinica':'Clínica *',
 			'consultorio':'Consultorio *',
+			'servicio':'Servicio Solicitado *',
 			'fechaCita':'Fecha de Cita *',
 		    'horaCita':'Hora de Cita *',
 		}
@@ -218,5 +219,5 @@ class ServicioForm(forms.ModelForm):
 			'catServicio':'Categoria',
 		}
 		widgets = {
-			'descServicio':forms.Textarea(attrs={'class':'form-control', 'rows':'4'}),
+			'descServicio':forms.Textarea(attrs={'class':'form-contol', 'rows':'4'}),
 		}

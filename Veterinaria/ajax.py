@@ -57,3 +57,9 @@ def load_Horarios(request):
 	horarios = Horario.objects.filter(clinica_id = horaId).filter(activo=1)
 	
 	return render(request, 'hr/hor_dropdown_list.html', context={'horarios': horarios})
+
+def load_Servicios(request):
+	servId = request.GET.get('servId')
+	servicios = Servicio.objects.filter(_id = servId)
+	
+	return render(request, 'hr/serv_dropdown_list.html', context={'serv': servicios})
