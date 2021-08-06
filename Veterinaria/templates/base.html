@@ -49,13 +49,13 @@
 	        </button>
         </div>
 				<div class="p-4">
-        <div class="contenedor_logo" allign="center">
+        <div class="contenedor_logo" align="center">
             <img  class="logo"  src="{% static 'images/logo.png'%}" alt="logo">
-        </div><p><p>
+        </div>&nbsp;
 
 			{% if request.user.is_authenticated %}
-			<h5 style="color:whitesmoke;" class="my-0 mr-md-auto font-weight-normal" allign ="center">Bienvenido/a:</h5>
-			<h5 style="color:whitesmoke;" allign ='center'>{{user.first_name}} {{user.last_name}}</h5>
+			<h5 style="color:whitesmoke;" class="my-0 mr-md-auto font-weight-normal" align ="center">Bienvenido/a:</h5>
+			<h5 style="color:whitesmoke;" align ='center'>{{user.first_name}} {{user.last_name}}</h5>
 			{% else %}
 			{% endif %}
 
@@ -75,7 +75,7 @@
 	          <li class="active">
               	<a href="{% url 'listado_solicitudes' %}"><span class="fa fa-paper-plane mr-3"></span> Solicitudes de ingreso</a>
 	          </li>
-			  			  <li class="active">
+			  	<li class="active">
               	<a href="{% url 'listado_servicios' %}"><span class="fa fa-medkit mr-3"></span> Servicios</a>
 	          </li>
 			</ul>
