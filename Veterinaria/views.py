@@ -520,3 +520,23 @@ class BorrarServicio(DeleteView):
     model = Servicio
     template_name = 'Plantillas/borrarServicio.html'
     success_url = reverse_lazy('listado_servicios')
+
+class CrearSolicitudServicio(CreateView):
+    model = SolicitudServicio
+    template_name = 'Plantillas/crearSolicitudServicio.html'
+    form_class = SolicitudServicioForm
+    success_url = reverse_lazy('solicitud_servicio_enviado')
+
+def SolicitudServicioEnviado(request):
+    return render(request, 'Plantillas/solicitudServicioEnviado.html')
+
+class ListarSolicitudServicio(ListView):
+    model = SolicitudServicio
+    template_name = 'Plantillas/listadoSolicitudServicio.html'
+    context_object_name = 'soliservicios'
+
+class DetalleSolicitudServicio(DetailView):
+    model = SolicitudServicio
+    template_name = 'Plantillas/detalleSolicitudServicio.html'
+    form_class = SolicitudServicioForm
+    context_object_name = 'soliservi'

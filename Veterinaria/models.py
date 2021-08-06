@@ -203,7 +203,7 @@ class Expediente (models.Model):
 #Programador: Bryan Marín
 class Servicio(models.Model):
     idServicio = models.IntegerField(primary_key=True)
-    nombreServicio = models.CharField(max_length=50)
+    nombreServicio = models.CharField(max_length=50, validators=[solo_Letras])
     descServicio = models.CharField(max_length=200)
     catServicio = models.CharField(max_length=30)
     ESTADOServicio = (('Activa', 'Activa'),('Inactiva','Inactiva'))
@@ -211,3 +211,13 @@ class Servicio(models.Model):
 
     def __str__(self):
         return self.nombreServicio
+
+class SolicitudServicio(models.Model):
+    solicitante = models.CharField(max_length=100, validators=[solo_Letras])
+    nombreClinica = models.CharField(max_length=100,validators=[solo_Letras])
+    nombreServicio = models.CharField(max_length=50, validators=[solo_Letras])
+    razonSolicitud = models.CharField(max_length=200)
+    catSolicitud = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.solicitante + ":" + self.nombreClinica
