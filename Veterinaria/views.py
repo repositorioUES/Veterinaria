@@ -73,6 +73,7 @@ def listar_clinica(request):
 
     filter2 = EmpleadoFilter(request.GET, queryset=empleados)
     empleados = filter2.qs
+    print(filter2)
 
     try:
         paginator = Paginator(clinicas,10)
