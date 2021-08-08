@@ -504,6 +504,10 @@ class ListarServicio(ListView):
     template_name = 'Plantillas/listadoServicios.html'
     context_object_name = 'servicios'
 
+def ServiciosInactivos(request):
+    servicios = Servicio.objects.filter(estadoServicio = 'Inactiva')
+    return render(request,'Plantillas/serviciosInactivos.html', {'servicios':servicios})
+
 class DetalleServicio(DetailView):
     model = Servicio
     template_name = 'Plantillas/detalleServicio.html'

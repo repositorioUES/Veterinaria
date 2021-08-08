@@ -220,7 +220,7 @@ class ServicioForm(forms.ModelForm):
 	class Meta:
 		model = Servicio
 		fields = [
-			'nombreServicio','descServicio','catServicio', 'estadoServicio',
+			'nombreServicio','descServicio','catServicio', 'estadoServicio', 
 		]
 		labels = {
 			'nombreServicio':'Nombre del servicio',
