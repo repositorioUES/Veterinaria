@@ -8,6 +8,7 @@
 	<div>
 		<a href="{% url 'crear_servicio'  %}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Crear Servicio</a>
 		<a href="{% url 'servicios_inactivos' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Servicios inactivos</a>
+		<a href="{% url 'servicio_para_borrar' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Servicios para borrar</a>
 	</div>
 </div>
 <br>
@@ -31,9 +32,6 @@
 				</td>
 				<td style="text-align: center">
     				<a href="{% url 'modificar_servicio' p.idServicio %}" class="btn btn-success" style="color:white; background-color:blue">Modificar</a>
-				</td>
-				<td style="text-align: center">
-    				<button onclick="return abrir_modal('{% url 'borrar_servicio' p.pk %}')"  style="color:white; background-color:red" class="btn btn-successtn">Borrar</button>
 				</td>
 			</tr>
 			{% endif %}
