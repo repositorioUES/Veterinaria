@@ -21,11 +21,11 @@ class ConsultorioFilter(django_filters.FilterSet):
         fields = ['estado', 'nombre']
 
 class EmpleadoFilter(django_filters.FilterSet):
-    nombreEmp = CharFilter(field_name='nombreEmp', lookup_expr='icontains', label='Nombre')
-    clinica__nombre = django_filters.CharFilter(lookup_expr='icontains', label='Clinica')
+    nombreEmp = CharFilter(field_name='nombreEmp', lookup_expr='icontains', label='Nombres')
+    apellidoEmp = CharFilter(field_name='apellidoEmp', lookup_expr='icontains', label='Apellidos')
     consultorio__nombre = django_filters.CharFilter(lookup_expr='icontains', label='Consultorio')
 
 
     class Meta:
         model = Empleado 
-        fields = ['nombreEmp']
+        fields = ['nombreEmp', 'apellidoEmp']

@@ -41,26 +41,54 @@
     <a class="btn btn-success" href="{% url 'registrar_consultorio' clinica.id %}" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Consultorio</a>
 </div>&nbsp;
 
-
 <div class="row">
-	<div class="col">
-		<div class="card card-body">
-			<form method="GET">
-		    <button class="btn btn-primary" type="submit">Buscar</button>
-            {{filter.form}}
-		  </form>
-		</div>
-	</div>
+    <div class="col-md">
+        <div class="card">
+            <div class="card-body">
+                <form method="GET">
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                    {{filter2.form}}
+                  </form>&nbsp;&nbsp;
+                <h2 align ="center">Empleados</h2>
+                <table class="table  table-bordered ">
+                    <tr style="text-align: center; background-color: #393c7f; color:whitesmoke;" >
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Cargo</th>
+                        <th>Salario</th>
+                        <th>Clinica</th>
+                        <th>Consultorio</th>
+                    </tr>
+
+                    {%for empleado in empleados %}
+                    <tr>
+                        <td>{{ empleado.nombreEmp }}</td>
+                        <td>{{ empleado.apellidoEmp }}</td>
+                        <td>{{ empleado.cargo }}</td>
+                        <td>$ {{ empleado.salario }}</td>
+                        <td>{{ empleado.consultorio.clinica.nombre}}</td>
+                        <td>{{ empleado.consultorio.nombre}}</td>
+                    </tr>
+                    {%endfor%}
+
+                </table>
+            </div>
+        </div>
+    </div>
 </div>&nbsp;
 
 <div class="row">
 	<div class="col-md">
 		<div class="card card-body">
+			<form method="GET">
+				<button class="btn btn-primary" type="submit">Buscar</button>
+				{{filter.form}}
+			  </form>&nbsp;&nbsp;
 			<h2 align ="center">Consultorios</h2>
-			<table class="table  table-bordered ">
+			<table class="table  table-bordered table-sm">
 				<tr style="text-align: center; background-color: #393c7f; color:whitesmoke;" >
 					<th>Nombre del consultorio</th>
-					<th>direccion</th>
+					<th>Direccion</th>
 					<th>Horarios</th>
 					<th>Telefono</th>
 					<th>Fecha de Ingreso</th>

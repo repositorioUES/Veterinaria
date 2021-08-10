@@ -66,14 +66,8 @@ def listar_clinica(request):
     clinicas = Clinica.objects.all()
     page = request.GET.get('page',1)
 
-    empleados = Empleado.objects.all()
-
     filter = ClinicaFilter(request.GET, queryset=clinicas)
     clinicas = filter.qs
-
-    filter2 = EmpleadoFilter(request.GET, queryset=empleados)
-    empleados = filter2.qs
-    print(filter2)
 
     try:
         paginator = Paginator(clinicas,10)
@@ -85,9 +79,7 @@ def listar_clinica(request):
     data = {
         'entity': clinicas,
         'paginator': paginator,
-        'filter' : filter,
-        'filter2' : filter2,
-        'empleados' : empleados
+        'filter' : filter
     }
 
     return render(request, 'clinica/listarClinica.html', data)
@@ -146,15 +138,19 @@ def listar_consultorio(request,id):
     clinica = Clinica.objects.get(id=id)
     consultorios = clinica.consultorio_set.all()
 
-    empleados = Empleado.objects.all().order_by('-clinica_id')
+    empleados = clinica.empleado_set.all()
 
     filter = ConsultorioFilter(request.GET, queryset=consultorios)
     consultorios = filter.qs
+
+    filter2 = EmpleadoFilter(request.GET, queryset=empleados)
+    empleados = filter2.qs
 
     data = {
         'clinica' : clinica,
         'consultorios' : consultorios,
         'filter' : filter,
+        'filter2' : filter2,
         'empleados' : empleados
     }
     
