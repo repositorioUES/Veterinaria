@@ -75,6 +75,7 @@ urlpatterns = [
     path('listadoSolicitudServicio/',login_required(ListarSolicitudServicio.as_view()),name='listado_solicitud_servicio'),
     path('detalleSolicitudServicio/<int:pk>',login_required(DetalleSolicitudServicio.as_view()),name='detalle_solicitud_servicio'),    
     path('serviciosInactivos/', login_required(ServiciosInactivos),name='servicios_inactivos'),
+    path('servicioParaBorrar/',login_required(ServiciosParaBorrar),name='servicio_para_borrar'),
 ]
 
 if settings.DEBUG:

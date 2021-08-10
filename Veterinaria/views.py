@@ -517,6 +517,25 @@ class ModificarServicio(UpdateView):
     form_class= ServicioForm
     success_url = reverse_lazy('listado_servicios')
 
+def ServiciosParaBorrar(request):
+    citas = Cita.objects.all()
+    servicios = Servicio.objects.filter(estadoServicio='Activa')
+    asignados = Servicio.objects.none()
+    noAsignados = Servicio.objects.none()
+
+    for c in citas:
+        asignados |= Servicio.objects.filter(idServicio = c.servicio_id)
+    idAsignados = []
+
+    for a in asignados:
+        idAsignados.append(a.idServicio)
+    
+    for s in servicios:
+        if s.idServicio not in idAsignados:
+            noAsignados |= Servicio.objects.filter(idServicio = s.idServicio)
+    
+    return render(request, 'Plantillas/serviciosParaBorrar.html',{'servicios':noAsignados})
+
 class BorrarServicio(DeleteView):
     model = Servicio
     template_name = 'Plantillas/borrarServicio.html'
