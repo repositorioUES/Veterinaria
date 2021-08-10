@@ -85,7 +85,7 @@
 				{{filter.form}}
 			  </form>&nbsp;&nbsp;
 			<h2 align ="center">Consultorios</h2>
-			<table class="table  table-bordered table-sm">
+			<table class="table table-bordered table-sm">
 				<tr style="text-align: center; background-color: #393c7f; color:whitesmoke;" >
 					<th>Nombre del consultorio</th>
 					<th>Direccion</th>
@@ -99,14 +99,14 @@
 				</tr>
 				{% for consultorio in consultorios %}
 				<tr>
-					<th>{{ consultorio.nombre }}</th>
-					<th>{{ consultorio.direccion}}</th>
-					<th>{{ consultorio.horarios }}</th>
-					<th>{{ consultorio.telefono }}</th>
-					<th>{{ consultorio.fechaIngreso }}</th>
-					<th>{{ consultorio.correoElectronico }}</th>
-					<th>{% for serv in consultorio.servicios.all %}  ✓{{ serv}}{% endfor %}</th>
-					<th>{{ consultorio.estado }}</th>
+					<td>{{ consultorio.nombre }}</td>
+					<td>{{ consultorio.direccion}}</td>
+					<td>{{ consultorio.horarios }}</td>
+					<td>{{ consultorio.telefono }}</td>
+					<td>{{ consultorio.fechaIngreso }}</td>
+					<td>{{ consultorio.correoElectronico }}</td>
+					<td>{% for serv in consultorio.servicios.all %}  ✓{{ serv}}{% endfor %}</td>
+					<td>{{ consultorio.estado }}</td>
 					<td> <a href="{% url 'modificar_consultorio' consultorio.id %}"><i class="fa fa-pencil fa-2x" aria-hidden="true" style="font-size:24px;color:rgb(238, 204, 9);text-shadow:2px 2px 4px #000000;"></i></a>&nbsp;&nbsp;
 						<a href="#" onclick="eliminarConsultorio({{ consultorio.id }})"><i class="fa fa-trash-o fa-2x" aria-hidden="true" style="font-size:24px;color:rgb(212, 10, 10);text-shadow:2px 2px 4px #000000;"></i></a>
 				   </td>
