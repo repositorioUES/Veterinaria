@@ -137,7 +137,7 @@ class Solicitudes(models.Model):
 #Programador y Analista: Ruddy Alfredo Pérez
 class Horario(models.Model):
     id = models.AutoField(primary_key = True)
-    hora = models.CharField(max_length=5)
+    hora = models.CharField(max_length=5, help_text=" Formato de Hora: ##:##")
     clinica = models.ForeignKey('Clinica', on_delete = models.PROTECT)
     activo = models.BooleanField(blank=True,  default=1)
     INDICADOR = (('am','AM'),('pm', 'PM'))# Estructura para la selección del indicador de la hora

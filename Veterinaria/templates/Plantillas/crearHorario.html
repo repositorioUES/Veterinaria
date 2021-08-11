@@ -14,6 +14,8 @@
 
         <table>
             <tr> 
+                <td>
+                </td>
                 <td width="200">
                     <input type="text" placeholder="Buscar Clínica" id="id_buscar" name="buscar" value="{{ request.GET.buscar }}">
                 </td>
@@ -63,7 +65,7 @@
                 type: "GET",
                 url: "{% url 'load_Clinica' %}",
                 data: {
-                    "propId":vacio
+                    "clinicId":vacio
                 },
             });
             request.done(function(response){
