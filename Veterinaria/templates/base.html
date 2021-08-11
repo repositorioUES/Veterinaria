@@ -32,11 +32,11 @@
         <a class="p-2 text-dark" href="#">Enlace 4</a>-->
 		
       </nav>
-	  <a class="btn btn-outline-primary" href="{% url 'registro'%}">Registrate</a>&nbsp;
+	  <a class="btn btn-info" href="{% url 'registro'%}">Registrate</a>&nbsp;
 	  {% if request.user.is_authenticated %}
-      <a class="btn btn-outline-danger" href="{% url 'logout' %}">Cerrar sesión</a>
+      <a class="btn btn-danger" href="{% url 'logout' %}">Cerrar sesión</a>
 	  {% else %}
-	  <a class="btn btn-outline-success" href="{% url 'login' %}">Iniciar sesión</a>
+	  <a class="btn btn-success" href="{% url 'login' %}">Iniciar sesión</a>
 	  {% endif %}
 
     </div>
@@ -48,14 +48,14 @@
 	          <span class="sr-only">Menu</span>
 	        </button>
         </div>
-				<div class="p-4">
-        <div class="contenedor_logo" allign="center">
+				<div class="p-3">
+        <div class="contenedor_logo" align="center">
             <img  class="logo"  src="{% static 'images/logo.png'%}" alt="logo">
-        </div><p><p>
+        </div>&nbsp;
 
 			{% if request.user.is_authenticated %}
-			<h5 style="color:whitesmoke;" class="my-0 mr-md-auto font-weight-normal" allign ="center">Bienvenido/a:</h5>
-			<h5 style="color:whitesmoke;" allign ='center'>{{user.first_name}} {{user.last_name}}</h5>
+			<h5 style="color:whitesmoke;" class="my-0 mr-md-auto font-weight-normal" align ="center">Bienvenido/a:</h5>
+			<h5 style="color:whitesmoke;" align ='center'>{{user.first_name}} {{user.last_name}}</h5>
 			{% else %}
 			{% endif %}
 
@@ -72,12 +72,15 @@
 	          <li class="active">
               	<a href="{% url 'listado_empleados' %}"><span class="fa fa-users mr-3"></span> Empleados</a>
 	          </li>
-	          <li class="active">
-              	<a href="{% url 'listado_solicitudes' %}"><span class="fa fa-paper-plane mr-3"></span> Solicitudes de ingreso</a>
-	          </li>
-			  			  <li class="active">
+			  <li class="active">
               	<a href="{% url 'listado_servicios' %}"><span class="fa fa-medkit mr-3"></span> Servicios</a>
 	          </li>
+			  <li class="active">
+              	<a href="{% url 'listado_solicitud_servicio' %}"><span class="fa fa-envelope-o mr-3"></span> Solicitudes de Servicios</a>
+	          </li>
+			  <li class="active">
+				<a href="{% url 'listado_solicitudes' %}"><span class="fa fa-envelope-o mr-3"></span> Solicitudes de ingreso</a>
+			</li>
 			</ul>
 			
 	        <!--Div de contenedor de iniciar sesion
@@ -93,9 +96,10 @@
 
 
 	        <div class="footer">
-	        	<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Proyecto DSI-115 <i class="icon-heart" aria-hidden="true"></i>
-						  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+	        	<h5 align="center" style="color:whitesmoke;"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						  Copyright &copy;<script>document.write(new Date().getFullYear());</script><br>
+						  All rights reserved <br> Proyecto DSI-115 <i class="icon-heart" aria-hidden="true"></i>
+						  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></h>
 	        </div>
 	      </div>
     	</nav>

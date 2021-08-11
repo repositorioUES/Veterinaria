@@ -2,24 +2,20 @@
 
 {% block content %}
 
-<h3>Listado de Servicios Activos</h3>
+<h3>Listado de Servicios Inactivos</h3>
 
 <div class="container">
-	<div>
-		<a href="{% url 'crear_servicio'  %}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Crear Servicio</a>
-		<a href="{% url 'servicios_inactivos' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Servicios inactivos</a>
-		<a href="{% url 'servicio_para_borrar' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Servicios para borrar</a>
+    <div>
+        <a href="{% url 'listado_servicios' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Servicios activos</a>
 	</div>
 </div>
 <br>
-<br>
-	<table  class="table table-sm">
+    <table  class="table table-sm">
 		<tr style="text-align: center">
 			<th style="text-align: center">Servicios</th>
 			<th style="text-align: center">Categoria</th>
 		</tr>
 		{% for p in servicios %}
-			{% if p.estadoServicio == 'Activa' %}
 			<tr>
 				<td style="text-align: center">
 					<div>{{p.nombreServicio}}</div>
@@ -33,27 +29,9 @@
 				<td style="text-align: center">
     				<a href="{% url 'modificar_servicio' p.idServicio %}" class="btn btn-success" style="color:white; background-color:blue">Modificar</a>
 				</td>
-			</tr>
-			{% endif %}
+            </tr>
 		{% endfor %}
 	</table>
 
-
-<div class="modal fade" id="popup" role="dialog">
-
-</div>
-
-<script type="text/javascript">
-
-	jQuery.noConflict();
-
-	function abrir_modal(url)
-	{
-    	$('#popup').load(url, function(){
-			$(this).modal('show');
-		});
-	}
-
-</script>
 
 {% endblock content%}

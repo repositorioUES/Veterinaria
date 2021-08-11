@@ -220,13 +220,31 @@ class ServicioForm(forms.ModelForm):
 	class Meta:
 		model = Servicio
 		fields = [
-			'nombreServicio','descServicio','catServicio',
+			'nombreServicio','descServicio','catServicio', 'estadoServicio', 
 		]
 		labels = {
 			'nombreServicio':'Nombre del servicio',
 			'descServicio':'Descripción',
 			'catServicio':'Categoria',
+			'estadoServicio':'Estado',
 		}
 		widgets = {
 			'descServicio':forms.Textarea(attrs={'class':'form-contol', 'rows':'4'}),
+		}
+
+class SolicitudServicioForm(forms.ModelForm):
+	class Meta:
+		model = SolicitudServicio
+		fields = [
+			'solicitante','nombreClinica','nombreServicio','razonSolicitud','catSolicitud',
+		]
+		labels = {
+			'solicitante':'Nombre del Dueño*',
+			'nombreClinica':'Nombre de la Clínica*',
+			'nombreServicio':'Nombre del servicio*',
+			'razonSolicitud':'Razón de la solicitud*',
+			'catSolicitud':'Categoría sugerida de su solicitud*',
+		}
+		widgets = {
+			'razonSolicitud':forms.Textarea(attrs={'rows':'4'}),
 		}

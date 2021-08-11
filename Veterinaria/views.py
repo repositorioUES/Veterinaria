@@ -66,13 +66,8 @@ def listar_clinica(request):
     clinicas = Clinica.objects.all()
     page = request.GET.get('page',1)
 
-    empleados = Empleado.objects.all()
-
     filter = ClinicaFilter(request.GET, queryset=clinicas)
     clinicas = filter.qs
-
-    filter2 = EmpleadoFilter(request.GET, queryset=empleados)
-    empleados = filter2.qs
 
     try:
         paginator = Paginator(clinicas,10)
@@ -84,9 +79,7 @@ def listar_clinica(request):
     data = {
         'entity': clinicas,
         'paginator': paginator,
-        'filter' : filter,
-        'filter2' : filter2,
-        'empleados' : empleados
+        'filter' : filter
     }
 
     return render(request, 'clinica/listarClinica.html', data)
@@ -145,15 +138,19 @@ def listar_consultorio(request,id):
     clinica = Clinica.objects.get(id=id)
     consultorios = clinica.consultorio_set.all()
 
-    empleados = Empleado.objects.all().order_by('-clinica_id')
+    empleados = clinica.empleado_set.all()
 
     filter = ConsultorioFilter(request.GET, queryset=consultorios)
     consultorios = filter.qs
+
+    filter2 = EmpleadoFilter(request.GET, queryset=empleados)
+    empleados = filter2.qs
 
     data = {
         'clinica' : clinica,
         'consultorios' : consultorios,
         'filter' : filter,
+        'filter2' : filter2,
         'empleados' : empleados
     }
     
@@ -504,6 +501,10 @@ class ListarServicio(ListView):
     template_name = 'Plantillas/listadoServicios.html'
     context_object_name = 'servicios'
 
+def ServiciosInactivos(request):
+    servicios = Servicio.objects.filter(estadoServicio = 'Inactiva')
+    return render(request,'Plantillas/serviciosInactivos.html', {'servicios':servicios})
+
 class DetalleServicio(DetailView):
     model = Servicio
     template_name = 'Plantillas/detalleServicio.html'
@@ -516,7 +517,46 @@ class ModificarServicio(UpdateView):
     form_class= ServicioForm
     success_url = reverse_lazy('listado_servicios')
 
+def ServiciosParaBorrar(request):
+    citas = Cita.objects.all()
+    servicios = Servicio.objects.filter(estadoServicio='Activa')
+    asignados = Servicio.objects.none()
+    noAsignados = Servicio.objects.none()
+
+    for c in citas:
+        asignados |= Servicio.objects.filter(idServicio = c.servicio_id)
+    idAsignados = []
+
+    for a in asignados:
+        idAsignados.append(a.idServicio)
+    
+    for s in servicios:
+        if s.idServicio not in idAsignados:
+            noAsignados |= Servicio.objects.filter(idServicio = s.idServicio)
+    
+    return render(request, 'Plantillas/serviciosParaBorrar.html',{'servicios':noAsignados})
+
 class BorrarServicio(DeleteView):
     model = Servicio
     template_name = 'Plantillas/borrarServicio.html'
     success_url = reverse_lazy('listado_servicios')
+
+class CrearSolicitudServicio(CreateView):
+    model = SolicitudServicio
+    template_name = 'Plantillas/crearSolicitudServicio.html'
+    form_class = SolicitudServicioForm
+    success_url = reverse_lazy('solicitud_servicio_enviado')
+
+def SolicitudServicioEnviado(request):
+    return render(request, 'Plantillas/solicitudServicioEnviado.html')
+
+class ListarSolicitudServicio(ListView):
+    model = SolicitudServicio
+    template_name = 'Plantillas/listadoSolicitudServicio.html'
+    context_object_name = 'soliservicios'
+
+class DetalleSolicitudServicio(DetailView):
+    model = SolicitudServicio
+    template_name = 'Plantillas/detalleSolicitudServicio.html'
+    form_class = SolicitudServicioForm
+    context_object_name = 'soliservi'

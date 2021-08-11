@@ -1,0 +1,34 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+<div class="container">
+<h3>Listado de Solicitudes Pendientes</h3>
+</div>
+
+<div class="container">
+	<table  class="table table-sm">
+		<tr style="text-align: center">
+			<th style="text-align: center">Nombre del Dueño</th>
+			<th style="text-align: center">Nombre de la clinica</th>
+			<th style="text-align: center">Nombre del servicio</th>
+		</tr>
+		{% for p in soliservicios %}
+			<tr>
+				<td style="text-align: center">
+					<div>{{p.solicitante}}</div>
+				</td>
+				<td style="text-align: center">
+                    <div>{{p.nombreClinica}}</div>
+                </td>
+				<td style="text-align: center">
+                    {{p.nombreServicio}}
+                </td>
+				<td style="text-align: center">
+    				<a href="{% url 'detalle_solicitud_servicio' p.id %}" class="btn btn-success" style="color:white; background-color:blue">Detalle</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>
+
+{% endblock content%}

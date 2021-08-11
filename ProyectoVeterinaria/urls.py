@@ -70,7 +70,12 @@ urlpatterns = [
     path('crearServicio/',login_required(CrearServicio.as_view()),name='crear_servicio'),
     path('modificarServicio/<int:pk>',login_required(ModificarServicio.as_view()), name='modificar_servicio'),
     path('borrarServicio/<int:pk>',login_required(BorrarServicio.as_view()),name='borrar_servicio'),
-
+    path('solicitudServicioIngreso/',login_required(CrearSolicitudServicio.as_view()),name ='crear_solicitud_servicio'),
+    path('solicitudServicioEnviado/',SolicitudServicioEnviado, name='solicitud_servicio_enviado'),
+    path('listadoSolicitudServicio/',login_required(ListarSolicitudServicio.as_view()),name='listado_solicitud_servicio'),
+    path('detalleSolicitudServicio/<int:pk>',login_required(DetalleSolicitudServicio.as_view()),name='detalle_solicitud_servicio'),    
+    path('serviciosInactivos/', login_required(ServiciosInactivos),name='servicios_inactivos'),
+    path('servicioParaBorrar/',login_required(ServiciosParaBorrar),name='servicio_para_borrar'),
 ]
 
 if settings.DEBUG:
