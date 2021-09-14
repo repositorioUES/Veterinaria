@@ -38,9 +38,12 @@
         </div>      
     </form>
 </div> 
+{% endblock content%}
 
+{% block js %}
 <script>
     //document.getElementById("id_pendiente").type ="hidden"; // deshabilitar
+    window.onload = VaciarSelects();
 
     $(document).ready(function(){
         $("#id_buscar").on("change", getPaciente);    
@@ -141,5 +144,10 @@
         }
     }
 
+    function VaciarSelects(){
+        $("#id_consultorio").html('<option value="" selected = "selected">-----------</option>');
+        $("#id_servicio").html('<option value="" selected = "selected">-----------</option>');
+        $("#id_horaCita").html('<option value="" selected = "selected">-----------</option>');
+    }
 </script>
-{% endblock content%}
+{% endblock js %}

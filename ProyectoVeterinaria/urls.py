@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve
 from Veterinaria.views import *
-from Veterinaria.ajax import load_Municipios, load_Propietario, load_Paciente, load_Clinica, load_Horarios, load_Consultorio, load_Servicios
+from Veterinaria.ajax import load_Municipios, load_Propietario, load_Paciente, load_Clinica, load_Horarios, load_Consultorio,  load_Consultorio_Edit, load_Servicios
 from django.contrib.auth.decorators import login_required
 
 app_name = 'Veterinaria'
@@ -44,8 +44,8 @@ urlpatterns = [
     path('detalleSolicitud/<int:pk>', login_required(DetalleSolicitud.as_view()), name='detalle_solicitud'),
     path('listadoCitas/', login_required(ListadoCitas), name='listado_citas'),
     path('crearCita/', login_required(CrearCita.as_view()), name='crear_cita'),
-    path('detalleCita/<int:pk>', login_required(DetalleCita.as_view()), name='detalle_cita'),
-    path('detalleCitaPasada/<int:pk>', login_required(DetalleCitaPasada.as_view()), name='detalle_cita_pasada'),
+    path('detalleCita/<int:pk>', login_required(DetalleCita), name='detalle_cita'),
+    path('detalleCitaPasada/<int:pk>', login_required(DetalleCitaPasada), name='detalle_cita_pasada'),
     path('modificarCita/<int:pk>', login_required(ModificarCita.as_view()), name='modificar_cita'),
     path('buscarCita/', login_required(BuscarCita), name='buscar_cita'),
     path('cancelarCita/<int:pk>/', login_required(CancelarCita.as_view()), name = 'cancelar_cita'),
@@ -55,7 +55,7 @@ urlpatterns = [
     path('modificarHorario/<int:pk>', login_required(ModificarHorario.as_view()), name='modificar_horario'),
     path('tipoRegistro/', login_required(TipoRegistro), name = 'tipo_registro'),
     path('registrarSoloPaciente/', login_required(RegistrarSoloPaciente.as_view()), name='registrar_solo_paciente'),
-    path('registrarConsulta/', login_required(RegistrarConsulta.as_view()), name='registrar_consulta'),
+    path('registrarConsulta/<int:pk>', login_required(RegistrarConsulta), name='registrar_consulta'),
     path('detalleConsulta/<int:pk>', login_required(DetalleConsulta.as_view()), name='detalle_consulta'),
     path('expediente/<int:pk>', login_required(DetalleExpediente), name='expediente'),
     path('pacientesInactivos/', login_required(PacientesInactivos), name='pacientes_inactivos'),
@@ -64,6 +64,7 @@ urlpatterns = [
     path('ajax/load_Clinica/', load_Clinica, name='load_Clinica'),
     path('ajax/load_Horario/', load_Horarios, name='load_Horario'),
     path('ajax/load_Consultorio/', load_Consultorio, name='load_consultorio'),
+    path('ajax/load_Consultorio_Edit/', load_Consultorio_Edit, name='load_consultorio_edit'),
     path('ajax/load_Servicios/', load_Servicios, name='load_servicio'),
     path('listadoServicios/',login_required(ListarServicio.as_view()), name='listado_servicios'),
     path('detalleServicio/<int:pk>',login_required(DetalleServicio.as_view()),name='detalle_servicios'),

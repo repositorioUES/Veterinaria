@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.admin import widgets
 from django.forms import fields
+from django.forms.forms import Form
+from django.forms.models import ModelMultipleChoiceField
+from django.forms.widgets import SelectMultiple
 from Veterinaria.models import *
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
@@ -147,7 +150,7 @@ class CitaForm(forms.ModelForm):
 			'pacienteId':'Paciente *',
 			'clinica':'Clínica *',
 			'consultorio':'Consultorio *',
-			'servicio':'Servicio Solicitado *',
+			'servicio':'Servicios Solicitados *',
 			'fechaCita':'Fecha de Cita *',
 		    'horaCita':'Hora de Cita *',
 		}

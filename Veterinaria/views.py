@@ -427,17 +427,19 @@ def BuscarCita(request):
         
     return render(request,'Plantillas/buscarCita.html', context)
 
-class DetalleCita(DetailView):
-    model = Cita
-    template_name = 'Plantillas/detalleCita.html'
-    form_class = CitaForm
-    context_object_name = 'cita'
+@login_required
+def DetalleCita(request, pk):
+    cita = Cita.objects.get(id = pk)
+    servicios = Servicio.objects.filter(cita__id = cita.id)
+    print(servicios)
+    return render(request, 'Plantillas/detalleCita.html', {'cita':cita,'servicios':servicios})
 
-class DetalleCitaPasada(DetailView):
-    model = Cita
-    template_name = 'Plantillas/detalleCitaPasada.html'
-    form_class = CitaForm
-    context_object_name = 'cita'
+@login_required
+def DetalleCitaPasada(request, pk):
+    cita = Cita.objects.get(id = pk)
+    servicios = Servicio.objects.filter(cita__id = cita.id)
+    print(servicios)
+    return render(request, 'Plantillas/detalleCitaPasada.html', {'cita':cita,'servicios':servicios})
 
 class CancelarCita(DeleteView):
     template_name = 'Plantillas/cancelarCita.html'
@@ -468,12 +470,22 @@ def HorariosInactivos(request):
     return render(request,'Plantillas/horariosInactivos.html', {'horarios':horarios})
 
 ## CONSULTA-------------------------------------------------------------------------------
-#Programador y Analista: Ruddy Alfredo Pérez
-class RegistrarConsulta(CreateView):
-    model = Consulta
-    template_name = 'Plantillas/registrarConsulta.html'
-    form_class = ConsultaForm
-    success_url = reverse_lazy('listado_pacientes')   
+#Programador y Analista: Ruddy Alfredo Pérez 
+@login_required
+def RegistrarConsulta(request, pk):
+    paciente = Paciente.objects.get(id=pk)
+    data = {
+        'form' : ConsultaForm(initial={'pacienteId': paciente})
+    }
+
+    if request.method == 'POST':
+        formulario=ConsulaForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect('expediente', paciente.id )
+        else:
+            data['form'] = formulario
+    return render(request, 'Plantillas/registrarConsulta.html',data)
     
 class DetalleConsulta(DetailView):
     model = Consulta

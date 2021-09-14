@@ -25,11 +25,11 @@
                 <td>
                     <!-- Solo por ocupar espacio XD -->
                 </td>
-                <td>
+            <!--<td>
                     <B><label>Introduzca el Nombre del Paciente, Nombre o DUI del Propietario</label></B>
                     <br>
                     <input type="text" placeholder="Buscar Paciente" id="id_buscar" name="buscar" value="{{ request.GET.buscar }}">
-                </td>
+                </td> -->
             </tr>
             <tr>
                 <td  width="150">
@@ -135,6 +135,7 @@
 
 <script>
     //document.getElementById("id_pendiente").type ="hidden"; // deshabilitar
+    document.getElementById("id_pacienteId").readOnly="True"; // deshabilitar
 
     $(document).ready(function(){
         $("#id_buscar").on("change", getPaciente);   

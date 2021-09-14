@@ -35,7 +35,7 @@
     {% if exp.pacienteId.activo == 1%}
         <a href="{% url 'modificar_paciente' exp.pacienteId.pk %}" class="btn btn-success" style="color:white; background-color:33CC00">Modificar Paciente</a>    
 
-        <a href="{% url 'registrar_consulta' %}" class="btn btn-success" style="color:white; background-color:33CC00">Agregar Consulta</a>  
+        <a href="{% url 'registrar_consulta' exp.pacienteId.pk%}" class="btn btn-success" style="color:white; background-color:33CC00">Agregar Consulta</a>  
     {% endif%}
     <a href="javascript: history.go(-1)" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
 </div>  

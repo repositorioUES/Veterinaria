@@ -8,20 +8,24 @@
 <div>
     <form role="form" method="POST" enctype ="multipart/form-data" >
         {% csrf_token %}
+        <h5><B>Datos del Paciente</B></h5>
         <table>
             <tr>
                 <td width="200">
-                    <h6><B>Datos del Paciente</B></h6>
                     {{form.as_table}}
                 </td>
+            </tr>
+        </table> 
+        <br>
+        <h5><B>Datos del Propietario</B></h5>
+        <table>
+            <tr>
                 <td width="200">
-                    <h6>Datos del Propietario</h6>
                     {{form2.as_table}}
                 </td>
-
             </tr>
-  
         </table>   
+        
         <br>
         <div>   
         <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Guardar">

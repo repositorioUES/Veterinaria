@@ -61,5 +61,17 @@ def load_Horarios(request):
 def load_Servicios(request):
 	consId = request.GET.get('consId')
 	serv = Servicio.objects.filter(consultorio__id = consId)
-	
+	print(consId)
 	return render(request, 'hr/serv_dropdown_list.html', context={'serv': serv})
+
+
+#Funciones de AJAX especiales para la vista de Modificar Cita-----------------------
+def load_Consultorio_Edit(request):
+	consultId = request.GET.get('consultId')
+	consult = request.GET.get('primerCons')
+	consultorios = Consultorio.objects.filter(id=consult)
+	
+	if consult:
+		consultorios |= Consultorio.objects.filter(clinica_id=consultId)
+	
+	return render(request, 'hr/cons_edit_dropdown_list.html', context={'consultorios': consultorios})

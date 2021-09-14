@@ -154,7 +154,7 @@ class Cita (models.Model):
     pacienteId = models.ForeignKey('Paciente', on_delete = models.PROTECT, null=True)
     clinica = models.ForeignKey('Clinica', on_delete = models.PROTECT)
     consultorio = models.ForeignKey('Consultorio', on_delete = models.PROTECT)
-    servicio = models.ForeignKey('Servicio', on_delete = models.PROTECT)
+    servicio = models.ManyToManyField('Servicio')
     fechaCita = models.DateField(null=True, verbose_name="Fecha de Cita", validators=[fecha_mayor])# Fecha de la consulta
     horaCita = models.ForeignKey('Horario', null=True, on_delete=models.PROTECT, verbose_name="Hora de Cita")
     fechaCreacion = models.DateField(auto_now_add = True)# fecha de creación de la cita
