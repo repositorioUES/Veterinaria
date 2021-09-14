@@ -145,7 +145,7 @@ class Horario(models.Model):
 
     def __str__(self):
         return self.hora + " " + self.indicador
-#FIN ORARIO DE CONSULTA
+#FIN HORARIO DE CONSULTA
 
 # Modelo de CITA -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
