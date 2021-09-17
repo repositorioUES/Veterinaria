@@ -75,12 +75,10 @@ class ClinicaForm(forms.ModelForm):
 		]
 
 class ConsultorioForm(forms.ModelForm):
-        servicios = forms.ModelMultipleChoiceField(
-                widget = forms.CheckboxSelectMultiple(attrs={'rows':3}),
-                queryset = Servicio.objects.all()
-            )
-
-		
+        # servicios = forms.ModelMultipleChoiceField(
+        #         widget = forms.CheckboxSelectMultiple(attrs={'rows':3}),
+        #         queryset = Servicio.objects.all()
+        #     )
 
         class Meta:
             model = Consultorio
