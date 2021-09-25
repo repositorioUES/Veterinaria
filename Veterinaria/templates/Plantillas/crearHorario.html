@@ -36,10 +36,26 @@
 
 <script>
     //document.getElementById("id_pendiente").type ="hidden"; // deshabilitar
-
+    window.onload = getClinicasActivas();
+    
     $(document).ready(function(){
         $("#id_buscar").on("change", getClinica);    
     });
+
+    function getClinicasActivas(){
+        $("#id_clinica").html("");
+        var request = $.ajax({
+            type: "GET",
+            url: "{% url 'load_Clinica_Activa' %}",
+            data: {
+                "consultId":"-"
+            },
+        });
+        request.done(function(response){
+            $("#id_clinica").html(response);
+                
+        });
+    }
 
     function getClinica(){
         var clinicId = $("#id_buscar").val();

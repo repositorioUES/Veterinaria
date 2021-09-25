@@ -40,9 +40,9 @@ def load_Paciente(request):
 def load_Clinica(request):
 	clinicId = request.GET.get('clinicId')
 	if clinicId != "-":
-		clinicas = Clinica.objects.filter(nombre__icontains=clinicId)
+		clinicas = Clinica.objects.filter(Q(nombre__icontains=clinicId) & Q(estado = "Activa"))
 	else:
-		clinicas = Clinica.objects.all()
+		clinicas = Clinica.objects.filter(estado = "Activa")
 	
 	return render(request, 'hr/prop_dropdown_list.html', context={'prop': clinicas})
 
@@ -75,3 +75,8 @@ def load_Consultorio_Edit(request):
 		consultorios |= Consultorio.objects.filter(clinica_id=consultId)
 	
 	return render(request, 'hr/cons_edit_dropdown_list.html', context={'consultorios': consultorios})
+
+def load_Clinica_Activa(request):
+	clinicas = Clinica.objects.filter(estado = "Activa")
+	print(clinicas)
+	return render(request,'hr/prop_dropdown_list.html', context={'prop': clinicas})

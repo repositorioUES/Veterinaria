@@ -479,7 +479,7 @@ def RegistrarConsulta(request, pk):
     }
 
     if request.method == 'POST':
-        formulario=ConsulaForm(data=request.POST)
+        formulario=ConsultaForm(data=request.POST)
         if formulario.is_valid():
             formulario.save()
             return redirect('expediente', paciente.id )
@@ -536,7 +536,7 @@ def ServiciosParaBorrar(request):
     noAsignados = Servicio.objects.none()
 
     for c in citas:
-        asignados |= Servicio.objects.filter(idServicio = c.servicio_id)
+        asignados |= Servicio.objects.filter(cita__id = c.id)
     idAsignados = []
 
     for a in asignados:

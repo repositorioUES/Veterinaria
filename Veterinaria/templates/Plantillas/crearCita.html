@@ -44,6 +44,7 @@
 <script>
     //document.getElementById("id_pendiente").type ="hidden"; // deshabilitar
     window.onload = VaciarSelects();
+    window.onload = getClinicasActivas();
 
     $(document).ready(function(){
         $("#id_buscar").on("change", getPaciente);    
@@ -53,6 +54,21 @@
         $("#id_clinica").on("change", getServicios);
         $("#id_consultorio").on("change", getServicios);
     });
+    
+    function getClinicasActivas(){
+        $("#id_clinica").html("");
+        var request = $.ajax({
+            type: "GET",
+            url: "{% url 'load_Clinica_Activa' %}",
+            data: {
+                "consultId":"-"
+            },
+        });
+        request.done(function(response){
+            $("#id_clinica").html(response);
+                
+        });
+    }
 
     function getPaciente(){
         var valor = $("#id_buscar").val();

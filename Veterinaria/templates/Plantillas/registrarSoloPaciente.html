@@ -150,6 +150,22 @@
 <script type="text/javascript">
 
     document.getElementById("id_activo").type ="hidden"; // deshabilitar
+    window.onload = getClinicasActivas();
+
+    function getClinicasActivas(){
+        $("#id_clinica").html("");
+        var request = $.ajax({
+            type: "GET",
+            url: "{% url 'load_Clinica_Activa' %}",
+            data: {
+                "consultId":"-"
+            },
+        });
+        request.done(function(response){
+            $("#id_clinica").html(response);
+                
+        });
+    }
 
 // SELECT DEPENDIENTE PARA LOS MUNICIPIOS====================================
 
