@@ -45,6 +45,7 @@
 //Trigerear la funcion geetServicios()-------------------------------------->>>>
     $(document).ready(function(){
         $("#id_consultorio").on("change", getServicios);
+        $("#id_consultorio").on("change", getHorario);
     });
 
 //Obtener los SERVICIOS de cada CONSULTORIO--------------------------------------->>>>
@@ -85,6 +86,28 @@
                 
             });
         
+        }
+    }
+
+    function getHorario(){
+        var valor = $("#id_clinica").val();
+        if (valor){
+            $("#id_horaCita").html("");
+            var request = $.ajax({
+                type: "GET",
+                url: "{% url 'load_Horario' %}",
+                data: {
+                    "filtro":valor
+                },
+            });
+            request.done(function(response){
+                $("#id_horaCita").html(response);
+                
+            });
+        
+        }else{
+            $("#id_horaCita").html('<option value="" selected = "selected">-----------</option>');      
+            $("#id_horaCita").trigger("change");
         }
     }
 
