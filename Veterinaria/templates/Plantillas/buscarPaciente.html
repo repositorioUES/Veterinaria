@@ -9,20 +9,20 @@
     <form role="form" method="get" >
         <div>
             
-            <label> Introduzca el Nombre del Paciente, el Nombre del Propietario o su DUI </label>
+            <h6> <B>Introduzca el Nombre del Paciente, el Nombre del Propietario o su DUI</B> </h6>
             <input type="text"  placeholder="Nombre del Paciente" name="buscar" value="{{ request.GET.buscar }}">
             <button type="submit" class="btn" style="color:white; background-color:blue">Buscar</button>
         
-            <br>
-            <div>
-                <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
-            </div>
+            <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
+            
         </div>
             <table  class="table table-sm">
                 <tr style="text-align: center">
                     <th style="text-align: center">Paciente</th>
                     <th style="text-align: center">Especie</th>
                     <th style="text-align: center">Propietario</th>
+                    <th style="text-align: center">Detalles</th>
+                    <th style="text-align: center">Expediente</th>
                 </tr>
                     {% for p in pacientes %}
                         
@@ -35,10 +35,10 @@
                             <td style="text-align: center">{{p.propietario.nombre}}</td>
 
                             <td style="text-align:center;">
-                                <a href="{% url 'detalle_paciente' p.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
+                                <a href="{% url 'detalle_paciente' p.pk %}" class="btn"  style="color:white; background-color:green"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             </td>
                             <td style="text-align:center;">
-                                <a href="{% url 'expediente' p.pk %}" class="btn"  style="color:white; background-color:blue">Expediente</a>
+                                <a href="{% url 'expediente' p.pk %}" class="btn"  style="color:white; background-color:blue"><i class="fa fa-file" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                         

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+{% if sinVacunas == 1 %}
+    <div>
+        <h5> El esquema se iniciará al agregar la primera Vacuna</h5>
+    </div>
+{% endif %}
+
+    <div>
+        <h5> Agregar Vacuna al paciente: {{paciente.nombrePac}}</h5>
+    </div>
+
+<div>
+    <form role="form" method="POST" enctype ="multipart/form-data" >
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td width="200">
+                    <h5>Datos de la Vacuna</h5>
+                    {{form.as_table}}
+                </td>
+            </tr>
+  
+        </table>   
+        <br>
+        <div>   
+        <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Guardar">
+
+        <a href="javascript: history.go(-1)" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
+        </div>      
+    </form>
+</div> 
+
+{% endblock content%}

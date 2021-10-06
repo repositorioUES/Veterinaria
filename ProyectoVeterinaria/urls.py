@@ -28,7 +28,8 @@ urlpatterns = [
     path('', include('Veterinaria.urls')),
     path('registrarPaciente/', login_required(RegistrarPaciente.as_view()), name='registrar_paciente'),
     path('modificarPaciente/<int:pk>', login_required(ModificarPaciente.as_view()), name='modificar_paciente'),
-    path('detallePaciente/<int:pk>', login_required(DetallePaciente.as_view()), name='detalle_paciente'),
+    path('detallePaciente/<int:pk>', login_required(DetallePaciente), name='detalle_paciente'),
+    path('eliminarPaciente/<int:pk>',login_required(eliminarPaciente),name='eliminar_paciente'),
     path('listadoPacientes/', login_required(ListadoPacientes.as_view()), name='listado_pacientes'),
     path('detallePropietario/<str:pk>', login_required(DetallePropietario.as_view()), name='detalle_propietario'),
     path('buscarPaciente/', login_required(BuscarPaciente), name='buscar_paciente'),
@@ -49,10 +50,11 @@ urlpatterns = [
     path('modificarCita/<int:pk>', login_required(ModificarCita.as_view()), name='modificar_cita'),
     path('buscarCita/', login_required(BuscarCita), name='buscar_cita'),
     path('cancelarCita/<int:pk>/', login_required(CancelarCita.as_view()), name = 'cancelar_cita'),
-    path('listadoHorarios/', login_required(ListadoHorarios.as_view()), name='listado_horarios'),
+    path('listadoHorarios/', login_required(ListadoHorarios), name='listado_horarios'),
     path('horariosInactivos/', login_required(HorariosInactivos), name='horarios_inactivos'),
     path('crearHorario/', login_required(CrearHorario.as_view()), name='crear_horario'),
-    path('modificarHorario/<int:pk>', login_required(ModificarHorario.as_view()), name='modificar_horario'),
+    path('modificarHorario/<int:pk>', login_required(cambiarEstadoHorario), name='modificar_horario'),
+    path('borrarHorario/<int:pk>', login_required(borrarHorario), name='borrar_horario'),
     path('tipoRegistro/', login_required(TipoRegistro), name = 'tipo_registro'),
     path('registrarSoloPaciente/', login_required(RegistrarSoloPaciente.as_view()), name='registrar_solo_paciente'),
     path('registrarConsulta/<int:pk>', login_required(RegistrarConsulta), name='registrar_consulta'),
@@ -78,6 +80,7 @@ urlpatterns = [
     path('detalleSolicitudServicio/<int:pk>',login_required(DetalleSolicitudServicio.as_view()),name='detalle_solicitud_servicio'),    
     path('serviciosInactivos/', login_required(ServiciosInactivos),name='servicios_inactivos'),
     path('servicioParaBorrar/',login_required(ServiciosParaBorrar),name='servicio_para_borrar'),
+    path('agregarVacuna/<int:pk>', login_required(AgregarVacuna), name='agregar_vacuna'),
 ]
 
 if settings.DEBUG:

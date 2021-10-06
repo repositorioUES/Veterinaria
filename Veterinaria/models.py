@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import *
 from django.utils import timezone
-from .validators import solo_Letras, solo_Numeros, validar_Fecha, fecha_mayor, formato_Dui, formato_Telefono
+from .validators import solo_Letras, solo_Numeros, validar_Fecha, fecha_mayor, formato_Dui, formato_Telefono,formato_Hora
 from django.core.exceptions import ValidationError
 
 # Create your models here.
@@ -30,7 +30,7 @@ class Paciente(models.Model):
     propietario = models.ForeignKey('Propietario', on_delete = models.SET_NULL, null=True)
     
     def __str__(self): #Para que retorne el nombre y no el Id
-        return self.nombrePac + " (" + self.propietario.nombre + ")"
+        return self.nombrePac + " (" + self.propietario.nombre + " ["+ self.propietario.dui +  "])"
 #FIN PACIENTE
 
 # Modelo del PROPIETARIO -------------------------------------------------------------------
@@ -137,7 +137,7 @@ class Solicitudes(models.Model):
 #Programador y Analista: Ruddy Alfredo Pérez
 class Horario(models.Model):
     id = models.AutoField(primary_key = True)
-    hora = models.CharField(max_length=5, help_text=" Formato de Hora: ##:##")
+    hora = models.CharField(max_length=5, help_text=" Formato de Hora: ##:##", validators=[formato_Hora])
     clinica = models.ForeignKey('Clinica', on_delete = models.PROTECT)
     activo = models.BooleanField(blank=True,  default=1)
     INDICADOR = (('am','AM'),('pm', 'PM'))# Estructura para la selección del indicador de la hora
@@ -221,3 +221,18 @@ class SolicitudServicio(models.Model):
 
     def __str__(self):
         return self.solicitante + ":" + self.nombreClinica
+
+# Modelo de VACUNA -------------------------------------------------------------------
+#Programador y Analista: Ruddy Alfredo Pérez
+class Vacuna(models.Model):
+    id = models.AutoField(primary_key = True)
+    paciente = models.ForeignKey('Paciente', on_delete = models.PROTECT, null=True)
+    fechaAplic = models.DateField(auto_now_add = True)# fecha de agrecada la vacuna
+    nombre = models.CharField(max_length=100,null=False)
+    lote = models.CharField(max_length=10,null=False) 
+    fechaProx = models.DateField(validators=[fecha_mayor],null=False)# fecha de creación de la consulta
+    aplicador = models.CharField(max_length=70,null=False, validators=[solo_Letras])
+
+    def __str__(self):
+        return self.nombre
+#FIN VACUNA

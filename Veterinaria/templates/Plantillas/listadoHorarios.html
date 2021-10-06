@@ -14,27 +14,53 @@
   		 Regresar</a> 
 		
 	</div>
+	<br>
+	<h6><B>* Sólo se puede eliminar horarios que NO estén asignados a ninguna cita</B></h6>
 
 </div>
 <br>
 	<table  class="table table-sm">
 		<tr style="text-align: center">
 			<th style="text-align: center">Hora</th>
-			<th style="text-align: center"></th>
+			<th style="text-align: center">Cambiar Estado</th>
+			<th style="text-align: center">Borrar</th>
 		</tr>
 		{% for h in horarios %}
 			{% if h.activo == 1%}
 			<tr>
 				<td style="text-align: center">{{h.hora}} {% if h.indicador == 'am' %} AM{%else%} PM{%endif%}</td>
 				
-				
 				<td style="text-align:center;">
-					<a href="{% url 'modificar_horario' h.pk %}" class="btn"  style="color:white; background-color:blue"><span class="glyphicon glyphicon-pencil">Modificar</a>
+					<button onclick="return abrir_modal('{% url 'modificar_horario' h.pk %}')"  style="color:white; background-color:orange" class="btn btn-successtn"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 				</td>
+				{% for hB in horaBorrar %}
+					{% if h.id == hB.id%}
+					<td style="text-align:center;">
+						<button onclick="return abrir_modal('{% url 'borrar_horario' h.pk %}')"  style="color:white; background-color:red" class="btn btn-successtn"><i class="fa fa-trash" aria-hidden="true"></i></button>
+					</td>
+					{% endif %}
+				{% endfor %}
 			</tr>
 			{% endif %}
 		{% endfor %}
 	</table>
 
+
+<div class="modal fade" id="popup" role="dialog">
+
+</div>
+
+<script type="text/javascript">
+
+jQuery.noConflict();
+
+function abrir_modal(url)
+{
+    $('#popup').load(url, function(){
+		$(this).modal('show');
+	});
+}
+
+</script>
 
 {% endblock content%}

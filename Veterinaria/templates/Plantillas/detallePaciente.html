@@ -1,6 +1,18 @@
 {% extends 'base.html' %}  
 
 {% block content %}
+
+<div>   
+    <a href="{% url 'modificar_paciente' paciente.pk %}" class="btn btn-success" style="color:white; background-color:blue"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</a>
+    <a href="javascript: history.go(-1)" class="btn btn-success" style="color:white; background-color:#f6685e"><i class="fa fa-minus" aria-hidden="true"></i> Regresar</a>
+</div>
+<div>
+    {% if borrar == 1 %}
+        <br>
+        <button onclick="return abrir_modal('{% url 'eliminar_paciente' paciente.pk %}')"  style="color:white; background-color:red" class="btn btn-successtn"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</button>
+        <h6><B> *Este paciente puede ser eliminado, dado que no tiene Citas, Vacunas ni Consultas registradas</B></h6>
+    {% endif %}
+</div>
 <table  class="table table-sm">
 <tr>
 <td width="300">
@@ -8,7 +20,7 @@
         <h4>Datos de Paciente</h4>
     </div> 
     <div>
-        <B><label>Estado: </label></B> {% if paciente.activo == True %} ACTIVO {% else %} INACTIVO{%endif%}
+        <B><label>Estado: </label></B> {% if paciente.activo == True %} ACTIVO {% else %} INACTIVO {% endif %}
     </div>
     <div>
         <img src=" {{ paciente.foto.url }}"/>
@@ -80,10 +92,22 @@
 </td>
 </tr>
 </table>
-<div>   
-    <a href="{% url 'modificar_paciente' paciente.pk %}" class="btn btn-success" style="color:white; background-color:blue">Modificar Datos</a>
-    
-    <a href="javascript: history.go(-1)" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
-</div>      
+
+<div class="modal fade" id="popup" role="dialog">
+
+</div>
+ 
+<script type="text/javascript">
+
+jQuery.noConflict();
+
+function abrir_modal(url)
+{
+    $('#popup').load(url, function(){
+		$(this).modal('show');
+	});
+}
+
+</script>    
 
 {% endblock content%}

@@ -9,7 +9,7 @@
 		<button onclick="return abrir_modal('{% url 'tipo_registro'%}')"  style="color:white; background-color:#33CC00" class="btn btn-successtn">Registrar Paciente</button>    
 		<a href="{% url 'pacientes_inactivos' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
   		Pacientes Inactivos</a>
-		<a href="{% url 'buscar_paciente' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
+		<a href="{% url 'buscar_paciente' %}" class="btn btn-success" style="color:white; background-color:blue">
   		 Buscar Paciente</a>
 	</div>
 </div>
@@ -21,6 +21,8 @@
 			<th style="text-align: center">Paciente</th>
 			<th style="text-align: center">Especie</th>
 			<th style="text-align: center">Propietario</th>
+			<th style="text-align: center">Detalles</th>
+			<th style="text-align: center">Expediente</th>
 		</tr>
 		{% for p in pacientes %}
 			{% if p.activo == 1 %}
@@ -38,10 +40,10 @@
 				</td>
 				
 				<td style="text-align:center;">
-					<a href="{% url 'detalle_paciente' p.pk %}" class="btn"  style="color:white; background-color:blue"><span class="glyphicon glyphicon-pencil">Detalles</a>
+					<a href="{% url 'detalle_paciente' p.pk %}" class="btn"  style="color:white; background-color:green"><i class="fa fa-eye" aria-hidden="true"></i></a>
 				</td>
 				<td style="text-align:center;">
-					<a href="{% url 'expediente' p.pk %}" class="btn"  style="color:white; background-color:blue"><span class="glyphicon glyphicon-pencil">Expediente</a>
+					<a href="{% url 'expediente' p.pk %}" class="btn"  style="color:white; background-color:blue"><i class="fa fa-file" aria-hidden="true"></i></a>
 				</td>
 			</tr>
 			{% endif %}

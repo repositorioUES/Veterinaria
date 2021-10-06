@@ -17,6 +17,7 @@ from django.core.paginator import Paginator
 from django.http import Http404
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required, permission_required
+from django import db
 
 # Create your views here.
 def index(request):
@@ -259,11 +260,45 @@ class ModificarPaciente(UpdateView):
     
 # Vista DETALLE DE PACIENTES -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
-class DetallePaciente(DetailView):
-    model = Paciente
-    template_name = 'Plantillas/detallePaciente.html'
-    form_class = PacienteForm
-    context_object_name = 'paciente'
+def DetallePaciente(request,pk):
+    paciente = Paciente.objects.get(id = pk)
+    consultas = Consulta.objects.filter(pacienteId_id = paciente.id).first() # Vemos si tiene almenos 1 consulta
+    citas = Cita.objects.filter(pacienteId_id = paciente.id).first() # Vemos si tiene almenos 1 cita
+    vacunas = Vacuna.objects.filter(paciente_id = paciente.id).first() # Vemos si tiene almenos 1 vacuna
+    
+    if consultas or citas or vacunas: # Si tiene almenos 1 cita y/o 1 consulta y/o vacuna
+        borrar = 0 #No lo podremos borrar
+    else:
+        borrar = 1 # Si no tiene ni una cita y consulta, si se podrá borrar
+
+    return render(request, 'Plantillas/detallePaciente.html', {'paciente':paciente,'borrar':borrar})
+
+# Vista ELIMINAR PACIENTE -------------------------------------------------------------------
+#Programador y Analista: Ruddy Alfredo Pérez
+@login_required
+def eliminarPaciente(request, pk):
+    paciente = Paciente.objects.get(id = pk) # Buscamos al paciente
+    expediente = Expediente.objects.get(pacienteId_id = paciente.id) # Buscamos su expediente
+
+# Si el propietario solo tienen 1 mascota registrada, al borrar la mascota se borrará el propietario
+# Si tiene 2 o +, NO se borrará el propietario.
+    propietario = Propietario.objects.get(dui = paciente.propietario_id)# Obtener al propietario del paciente.
+    mascotas = Paciente.objects.filter(propietario_id = propietario.dui) 
+    cantidadMascotas = 0 # Acumulador de cantidad de mascotas de este propietario
+
+    for m in mascotas:
+        cantidadMascotas += 1
+
+    if request.method == 'POST':
+        if cantidadMascotas == 1: # Si tiene solo 1 mascotas
+            propietario.delete() # Se borra el propietario
+            print(cantidadMascotas)
+    
+        expediente.delete() # Borramos 1º al Expediente para que no de error por la FK protegida
+        paciente.delete() # Borramos al paciente
+        return redirect('listado_pacientes')
+
+    return render(request,'Plantillas/eliminarPaciente.html', {'paciente':paciente, 'cant':cantidadMascotas})
 
 # Vista LSITADO DE PACIENTES -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
@@ -336,7 +371,7 @@ class DetalleSolicitud(DetailView):
     context_object_name = 'solicitud'
 
 
-# Vista  -------------------------------------------------------------------
+# REGISTARA SOLO PACIENTE  -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
 def TipoRegistro(request):
     return render(request, 'Plantillas/tipoRegistro.html')
@@ -390,41 +425,70 @@ class ModificarCita(UpdateView):
 def ListadoCitas(request):
     hoy = datetime.now().date() # Fecha de hoy
     citasHoy = Cita.objects.filter(fechaCita__contains = hoy) # Citas SOLO de HOY
-    citas = Cita.objects.filter(fechaCita__gt = hoy) # Citas a Futuro
-    return render(request,'Plantillas/listadoCitas.html', {'citasHoy':citasHoy,'citas':citas})
+    return render(request,'Plantillas/listadoCitas.html', {'citasHoy':citasHoy})
 
 # Vista BUSCAR CITA -------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
 def BuscarCita(request):
     pac = request.GET.get('buscar') # Filtro por paciente
     fec = request.GET.get('buscarFecha') # Filtro por fecha
+    cli = request.GET.get('buscarClinica') # Filtro por clinica
+
+    citasHoy = Cita.objects.none()
+    citasFuturo = Cita.objects.none()
+    citasPasado = Cita.objects.none()
+
+
     context={}
     hoy = datetime.now().date() # Fecha de hoy
 
-    if pac and fec: # Si mandamos info del paceiente
-        paciente = Paciente.objects.filter(nombrePac__iexact=pac).first()
-        if paciente:
-            citasHoy = Cita.objects.filter(fechaCita__contains = hoy).filter(pacienteId=paciente.id).filter(fechaCita__contains = fec) # Cita para Hoy
-            citasFuturo = Cita.objects.filter(fechaCita__gt = hoy).filter(pacienteId=paciente.id).filter(fechaCita__contains = fec) # Citas a Futuro
-            citasPasado = Cita.objects.filter(fechaCita__lt = hoy).filter(pacienteId=paciente.id).filter(fechaCita__contains = fec) # Citas ya Pasadas
-            citaFecha = None
-            context = {'citasHoy':citasHoy, 'citasFuturo':citasFuturo,'citasPasado':citasPasado,'citaFecha':citaFecha}
+    paciente = Paciente.objects.filter(nombrePac__iexact = pac).first()
+    clinica = Clinica.objects.filter(nombre__iexact = cli).first()
+    
+    if pac!="" and fec!="" and cli!="": # Si mandamos info en los 3 campos
+        if paciente and clinica:
+            citasHoy = Cita.objects.filter(fechaCita__contains = hoy).filter(pacienteId=paciente.id).filter(fechaCita__contains = fec).filter(clinica_id = clinica.id) # Cita para Hoy
+            citasFuturo = Cita.objects.filter(fechaCita__gt = hoy).filter(pacienteId=paciente.id).filter(fechaCita__contains = fec).filter(clinica_id = clinica.id) # Citas a Futuro
+            citasPasado = Cita.objects.filter(fechaCita__lt = hoy).filter(pacienteId=paciente.id).filter(fechaCita__contains = fec).filter(clinica_id = clinica.id) # Citas ya Pasadas
     else:
-        if pac: # Si mandamos info del paceiente
-            paciente = Paciente.objects.filter(nombrePac__iexact=pac).first()
+        if pac!="" and cli!="": # Si mandamos solo paciente y clinica
+            if paciente and clinica:
+                citasHoy = Cita.objects.filter(fechaCita__contains = hoy).filter(pacienteId=paciente.id).filter(clinica_id = clinica.id) # Cita para Hoy
+                citasFuturo = Cita.objects.filter(fechaCita__gt = hoy).filter(pacienteId=paciente.id).filter(clinica_id = clinica.id) # Citas a Futuro
+                citasPasado = Cita.objects.filter(fechaCita__lt = hoy).filter(pacienteId=paciente.id).filter(clinica_id = clinica.id) # Citas ya Pasadas
+               
+        if pac!="" and fec!="": # Si mandamos solo paciente y fecha
+            if paciente:
+                citasHoy = Cita.objects.filter(fechaCita__contains = fec).filter(fechaCita__contains = hoy).filter(pacienteId=paciente.id) # Cita para Hoy
+                citasFuturo = Cita.objects.filter(fechaCita__icontains = fec).filter(fechaCita__gt=hoy).filter(pacienteId=paciente.id)
+                citasPasado = Cita.objects.filter(fechaCita__icontains=fec).filter(fechaCita__lt=hoy).filter(pacienteId=paciente.id)
+                
+        if fec!="" and cli!="": # Si solo mandamos fecha y clinica
+            if clinica:
+                citasHoy = Cita.objects.filter(clinica_id = clinica.id).filter(fechaCita__icontains = fec).filter(fechaCita__contains=hoy)
+                citasFuturo = Cita.objects.filter(clinica_id = clinica.id).filter(fechaCita__icontains = fec).filter(fechaCita__gt=hoy)
+                citasPasado = Cita.objects.filter(clinica_id = clinica.id).filter(fechaCita__icontains=fec).filter(fechaCita__lt=hoy)
+                
+        if pac and fec=="" and cli=="": # Si mandamos solo paciente
             if paciente:
                 citasHoy = Cita.objects.filter(fechaCita__contains = hoy).filter(pacienteId=paciente.id) # Cita para Hoy
-                citasFuturo = Cita.objects.filter(fechaCita__gt = hoy).filter(pacienteId=paciente.id) # Citas a Futuro
-                citasPasado = Cita.objects.filter(fechaCita__lt = hoy).filter(pacienteId=paciente.id) # Citas ya Pasadas
-                citaFecha = None
-                context = {'citasHoy':citasHoy, 'citasFuturo':citasFuturo,'citasPasado':citasPasado,'citaFecha':citaFecha}
-        
-        if fec:
-            citaFecha = Cita.objects.filter(fechaCita__icontains = fec).filter(fechaCita__gte=hoy)
-            citaFechaPasada = Cita.objects.filter(fechaCita__icontains=fec).filter(fechaCita__lt=hoy)
-            
-            context = {'citaFecha':citaFecha,'citaFechaPasada':citaFechaPasada}
-        
+                citasFuturo = Cita.objects.filter(fechaCita__gt=hoy).filter(pacienteId=paciente.id)
+                citasPasado = Cita.objects.filter(fechaCita__lt=hoy).filter(pacienteId=paciente.id)
+
+        if cli and fec=="" and pac=="": # Si mandamos solo clinica
+            if clinica:
+                citasHoy = Cita.objects.filter(fechaCita__contains = hoy).filter(clinica_id = clinica.id) # Cita para Hoy
+                citasFuturo = Cita.objects.filter(fechaCita__gt = hoy).filter(clinica_id = clinica.id) # Citas a Futuro
+                citasPasado = Cita.objects.filter(fechaCita__lt = hoy).filter(clinica_id = clinica.id) # Citas ya Pasadas
+               
+        if fec and pac=="" and cli=="": # Si solo mandamos fecha
+            citasHoy = Cita.objects.filter(fechaCita__contains = fec).filter(fechaCita__contains=hoy)
+            citasFuturo = Cita.objects.filter(fechaCita__contains = fec).filter(fechaCita__gt=hoy)
+            citasPasado = Cita.objects.filter(fechaCita__icontains=fec).filter(fechaCita__lt=hoy)
+
+    if citasHoy.exists() or citasFuturo.exists() or citasPasado.exists():   
+        context = {'citasHoy':citasHoy,'citasFuturo':citasFuturo,'citasPasado':citasPasado}
+   
     return render(request,'Plantillas/buscarCita.html', context)
 
 @login_required
@@ -454,20 +518,68 @@ class CrearHorario(CreateView):
     form_class = HorarioForm
     success_url = reverse_lazy('listado_horarios')
 
-class ModificarHorario(UpdateView):
-    model = Horario
-    template_name = 'Plantillas/modificarHorario.html'
-    form_class = HorarioForm
-    success_url = reverse_lazy('listado_horarios')
+@login_required
+def cambiarEstadoHorario(request, pk):
+    horario = Horario.objects.filter(id = pk).first()
 
-class ListadoHorarios(ListView):
-    model = Horario
-    template_name = 'Plantillas/listadoHorarios.html'
-    context_object_name = 'horarios'
+    if request.method == 'POST':
+        if horario.activo == True:
+            horario.activo = False
+        else:
+            horario.activo = True
+
+        horario.save()
+
+        return redirect('listado_horarios')
+    return render(request,'Plantillas/modificarHorario.html', {'horario':horario})
+
+def ListadoHorarios(request):
+    horarios = Horario.objects.all().order_by('id')
+    citas = Cita.objects.all()
+    horaCita = Horario.objects.none()
+    horaBorrar = Horario.objects.none()
+
+    for c in citas:
+        horaCita |= Horario.objects.filter(id = c.horaCita_id)
+
+    horaId = []
+    for hC in horaCita:
+        horaId.append(hC.id)
+
+    for h in horarios:
+        if h.id not in horaId:
+            horaBorrar |= Horario.objects.filter(id = h.id)
+    
+    return render(request, 'Plantillas/listadoHorarios.html', {'horarios':horarios, 'horaBorrar':horaBorrar})
 
 def HorariosInactivos(request):
     horarios = Horario.objects.filter(activo = 0)
-    return render(request,'Plantillas/horariosInactivos.html', {'horarios':horarios})
+    citas = Cita.objects.all()
+    horaCita = Horario.objects.none()
+    horaBorrar = Horario.objects.none()
+
+    for c in citas:
+        horaCita |= Horario.objects.filter(id = c.horaCita_id)
+
+    horaId = []
+    for hC in horaCita:
+        horaId.append(hC.id)
+
+    for h in horarios:
+        if h.id not in horaId:
+            horaBorrar |= Horario.objects.filter(id = h.id)
+
+    return render(request,'Plantillas/horariosInactivos.html', {'horarios':horarios, 'horaBorrar':horaBorrar})
+
+@login_required
+def borrarHorario(request, pk):
+    horario = Horario.objects.filter(id = pk).first()
+
+    if request.method == 'POST':
+        horario.delete()
+
+        return redirect('listado_horarios')
+    return render(request,'Plantillas/borrarHorario.html', {'horario':horario})
 
 ## CONSULTA-------------------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez 
@@ -496,11 +608,17 @@ class DetalleConsulta(DetailView):
 ## EXPEDIENTE-------------------------------------------------------------------------------
 #Programador y Analista: Ruddy Alfredo Pérez
 def DetalleExpediente (request, pk):
+    vacunas = Vacuna.objects.filter(paciente_id = pk)
+    sinVacunas = 0
+
     if request.method == 'GET':
+        if vacunas.exists() == False: # Si no tiene vacunas
+            sinVacunas = 1 #Ponemos esto a 1
+    
         exp = Expediente.objects.filter(pacienteId_id = pk).first()
         consultas = Consulta.objects.filter(pacienteId_id = pk)
 
-    return render(request, 'Plantillas/detalleExpediente.html', {'exp':exp,'cons':consultas})
+    return render(request, 'Plantillas/detalleExpediente.html', {'exp':exp,'cons':consultas,'sinVacunas':sinVacunas,'vacunas':vacunas})
 
 class CrearServicio(CreateView):
     model = Servicio
@@ -572,3 +690,34 @@ class DetalleSolicitudServicio(DetailView):
     template_name = 'Plantillas/detalleSolicitudServicio.html'
     form_class = SolicitudServicioForm
     context_object_name = 'soliservi'
+
+## VACUNAS -------------------------------------------------------------------------------
+#Programador y Analista: Ruddy Alfredo Pérez 
+@login_required
+def AgregarVacuna(request, pk):
+    paciente = Paciente.objects.get(id=pk)
+    vacunas = Vacuna.objects.filter(paciente_id = paciente.id)
+    sinVacunas = 0
+
+    if vacunas.exists() == False: # Si no tiene vacunas
+        sinVacunas = 1 #Ponemos esto a 1
+
+    data = {
+        'form' : VacunaForm(initial={'paciente': paciente}),
+        'vacunas':vacunas,
+        'sinVacunas':sinVacunas,
+        'paciente':paciente,
+    }
+       
+    if request.method == 'POST':
+        formulario=VacunaForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect('expediente', paciente.id )
+        else:
+            data['form'] = formulario
+            data['vacunas'] = vacunas
+            data['sinVacunas'] = sinVacunas
+            data['paciente'] = paciente
+
+    return render(request, 'Plantillas/agregarVacuna.html',data)

@@ -16,6 +16,8 @@
 			<th style="text-align: center">Paciente</th>
 			<th style="text-align: center">Especie</th>
 			<th style="text-align: center">Propietario</th>
+			<th style="text-align: center">Detalles</th>
+			<th style="text-align: center">Expediente</th>
 		</tr>
 		{% for p in pacientes %}
 			<tr>
@@ -32,10 +34,10 @@
 				</td>
 				
 				<td style="text-align:center;">
-					<a href="{% url 'detalle_paciente' p.pk %}" class="btn"  style="color:white; background-color:blue"><span class="glyphicon glyphicon-pencil">Detalles</a>
+					<a href="{% url 'detalle_paciente' p.pk %}" class="btn"  style="color:white; background-color:green"><span class="glyphicon glyphicon-pencil"><i class="fa fa-eye" aria-hidden="true"></i></a>
 				</td>
 				<td style="text-align:center;">
-					<a href="{% url 'expediente' p.pk %}" class="btn"  style="color:white; background-color:blue"><span class="glyphicon glyphicon-pencil">Expediente</a>
+					<a href="{% url 'expediente' p.pk %}" class="btn"  style="color:white; background-color:blue"><span class="glyphicon glyphicon-pencil"><i class="fa fa-file" aria-hidden="true"></i></a>
 				</td>
 			</tr>
 		

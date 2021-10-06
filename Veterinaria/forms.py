@@ -138,6 +138,7 @@ class HorarioForm(forms.ModelForm):
 			'activo':'Activo ',
 		}
 
+
 class CitaForm(forms.ModelForm):
 	class Meta:
 		model = Cita
@@ -248,4 +249,21 @@ class SolicitudServicioForm(forms.ModelForm):
 		}
 		widgets = {
 			'razonSolicitud':forms.Textarea(attrs={'rows':'4'}),
+		}
+
+class VacunaForm(forms.ModelForm):
+	class Meta:
+		model = Vacuna
+		fields = [
+			 'paciente','nombre','lote','fechaProx','aplicador',
+		]
+		labels = {
+			'paciente':'Paciente *',
+			'nombre':'Nombre Vacuna *',
+			'lote':'Lote Vacuna *',
+			'fechaProx':'Próxima Aplicación *',
+			'aplicador':'Médico que la Aplicó *',
+		}
+		widgets = {
+			'fechaProx': DateInput(format=('%Y-%m-%d'),attrs={'class':'form-control',}),
 		}

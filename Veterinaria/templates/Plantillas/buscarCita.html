@@ -8,41 +8,37 @@
 <div>
     <form role="form" method="get" >
         <div>
-            <label> Puede Buscar po el Nombre del Paciente o Fecha de Cita</label>
+            <label> Debe ser el Nombre Exacto del Paciente, Nombre Exacto de Clínica o Fecha de Cita</label>
         </div>
         <div>    
-            <input type="text"  placeholder="Nombre Paciente" name="buscar" value="{{ request.GET.buscar }}">
-        
-            <button type="submit" class="btn" style="color:white; background-color:blue">Buscar</button>
-        </div>
-        <div>
-            <label>Fecha de Cita ( aaaa-mm-dd )</label>
-        </div>
-        <div>    
+            <input type="text"  placeholder="Nombre de Paciente" name="buscar" value="{{ request.GET.buscar }}">
+            <input type="text"  placeholder="Nombre de Clínica" name="buscarClinica" value="{{ request.GET.buscarClinica }}">
             <input type="text"  placeholder="aaaa-mm-dd" name="buscarFecha" value="{{ request.GET.buscarFecha }}">
         </div>
-            <br>
-            <div>
-                <a href="{% url 'listado_citas' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar a Listado</a>
-            </div>
+        <br>
+        <div>
+            <button type="submit" class="btn" style="color:white; background-color:blue">Buscar</button>
+            <a href="{% url 'listado_citas' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
         </div>
     </form>
-{% if citaFecha == None%} 
-        <!--TABLA DE CITAS DE HOY-->
-        <h5>Cita para Hoy</h5>
+</div>
+
+<!--TABLA DE CITAS DE HOY-->
+{% if citasHoy%} 
+        <h5>Citas para Hoy</h5>
             <table  class="table table-sm">
-                <tr style="text-align: center">
-                    <th style="text-align: center">Fecha</th>
-                    <th style="text-align: center">Hora</th>
-                    <th style="text-align: center">Paciente</th>
-                    <th style="text-align: center">Servicio</th>
-                </tr>
+                    <tr style="text-align: center">
+                        <th style="text-align: center">Fecha</th>
+                        <th style="text-align: center">Hora</th>
+                        <th style="text-align: center">Paciente</th>
+                        <th style="text-align: center">Clínica</th>
+                    </tr>
                     {% for ch in citasHoy %}
                         <tr>
                             <td style="text-align: center">{{ch.fechaCita}}</td>
                             <td style="text-align: center">{{ch.horaCita}}</td>
                             <td style="text-align: center">{{ch.pacienteId}}</td>
-                            <td style="text-align: center">{{ch.servicio.nombre}}</td>
+                            <td style="text-align: center">{{ch.clinica.nombre}}</td>
 
                             <td style="text-align:center;">
                                 <a href="{% url 'detalle_cita' ch.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
@@ -52,27 +48,27 @@
                             </td>
                         </tr>
                         
-                    {%endfor%}
-                    {% if citasHoy == None%}  
-                        <h6>No tiene cita para Hoy </h6>
-                    {% endif %}
+                    {% endfor %}
                 </tr>
             </table>   
- <!--TABLA DE CITAS DE FUTURAS-->
-            <h5>Cita Pendiente</h5>
+{% endif %}
+
+<!--TABLA DE CITAS A FUTURO-->
+{% if citasFuturo%} 
+        <h5>Citas Pendientes</h5>
             <table  class="table table-sm">
-                <tr style="text-align: center">
-                    <th style="text-align: center">Fecha</th>
-                    <th style="text-align: center">Hora</th>
-                    <th style="text-align: center">Paciente</th>
-                    <th style="text-align: center">Servicio</th>
-                </tr>
+                    <tr style="text-align: center">
+                        <th style="text-align: center">Fecha</th>
+                        <th style="text-align: center">Hora</th>
+                        <th style="text-align: center">Paciente</th>
+                        <th style="text-align: center">Clínica</th>
+                    </tr>
                     {% for cf in citasFuturo %}
                         <tr>
                             <td style="text-align: center">{{cf.fechaCita}}</td>
                             <td style="text-align: center">{{cf.horaCita}}</td>
                             <td style="text-align: center">{{cf.pacienteId}}</td>
-                            <td style="text-align: center">{{cf.servicio.nombre}}</td>
+                            <td style="text-align: center">{{cf.clinica.nombre}}</td>
 
                             <td style="text-align:center;">
                                 <a href="{% url 'detalle_cita' cf.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
@@ -82,100 +78,45 @@
                             </td>
                         </tr>
                         
-                    {%endfor%}
-                    {% if citasFuturo == None%}  
-                        <h6>No tiene cita Pendiente</h6>  
-                    {% endif %}
+                    {% endfor %}
                 </tr>
-            </table>
-        <!--TABLA DE CITAS DE PASADAS-->
+            </table>   
+{% endif %}
+
+<!--TABLA DE CITAS PASADAS-->
+{% if citasPasado%} 
         <h5>Citas Pasadas</h5>
             <table  class="table table-sm">
-                <tr style="text-align: center">
-                    <th style="text-align: center">Fecha</th>
-                    <th style="text-align: center">Hora</th>
-                    <th style="text-align: center">Paciente</th>
-                    <th style="text-align: center">Servicio</th>
-                </tr>
+                    <tr style="text-align: center">
+                        <th style="text-align: center">Fecha</th>
+                        <th style="text-align: center">Hora</th>
+                        <th style="text-align: center">Paciente</th>
+                        <th style="text-align: center">Clínica</th>
+                    </tr>
                     {% for cp in citasPasado %}
                         <tr>
-                            <td style="text-align: center">
-                                <div>{{cp.fechaCita}}</div>
-                            </td>
+                            <td style="text-align: center">{{cp.fechaCita}}</td>
                             <td style="text-align: center">{{cp.horaCita}}</td>
                             <td style="text-align: center">{{cp.pacienteId}}</td>
-                            <td style="text-align: center">{{cp.servicio.nombre}}</td>
+                            <td style="text-align: center">{{cp.clinica.nombre}}</td>
 
                             <td style="text-align:center;">
-                                <a href="{% url 'detalle_cita_pasada' cp.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
+                                <a href="{% url 'detalle_cita' cp.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
                             </td>
                         </tr>
                         
-                    {%endfor%}
-                    {% if citasPasado == None%}  
-                        <h6>No tiene citas Pasadas Registradas </h6>
-                    {% endif %}
+                    {% endfor %}
                 </tr>
             </table>
-{% else %}
-    <!--TABLA DE CITAS POR FECHA PENDIENTES-->
-        <h5>Citas Pendientes Encontradas</h5>
-            <table  class="table table-sm">
-                <tr style="text-align: center">
-                    <th style="text-align: center">Fecha</th>
-                    <th style="text-align: center">Hora</th>
-                    <th style="text-align: center">Paciente</th>
-                    <th style="text-align: center">Servicio</th>
-                </tr>
-                    {% for c in citaFecha %}
-                        <tr>
-                            <td style="text-align: center">
-                                <div>{{c.fechaCita}}</div>
-                            </td>
-                            <td style="text-align: center">{{c.horaCita}}</td>
-                            <td style="text-align: center">{{c.pacienteId}}</td>
-                            <td style="text-align: center">{{c.servicio.nombre}}</td>
+{% endif %}
 
-                            <td style="text-align:center;">
-                                <a href="{% url 'detalle_cita' c.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
-                            </td>
-                            <td style="text-align:center;">
-                                <button onclick="return abrir_modal('{% url 'cancelar_cita' c.pk %}')"  style="color:white; background-color:red" class="btn btn-successtn">Cancelar</button>
-                            </td>
-                        </tr>
-                        
-                    {%endfor%}
-                   
-                </tr>
-            </table>
-    <!--TABLA DE CITAS POR FECHA PASADAS-->
-        <h5>Citas Pasadas Encontradas</h5>
-            <table  class="table table-sm">
-                <tr style="text-align: center">
-                    <th style="text-align: center">Fecha</th>
-                    <th style="text-align: center">Hora</th>
-                    <td style="text-align: center">Paciente</th>
-                    <th style="text-align: center">Servicio</th>
-                </tr>
-                    {% for cfp in citaFechaPasada %}
-                        <tr>
-                            <td style="text-align: center">
-                                <div>{{cfp.fechaCita}}</div>
-                            </td>
-                            <td style="text-align: center">{{cfp.horaCita}}</td>
-                            <td style="text-align: center">{{cfp.pacienteId}}</td>
-                            <td style="text-align: center">{{cfp.servicio.nombre}}</td>
+{% if citasHoy == None and citasFuturo == None and citasPasado == None%} 
+        <br>
+        <h5>Sin Resultados</h5>
 
-                            <td style="text-align:center;">
-                                <a href="{% url 'detalle_cita_pasada' cfp.pk %}" class="btn"  style="color:white; background-color:blue">Detalles</a>
-                            </td>
-                        </tr>
-                        
-                    {%endfor%}
-                   
-                </tr>
-            </table>
-{% endif %} 
+{% endif %}
+
+<br>
     
 </div> 
 <div class="modal fade" id="popup" role="dialog">
