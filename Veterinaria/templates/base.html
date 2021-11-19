@@ -63,8 +63,7 @@
 			{% if request.user.is_authenticated %}
 			<h5 style="color:whitesmoke;" class="my-0 mr-md-auto font-weight-normal" align ="center">Bienvenido/a:</h5>
 			<h5 style="color:whitesmoke;" align ='center'>{{user.first_name}} {{user.last_name}}</h5>
-			{% else %}
-			{% endif %}
+			
 
 	        <ul class="list-unstyled components mb-5">
 	          <li class="active">
@@ -89,6 +88,8 @@
 				<a href="{% url 'listado_solicitudes' %}"><span class="fa fa-envelope-o mr-3"></span> Solicitudes de ingreso</a>
 			</li>
 			</ul>
+			{% else %}
+			{% endif %}
 			
 	        <!--Div de contenedor de iniciar sesion
 				<div class="mb-5">
@@ -105,14 +106,12 @@
 	        <div class="footer">
 	        	<h5 align="center" style="color:whitesmoke;"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						  Copyright &copy;<script>document.write(new Date().getFullYear());</script><br>
-						  All rights reserved <br> Proyecto DSI-115 <i class="icon-heart" aria-hidden="true"></i>
+						  All rights reserved <br> Proyecto Diseño de Sistemas <i class="icon-heart" aria-hidden="true"></i>
 						  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></h>
 	        </div>
 	      </div>
     	</nav>
         {% endblock navbar%} 
-
-       
     
        <!-- Page Content  -->
       <div id="content" class="p-4 p-md-5 pt-5">
