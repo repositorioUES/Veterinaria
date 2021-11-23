@@ -10,15 +10,7 @@
         {% csrf_token %}
     
         <h5>Datos del Paciente</h5>
-        
-            <tr>
-                <td  width="150">
-                    <!--<B><label for="{{form.activo.name}}">{{form.activo.label}}</label></B>-->
-                </td>
-                <td>
-                    {{form.activo}}
-                </td>
-            </tr>
+           
         <table>
             <tr>
                 <td  width="150">
@@ -85,7 +77,14 @@
                 </td>
             </tr>
         </table>
-
+        {% comment %} <table>
+            <tr>    
+                <td width="200">
+                    <h5>Datos del Paciente</h5>
+                    {{form.as_table}}
+                </td>
+            </tr>
+        </table>  {% endcomment %}
         <div>
             <B><label>Para seleccionar al Propietario introduzca el Nombre o DUI (########-#)</label></B>
         </div>
@@ -149,7 +148,8 @@
 
 <script type="text/javascript">
 
-    document.getElementById("id_activo").type ="hidden"; // deshabilitar
+    document.getElementById("id_activo").type ="hidden"; // deshabilitar.
+    document.getElementById("id_activo").value ="true"; // deshabilitar
     window.onload = getClinicasActivas();
 
     function getClinicasActivas(){

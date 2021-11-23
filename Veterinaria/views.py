@@ -350,6 +350,21 @@ class DetalleEmpleado(DetailView):
     form_class = EmpleadoForm
     context_object_name = 'empleado'
 
+@login_required
+def cambiarEstadoEmoleado(request, duiEmp):
+    empleado = Empleado.objects.filter(duiEmp = duiEmp).first()
+
+    if request.method == 'POST':
+        if empleado.activo == True:
+            empleado.activo = False
+        else:
+            empleado.activo = True
+
+        empleado.save()
+
+        return redirect('listado_empleados')
+    return render(request,'Plantillas/modificarEmpleado.html', {'empleado':empleado})
+
 class CrearSolicitud(CreateView):
     model = Solicitudes
     template_name = 'Plantillas/crearSolicitud.html'

@@ -18,6 +18,7 @@
 						<th style="text-align: center">Consultorio</th>
 						<th style="text-align: center">Cargo</th>
 						<th></th>
+						<th style="text-align: center">Cambiar Estado</th>
 			
 					</tr>
 					{% for p in empleados %}
@@ -38,11 +39,33 @@
 							<td style="text-align: center">
 								<a href="{% url 'detalle_empleado' p.duiEmp %}" class="btn btn-primary" style="color:white;">Detalle</a>
 							</td>
+							<td style="text-align:center;">
+								<button onclick="return abrir_modal('{% url 'cambiar_estado' p.duiEmp %}')"  style="color:white; background-color:orange" class="btn btn-successtn"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+							</td>
 						</tr>
 					{% endfor %}
 				</table>
             </div>
         </div>
     </div>
+
+
+<div class="modal fade" id="popup" role="dialog">
+
+</div>
+
+<script type="text/javascript">
+
+jQuery.noConflict();
+
+function abrir_modal(url)
+{
+    $('#popup').load(url, function(){
+		$(this).modal('show');
+	});
+}
+
+</script>
 </div>&nbsp;
+
 {% endblock content%}
