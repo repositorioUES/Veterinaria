@@ -74,6 +74,34 @@ def listar_clinica(request):
     clinicas = Clinica.objects.all()
     page = request.GET.get('page',1)
 
+    clinicasId = [] #Arreglo para guardar los id's de las clinicas que si tienen registros asociados
+    expedientes = Expediente.objects.all()
+    consultorios = Consultorio.objects.all()
+    empleados = Empleado.objects.all()
+    horarios = Horario.objects.all()
+    citas = Cita.objects.all()
+    consultas = Consulta.objects.all()
+
+    for ex in expedientes:
+        clinicasId.append(ex.clinica_id)
+    
+    for c in consultorios:
+        clinicasId.append(c.clinica_id)
+    
+    for em in empleados:
+        clinicasId.append(em.clinica_id)
+
+    for h in horarios:
+        clinicasId.append(h.clinica_id)
+
+    for ci in citas:
+        clinicasId.append(ci.clinica_id)
+
+    for co in consultas:
+        clinicasId.append(co.clinica_id)
+    
+    clinicasId = set(clinicasId)
+
     filter = ClinicaFilter(request.GET, queryset=clinicas)
     clinicas = filter.qs
 
@@ -87,7 +115,8 @@ def listar_clinica(request):
     data = {
         'entity': clinicas,
         'paginator': paginator,
-        'filter' : filter
+        'filter' : filter,
+        'clinicasId' : clinicasId
     }
 
     return render(request, 'clinica/listarClinica.html', data)
@@ -154,12 +183,33 @@ def listar_consultorio(request,id):
     filter2 = EmpleadoFilter(request.GET, queryset=empleados)
     empleados = filter2.qs
 
+    consultoriosId = [] #Arreglo para guardar los id's de las clinicas que si tienen registros asociados
+    expedientes = Expediente.objects.all()
+    emp = Empleado.objects.all()
+    citas = Cita.objects.all()
+    consultas = Consulta.objects.all()
+
+    for ex in expedientes:
+        consultoriosId.append(ex.consultorio_id)
+    
+    for em in emp:
+        consultoriosId.append(em.consultorio_id)
+
+    for ci in citas:
+        consultoriosId.append(ci.consultorio_id)
+
+    for co in consultas:
+        consultoriosId.append(co.consultorio_id)
+    
+    consultoriosId = set(consultoriosId)
+
     data = {
         'clinica' : clinica,
         'consultorios' : consultorios,
         'filter' : filter,
         'filter2' : filter2,
-        'empleados' : empleados
+        'empleados' : empleados,
+        'consultoriosId':consultoriosId,
     }
     
     return render(request, 'consultorio/listarConsultorio.html', data)
@@ -356,6 +406,21 @@ class DetalleEmpleado(DetailView):
     template_name = 'Plantillas/detalleEmpleado.html'
     form_class = EmpleadoForm
     context_object_name = 'empleado'
+
+@login_required
+def cambiarEstadoEmpleado(request, duiEmp):
+    empleado = Empleado.objects.filter(duiEmp = duiEmp).first()
+
+    if request.method == 'POST':
+        if empleado.activo == True:
+            empleado.activo = False
+        else:
+            empleado.activo = True
+
+        empleado.save()
+
+        return redirect('listado_empleados')
+    return render(request,'Plantillas/modificarEmpleado.html', {'empleado':empleado})
 
 class CrearSolicitud(CreateView):
     model = Solicitudes

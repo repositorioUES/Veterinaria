@@ -117,6 +117,8 @@ class Empleado(models.Model):
     salario = models.CharField(max_length=9, validators=[solo_Numeros])
     clinica = models.ForeignKey('Clinica', on_delete = models.PROTECT)
     consultorio = models.ForeignKey('Consultorio', on_delete = models.CASCADE)
+    # Booleano para determinar su el empleado esta activo o no
+    activo = models.BooleanField(blank=True,  default=1)
 
     def __str__(self):
         return self.nombreEmp + " " + self.apellidoEmp
