@@ -13,11 +13,11 @@
             <input type="text"  placeholder="Nombre del Paciente" name="buscar" value="{{ request.GET.buscar }}">
             <button type="submit" class="btn" style="color:white; background-color:blue">Buscar</button>
         
-            <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
+            <a href="{% url 'listado_pacientes' %}" class="btn btn-danger">Regresar</a>
             
         </div>
             <table  class="table table-sm">
-                <tr style="text-align: center">
+                <tr style="text-align: center; background-color: #393c7f; color:whitesmoke;">
                     <th style="text-align: center">Paciente</th>
                     <th style="text-align: center">Especie</th>
                     <th style="text-align: center">Propietario</th>

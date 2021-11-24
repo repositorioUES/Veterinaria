@@ -1,134 +1,39 @@
 {% extends 'base.html' %}  
-
+{%load static%}
+{% block title %}<title>Registrar Paciente y Propietario</title>{% endblock title%}
 {% block content %}
-<div>
-<h3> Registrar un Paciente y Propietario Nuevos</h3>
+{% load crispy_forms_tags %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="card bg-light text-dark">
+                <div class="card-body" style="background-color: #b9bbc281;">
+                    <h2 align="center">Registro de Pacientes</h2>
+                    <hr>
+                    <form role="form" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <h5>Datos del Paciente</h5>
+                        {{ form|crispy}}
+
+                        <h5>Datos del Propietario</h5>
+                        {{ form2|crispy}}
+
+                        <h5>Datos para el Expediente</h5>
+                        {{ form3|crispy}}
+
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-danger" href="{% url 'listado_pacientes' %}"><i class="fa fa-ban"
+                                    aria-hidden="true"></i> Cancelar</a>
+                            &nbsp;
+                            <button type="submit" class="btn btn-success float-right"><i class="fa fa-check"
+                                    aria-hidden="true"></i> Registrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div>
-    <form role="form" method="POST" enctype ="multipart/form-data" >
-        {% csrf_token %}
-        <table>
-            <tr>    
-                <td width="200">
-                    <h5>Datos del Paciente</h5>
-                    {{form.as_table}}
-                </td>
-            </tr>
-        </table> 
-
-        <h5>Datos del Propietario</h5>
-        <table>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form2.dui.name}}">{{form2.dui.label}}</label></B>
-                </td>
-                <td>
-                    {{form2.dui}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form2.nombre.name}}">{{form2.nombre.label}}</label></B>
-                </td>
-                <td>
-                    {{form2.nombre}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form2.apellido.name}}">{{form2.apellido.label}}</label></B>
-                </td>
-                <td>
-                    {{form2.apellido}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form2.fechaNacim.name}}">{{form2.fechaNacim.label}}</label></B>
-                </td>
-                <td>
-                    {{form2.fechaNacim}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form2.edad.name}}">{{form2.edad.label}}</label></B>
-                </td>
-                <td>
-                    {{form2.edad}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form2.direccion.name}}">{{form2.direccion.label}}</label></B>
-                </td>
-                <td>
-                    {{form2.direccion}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form2.departamento.name}}">{{form2.departamento.label}}</label></B>
-                </td>
-                <td>
-                    {{form2.departamento}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form2.municipio.name}}">{{form2.municipio.label}}</label></B>
-                </td>
-                <td>
-                    {{form2.municipio}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form2.telefono.name}}">{{form2.telefono.label}}</label></B>
-                </td>
-                <td>
-                    {{form2.telefono}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form2.correo.name}}">{{form2.correo.label}}</label></B>
-                </td>
-                <td>
-                    {{form2.correo}}
-                </td>
-            </tr>
-        </table>
-
-        <h5>Datos para el Expediente</h5>
-        <table>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form3.clinica.name}}">{{form3.clinica.label}}</label></B>
-                </td>
-                <td>
-                    {{form3.clinica}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form3.consultorio.name}}">{{form3.consultorio.label}}</label></B>
-                </td>
-                <td>
-                    {{form3.consultorio}}
-                </td>
-            </tr>
-        </table>
-          
-        <br>
-        <div>   
-        <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Guardar">
-
-        <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
-        </div>      
-    </form>
-</div> 
 
 <script type="text/javascript">
 

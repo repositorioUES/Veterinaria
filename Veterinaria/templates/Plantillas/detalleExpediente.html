@@ -36,12 +36,12 @@
         {% if sinVacunas == 1 %} 
         <a href="{% url 'agregar_vacuna' exp.pacienteId.pk %}" class="btn btn-success" style="color:white; background-color:red"><i class="fa fa-star" aria-hidden="true"></i> Iniciar Esquema de Vacunación</a>
         {% else %}
-        <a href="{% url 'agregar_vacuna' exp.pacienteId.pk %}" class="btn btn-success" style="color:white; background-color:blue"><i class="fa fa-plus" aria-hidden="true"></i> Vacuna</a>    
+        <a href="{% url 'agregar_vacuna' exp.pacienteId.pk %}" class="btn btn-info" ><i class="fa fa-plus" aria-hidden="true"></i> Vacuna</a>    
         {% endif%}    
 
-        <a href="{% url 'registrar_consulta' exp.pacienteId.pk%}" class="btn btn-success" style="color:white; background-color:33CC00"><i class="fa fa-plus" aria-hidden="true"></i> Consulta</a>  
+        <a href="{% url 'registrar_consulta' exp.pacienteId.pk%}" class="btn btn-success""><i class="fa fa-plus" aria-hidden="true"></i> Consulta</a>  
     {% endif%}
-    <a href="{% url 'listado_pacientes'%}" class="btn btn-success" style="color:white; background-color:#f6685e"><i class="fa fa-minus" aria-hidden="true"></i> Regresar</a>
+    <a href="{% url 'listado_pacientes'%}" class="btn btn-danger"><i class="fa fa-minus" aria-hidden="true"></i> Regresar</a>
 </div>  
 <br>
     <div>
@@ -113,7 +113,7 @@
     <h5>Esquema de Vacunación: </h5> 
 </div>
 <table  class="table table-sm">
-		<tr style="text-align: center">
+		<tr style="text-align: center; background-color: #393c7f; color:whitesmoke;">
 			<th style="text-align: center">Fecha de Aplicación</th>
             <th style="text-align: center">Nombre de Vacuna</th>
 			<th style="text-align: center">Lote</th>
@@ -135,7 +135,7 @@
     <h5>Historial de Consultas: </h5> 
 </div>
 <table  class="table table-sm">
-		<tr style="text-align: center">
+		<tr style="text-align: center; background-color: #393c7f; color:whitesmoke;">
 			<th style="text-align: center">Fecha de Consulta</th>
             <th style="text-align: center">Hora</th>
 			<th style="text-align: center">Médico</th>

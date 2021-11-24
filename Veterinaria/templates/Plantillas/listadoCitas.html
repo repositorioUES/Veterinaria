@@ -1,19 +1,14 @@
 {% extends 'base.html' %}  
-
+{% block title %}<title>Listado de Citas</title>{% endblock title%}
 {% block content %}
 
 <h5>Listado de Citas</h5>
+<div class="d-flex justify-content-start">
+		<a href="{% url 'crear_cita' %}" class="btn btn-success">Nueva Cita</a>&nbsp;
+		<a href="{% url 'buscar_cita' %}" class="btn btn-info">Buscar Cita</a>&nbsp;
+		<a href="{% url 'listado_horarios' %}" class="btn btn-success">Gestion de Horarios</a>    
+</div>&nbsp;
 
-<div class="container">
-	<div>
-		<a href="{% url 'crear_cita' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
-  		 Nueva Cita</a> 
-		<a href="{% url 'buscar_cita' %}" class="btn btn-success" style="color:white; background-color:blue">
-  		Buscar Cita</a>
-		<a href="{% url 'listado_horarios' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
-  		 Gestion de Horarios</a>    
-	</div>
-</div>
 <br>
 <div>
 	<h5>Citas para Hoy</h5>

@@ -1,18 +1,18 @@
 {% extends 'base.html' %}  
-
+{% block title %}<title>Listado de Pacientes Inactivos</title>{% endblock title%}
 {% block content %}
 
-<h5>Listado de Pacientes Inactivos</h5>
-
-<div class="container">
-	<div>   
-		<a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
+<div class="d-flex justify-content-start"> 
+		<a href="{% url 'listado_pacientes' %}" class="btn btn-success">
   		Pacientes Activos</a> 
-	</div>
-</div>
-<br>
-	<table  class="table table-sm">
-		<tr style="text-align: center">
+	</div>&nbsp;
+	<div class="row">
+		<div class="col-md">
+			<div class="card">
+				<div class="card-body">
+					<h3 align ="center">Listado de Pacientes Inactivos</h3>
+					<table class="table table-bordered ">
+						<tr style="text-align: center; background-color: #393c7f; color:whitesmoke;">
 			<th style="text-align: center">Paciente</th>
 			<th style="text-align: center">Especie</th>
 			<th style="text-align: center">Propietario</th>
@@ -43,6 +43,9 @@
 		
 		{% endfor %}
 	</table>
-
+</div>
+</div>
+</div>
+</div>&nbsp;
 
 {% endblock content%}

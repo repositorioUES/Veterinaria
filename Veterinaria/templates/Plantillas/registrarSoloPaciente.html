@@ -1,149 +1,32 @@
 {% extends 'base.html' %}  
-
+{%load static%}
+{% block title %}<title>Registrar Paciente y Propietario</title>{% endblock title%}
 {% block content %}
-<div>
-<h3> Registrar un Paciente Nuevo</h3>
-</div>
-
-<div>
+{% load crispy_forms_tags %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="card bg-light text-dark">
+                <div class="card-body" style="background-color: #b9bbc281;">
+                    <h2 align="center">Registro de Pacientes</h2>
+                    <hr>
     <form role="form" method="POST" enctype ="multipart/form-data" >
         {% csrf_token %}
     
         <h5>Datos del Paciente</h5>
-        
-            <tr>
-                <td  width="150">
-                    <!--<B><label for="{{form.activo.name}}">{{form.activo.label}}</label></B>-->
-                </td>
-                <td>
-                    {{form.activo}}
-                </td>
-            </tr>
-        <table>
-            <tr>
-                <td  width="150">
-                    <B><label for="{{form.foto.name}}">{{form.foto.label}}</label></B>
-                </td>
-                <td>
-                    {{form.foto}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="150">
-                    <B><label for="{{form.nombrePac.name}}">{{form.nombrePac.label}}</label></B>
-                </td>
-                <td>
-                    {{form.nombrePac}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="150">
-                    <B><label for="{{form.sexo.name}}">{{form.sexo.label}}</label></B>
-                </td>
-                <td>
-                    {{form.sexo}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="150">
-                    <B><label for="{{form.especie.name}}">{{form.especie.label}}</label></B>
-                </td>
-                <td>
-                    {{form.especie}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="150">
-                    <B><label for="{{form.raza.name}}">{{form.raza.label}}</label></B>
-                </td>
-                <td>
-                    {{form.raza}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="150">
-                    <B><label for="{{form.color.name}}">{{form.color.label}}</label></B>
-                </td>
-                <td>
-                    {{form.color}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="150">
-                    <B><label for="{{form.fechaNacimPac.name}}">{{form.fechaNacimPac.label}}</label></B>
-                </td>
-                <td>
-                    {{form.fechaNacimPac}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="150">
-                    <B><label for="{{form.observaciones.name}}">{{form.observaciones.label}}</label></B>
-                </td>
-                <td>
-                    {{form.observaciones}}
-                </td>
-            </tr>
-        </table>
-
-        <div>
-            <B><label>Para seleccionar al Propietario introduzca el Nombre o DUI (########-#)</label></B>
-        </div>
-        <!--<button onclick="getPropietario()" style="color:white; background-color:blue">Buscar</button>-->
-        
-        <table>
-            <tr>
-                <td  width="200">
-
-                </td>
-                <td>
-                    <input type="text" placeholder="Nombre o DUI" id="id_buscar" name="buscar" value="{{ request.GET.buscar }}">
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form.propietario.name}}">{{form.propietario.label}}</label></B>
-                </td>
-                <td>
-                    {{form.propietario}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form.personaInscrip.name}}">{{form.personaInscrip.label}}</label></B>
-                </td>
-                <td>
-                    {{form.personaInscrip}}
-                </td>
-            </tr>
-        </table>
+        {{ form|crispy}}
 
         <h5>Datos para el Expediente</h5>
-        <table>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form2.clinica.name}}">{{form2.clinica.label}}</label></B>
-                </td>
-                <td>
-                    {{form2.clinica}}
-                </td>
-            </tr>
-            <tr>
-                <td  width="200">
-                    <B><label for="{{form2.consultorio.name}}">{{form2.consultorio.label}}</label></B>
-                </td>
-                <td>
-                    {{form2.consultorio}}
-                </td>
-            </tr>
-        </table>
+        {{ form2|crispy}}
 
-        <br>
-        <div>   
-        <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Guardar">
 
-        <a href="{% url 'listado_pacientes' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
-        </div>      
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-danger" href="{% url 'listado_pacientes' %}"><i class="fa fa-ban"
+                    aria-hidden="true"></i> Cancelar</a>
+            &nbsp;
+            <button type="submit" class="btn btn-success float-right"><i class="fa fa-check"
+                    aria-hidden="true"></i> Guardar</button>
+                </div>     
     </form>
 </div> 
 

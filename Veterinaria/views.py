@@ -2,7 +2,7 @@ from django import forms
 from django.views.generic.edit import View, UpdateView, CreateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from django.urls import reverse_lazy, reverse
 from Veterinaria.models import *
 from Veterinaria.forms import *
@@ -18,6 +18,13 @@ from django.http import Http404
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required, permission_required
 from django import db
+
+import os
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
 
 # Create your views here.
 def index(request):
@@ -721,3 +728,21 @@ def AgregarVacuna(request, pk):
             data['paciente'] = paciente
 
     return render(request, 'Plantillas/agregarVacuna.html',data)
+
+
+
+class reportePdfView(View):
+    def get(self,request, *args, **kwargs):
+        try:
+            template = get_template('reporte.html')
+            context = {'title': 'Clinicas'}
+            html = template.render(context)
+            response = HttpResponse(content_type='application/pdf')
+            #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+            
+            # create a pdf
+            pisa_status = pisa.CreatePDF(html, dest=response)
+            return response
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('listar_clinica'))

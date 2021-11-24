@@ -1,20 +1,17 @@
 {% extends 'base.html' %}  
-
+{% block title %}<title>Servicios por borrar</title>{% endblock title%}
 {% block content %}
 
-<h3>Listado de Servicios por borrar</h3>
-
-<div class="container">
-	<div>
-		<a href="{% url 'listado_servicios' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Regresar</a>
-	</div>
-</div>
-<br>
-<br>
-	<table  class="table table-sm">
-		<tr style="text-align: center">
+<div class="row">
+	<div class="col-md">
+		<div class="card">
+			<div class="card-body">
+				<h3 align ="center">Listado de Servicios por borrar</h3>
+				<table class="table table-bordered ">
+					<tr style="text-align: center; background-color: #393c7f; color:whitesmoke;">
 			<th style="text-align: center">Servicios</th>
 			<th style="text-align: center">Categoria</th>
+			<th style="text-align: center">Gestionar</th>
 		</tr>
 		{% for p in servicios %}
 			<tr>
@@ -25,12 +22,22 @@
 					<div>{{p.catServicio}}</div>
 				</td>
 				<td style="text-align: center">
-                   <button onclick="return abrir_modal('{% url 'borrar_servicio' p.pk %}')"  style="color:white; background-color:red" class="btn btn-successtn">Borrar</button>
+                   <button onclick="return abrir_modal('{% url 'borrar_servicio' p.pk %}')" class="btn btn-danger">Borrar</button>
 				</td>
 			</tr>
 
 		{% endfor %}
 	</table>
+</div>
+</div>
+</div>
+</div>&nbsp;
+
+<br>
+<div class="d-flex justify-content-center">
+    <a class="btn btn-danger" href="{% url 'listado_servicios' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
+</div>
+
 
 
 <div class="modal fade" id="popup" role="dialog">

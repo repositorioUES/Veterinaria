@@ -1,38 +1,37 @@
-{% extends 'base.html' %}  
+{% extends 'base.html'%}
+{%load static%}
+
+{% block title %}<title>Nuevo Horario</title>{% endblock title%}
 
 {% block content %}
-<div>
-<h5>Crear Nuevo Horario</h5>
-</div>
+{% load crispy_forms_tags %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="card bg-light text-dark">
+                <div class="card-body" style="background-color: #b9bbc281;">
+                    <h2 align="center">Nuevo Horario </h2>
+                    <hr>
+                    <form role="form" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div>
+                            <B><label>Introduzca el Nombre de la Clínica</label></B>
+                            <input type="text" placeholder="Buscar Clínica" id="id_buscar" name="buscar"
+                                value="{{ request.GET.buscar }}">
+                        </div>
+                        {{ form|crispy}}
 
-<div>
-    <form role="form" method="POST" enctype ="multipart/form-data" >
-        {% csrf_token %}
-        <div>
-            <B><label>Introduzca el Nombre de la Clínica</label></B>
-        </div>
 
-        <table>
-            <tr> 
-                <td>
-                </td>
-                <td width="200">
-                    <input type="text" placeholder="Buscar Clínica" id="id_buscar" name="buscar" value="{{ request.GET.buscar }}">
-                </td>
-                <td width="200">
-                    {{form}}
-                </td>
-            </tr>
-  
-        </table>   
-        <br>
-        <div>   
-        <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Aceptar">
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-danger" href="{% url 'listado_horarios' %}"><i class="fa fa-ban"
+                                    aria-hidden="true"></i> Cancelar</a>
+                            &nbsp;
+                            <button type="submit" class="btn btn-success float-right"><i class="fa fa-check"
+                                    aria-hidden="true"></i> Guardar</button>
+                        </div>
 
-        <a href="{% url 'listado_horarios' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
-        </div>      
-    </form>
-</div> 
+                    </form>
+                </div>
 
 <script>
     //document.getElementById("id_pendiente").type ="hidden"; // deshabilitar

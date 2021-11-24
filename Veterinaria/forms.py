@@ -112,12 +112,12 @@ class SolicitudForm(forms.ModelForm):
 			'solicitante','nombreClinica', 'direccionClinica', 'horariosClinica', 'telefonoClinica','serviciosClinica',
 		]
 		labels = {
-			'solicitante':'Nonbre del Dueño*',
-			'nombreClinica':'Nombre de la Clínica*',
-			'direccionClinica':'Dirección*',
-            'horariosClinica':'Horarios*',
-            'telefonoClinica':'Telefono*',
-			'serviciosClinica':'Servicios que Presta*',
+			'solicitante':'Nombre del Dueño',
+			'nombreClinica':'Nombre de la Clínica',
+			'direccionClinica':'Dirección',
+            'horariosClinica':'Horarios',
+            'telefonoClinica':'Telefono',
+			'serviciosClinica':'Servicios que Presta',
 		}
 		widgets = {
 			'horariosClinica':forms.Textarea(attrs={'class':'form-contol','rows':'4'}),
@@ -132,7 +132,7 @@ class HorarioForm(forms.ModelForm):
 			 'clinica','hora','indicador','activo',
 		]
 		labels = {
-			'clinica':'Clínca *',
+			'clinica':'Clínica *',
 			'hora':'Hora *',
 			'indicador':'Indicador *',
 			'activo':'Activo ',

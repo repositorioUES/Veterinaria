@@ -1,15 +1,17 @@
 {% extends 'base.html' %}  
-
+{% block title %}<title>Listado de Soliciitudes de Ingreso</title>{% endblock title%}
 {% block content %}
-<div class="container">
-<h3>Listado de Solicitudes Pendientes</h3>
-</div>
 
-<div class="container">
-	<table  class="table table-sm">
-		<tr style="text-align: center">
+<div class="row">
+	<div class="col-md">
+		<div class="card">
+			<div class="card-body">
+				<h3 align ="center">Listado de Solicitudes de ingreso pendientes</h3>
+				<table class="table table-bordered ">
+					<tr style="text-align: center; background-color: #393c7f; color:whitesmoke;">
 			<th style="text-align: center">Nombre del Dueño</th>
 			<th style="text-align: center">Nombre de la Clínica</th>
+			<th style="text-align: center">Detalle</th>
 		</tr>
 		{% for p in solicitudes %}
 			<tr>
@@ -21,11 +23,14 @@
 				{{p.nombreClinica}}
 				</td>
 				<td style="text-align: center">
-    				<a href="{% url 'detalle_solicitud' p.id %}" class="btn btn-success" style="color:white; background-color:blue">Detalle</a>
+    				<a href="{% url 'detalle_solicitud' p.id %}" class="btn btn-primary">Detalle</a>
 				</td>
 			</tr>
 		{% endfor %}
 	</table>
 </div>
+</div>
+</div>
+</div>&nbsp;
 
 {% endblock content%}

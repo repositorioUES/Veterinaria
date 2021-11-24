@@ -1,43 +1,39 @@
 {% extends 'base.html' %}  
+{%load static%}
 
+{% block title %}<title>Nueva Cita </title>{% endblock title%}
 {% block content %}
-<div>
-<h5> Cita Nueva</h5>
-</div>
+{% load crispy_forms_tags %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="card bg-light text-dark">
+                <div class="card-body" style="background-color: #b9bbc281;">
+                    <h2 align="center">Agregar Cita </h2>
+                    <hr>
+                    <form role="form" method="POST" enctype="multipart/form-data">
+                        <div>
+                            <B><label>Buscar Paciente: Introduzca el Nombre del Paciente, Nombre o DUI del
+                                    Propietario</label></B>
+                            <input type="text" placeholder="Buscar Paciente" id="id_buscar" name="buscar"
+                                value="{{ request.GET.buscar }}">
+                        </div>
 
-<div>
-    <form role="form" method="POST" enctype ="multipart/form-data" >
-        {% csrf_token %}
-        
-          
-            <div>
-                <B><label>Buscar Paciente: Introduzca el Nombre del Paciente, Nombre o DUI del Propietario</label></B>
+                        {% csrf_token %}
+                        {{form|crispy}}
+
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-danger" href="{% url 'listado_citas' %}"><i class="fa fa-ban"
+                                    aria-hidden="true"></i> Cancelar</a>
+                            &nbsp;
+                            <button type="submit" class="btn btn-success float-right"><i class="fa fa-check"
+                                    aria-hidden="true"></i> Guardar</button>
+                        </div>
+                </form>
             </div>
-            
-        <table>
-            <tr>
-                <td width="150">
-                </td>
-                <td width="150">
-                    <input type="text" placeholder="Buscar Paciente" id="id_buscar" name="buscar" value="{{ request.GET.buscar }}">
-                </td>
-
-                <td width="150">
-                    {{form.as_table}}
-                </td>
-            </tr>
-  
-        </table>   
-        <br>
-
-        <br>
-        <div>   
-            <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Crear">
-
-            <a href="{% url 'listado_citas' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
-        </div>      
-    </form>
-</div> 
+        </div>
+    </div>
+</div>
 {% endblock content%}
 
 {% block js %}

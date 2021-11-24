@@ -18,6 +18,7 @@ urlpatterns = [
     path('registrar_consultorio/<id>/',registrar_consultorio, name="registrar_consultorio"),
     path('modificar_consultorio/<id>/',modificar_consultorio, name="modificar_consultorio"),
     path('eliminar_consultorio/<id>/',eliminar_consultorio, name="eliminar_consultorio"),
+    path('reporte_clinica/<id>/',reportePdfView.as_view(), name="reporte_clinica"),
 ]
 
 urlpatterns += [

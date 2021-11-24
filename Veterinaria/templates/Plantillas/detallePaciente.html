@@ -3,8 +3,8 @@
 {% block content %}
 
 <div>   
-    <a href="{% url 'modificar_paciente' paciente.pk %}" class="btn btn-success" style="color:white; background-color:blue"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</a>
-    <a href="javascript: history.go(-1)" class="btn btn-success" style="color:white; background-color:#f6685e"><i class="fa fa-minus" aria-hidden="true"></i> Regresar</a>
+    <a href="{% url 'modificar_paciente' paciente.pk %}" class="btn btn-info" ><i class="fa fa-pencil" aria-hidden="true"></i> Editar</a>
+    <a href="javascript: history.go(-1)" class="btn btn-danger"><i class="fa fa-minus" aria-hidden="true"></i> Regresar</a>
 </div>
 <div>
     {% if borrar == 1 %}

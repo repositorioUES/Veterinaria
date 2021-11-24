@@ -6,11 +6,11 @@
 
 <div class="container">
 	<div>
-		<a href="{% url 'crear_horario' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
+		<a href="{% url 'crear_horario' %}" class="btn btn-success">
   		 Nuevo Horario</a>   
-		<a href="{% url 'horarios_inactivos' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
+		<a href="{% url 'horarios_inactivos' %}" class="btn btn-success">
   		 Horarios Inactivos</a>  
-		<a href="{% url 'listado_citas' %}" class="btn btn-success" style="color:white; background-color:red">
+		<a href="{% url 'listado_citas' %}" class="btn btn-danger">
   		 Regresar</a> 
 		
 	</div>
@@ -20,7 +20,7 @@
 </div>
 <br>
 	<table  class="table table-sm">
-		<tr style="text-align: center">
+		<tr style="text-align: center; background-color: #393c7f; color:whitesmoke;">
 			<th style="text-align: center">Hora</th>
 			<th style="text-align: center">Cambiar Estado</th>
 			<th style="text-align: center">Borrar</th>
