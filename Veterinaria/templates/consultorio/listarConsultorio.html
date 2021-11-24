@@ -39,6 +39,8 @@
 
 <div class="d-flex justify-content-end">
     <a class="btn btn-success" href="{% url 'registrar_consultorio' clinica.id %}" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Consultorio</a>
+	&nbsp;
+	<a class="btn btn-info " href="{% url 'crear_solicitud_servicio'%}">Sugerir Servicio</a>
 </div>&nbsp;
 
 <div class="row">
@@ -108,8 +110,10 @@
 					<td>{% for serv in consultorio.servicios.all %}  ✓{{ serv}}{% endfor %}</td>
 					<td>{{ consultorio.estado }}</td>
 					<td> <a href="{% url 'modificar_consultorio' consultorio.id %}"><i class="fa fa-pencil fa-2x" aria-hidden="true" style="font-size:24px;color:rgb(238, 204, 9);text-shadow:2px 2px 4px #000000;"></i></a>&nbsp;&nbsp;
+						{% if consultorio.id not in consultoriosId%}
 						<a href="#" onclick="eliminarConsultorio({{ consultorio.id }})"><i class="fa fa-trash-o fa-2x" aria-hidden="true" style="font-size:24px;color:rgb(212, 10, 10);text-shadow:2px 2px 4px #000000;"></i></a>
-				   </td>
+				    	{% endif %}
+					</td>
 				</tr>
 				{% endfor %}
 			</table>

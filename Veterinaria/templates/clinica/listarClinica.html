@@ -6,7 +6,7 @@
 <div class="d-flex justify-content-end">
     <a class="btn btn-success" href="{% url 'registrar_clinica' %}" ><i class="fa fa-plus" aria-hidden="true"></i> Registrar Clínica</a>
 &nbsp;
-    <a class="btn btn-info " href="{% url 'crear_solicitud_servicio'%}">Sugerir Servicio</a>
+    {% comment %} <a class="btn btn-info " href="{% url 'crear_solicitud_servicio'%}">Sugerir Servicio</a> {% endcomment %}
 </div>&nbsp;
 
 <div class="row">
@@ -38,7 +38,9 @@
                         <td>{{ clinica.fechaIngreso}}</td>
                         <td>{{ clinica.estado}}</td>
                         <td> <a href="{% url 'modificar_clinica' clinica.id %}"><i class="fa fa-pencil fa-2x" aria-hidden="true" style="font-size:24px;color:rgb(238, 204, 9);text-shadow:2px 2px 4px #000000;"></i></a>&nbsp;&nbsp;
+                            {% if clinica.id not in clinicasId%}
                             <a href="#" onclick="eliminarClinica({{ clinica.id }})"><i class="fa fa-trash-o fa-2x" aria-hidden="true" style="font-size:24px;color:rgb(212, 10, 10);text-shadow:2px 2px 4px #000000;"></i></a>
+                            {% endif %}
                         </td>
                     </tr>
                     {%endfor%}

@@ -81,7 +81,7 @@ urlpatterns = [
     path('serviciosInactivos/', login_required(ServiciosInactivos),name='servicios_inactivos'),
     path('servicioParaBorrar/',login_required(ServiciosParaBorrar),name='servicio_para_borrar'),
     path('agregarVacuna/<int:pk>', login_required(AgregarVacuna), name='agregar_vacuna'),
-    path('estadoEmpleado/<str:duiEmp>', login_required(cambiarEstadoEmoleado), name='cambiar_estado'),
+    path('estadoEmpleado/<str:duiEmp>', login_required(cambiarEstadoEmpleado), name='cambiar_estado'),
 
 ]
 
