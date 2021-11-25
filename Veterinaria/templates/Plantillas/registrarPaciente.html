@@ -42,6 +42,7 @@
 
     document.getElementById("id_edad").readOnly = true;
     window.onload = getClinicasActivas();
+    window.onload = VaciarSelects();
 
 // SELECT DEPENDIENTE PARA LOS MUNICIPIOS====================================
     $(document).ready(function(){
@@ -135,6 +136,11 @@
 
         document.getElementById("id_edad").value = edad;
         return edad
+    }
+
+     function VaciarSelects(){
+        $("#id_consultorio").html('<option value="" selected = "selected">-----------</option>');
+        $("#id_municipio").html('<option value="" selected = "selected">-----------</option>');
     }
 </script>
 

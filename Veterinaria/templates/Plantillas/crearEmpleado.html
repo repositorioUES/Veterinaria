@@ -37,3 +37,41 @@
 
 
 {% endblock content%}
+
+{% block js %}
+<script>
+    //document.getElementById("id_pendiente").type ="hidden"; // deshabilitar
+    window.onload = VaciarSelects();
+
+    $(document).ready(function(){
+      
+        $("#id_clinica").on("change", getConsultorios);
+    });
+    
+    function getConsultorios(){
+        var valor = $("#id_clinica").val();
+        if (valor){
+            $("#id_consultorio").html("");
+            var request = $.ajax({
+                type: "GET",
+                url: "{% url 'load_consultorio' %}",
+                data: {
+                    "consultId":valor
+                },
+            });
+            request.done(function(response){
+                $("#id_consultorio").html(response);
+                
+            });
+        
+        }else{
+            $("#id_consultorio").html('<option value="" selected = "selected">-----------</option>');      
+            $("#id_consultorio").trigger("change");
+        }
+    }
+
+    function VaciarSelects(){
+        $("#id_consultorio").html('<option value="" selected = "selected">-----------</option>');
+    }
+</script>
+{% endblock js %}

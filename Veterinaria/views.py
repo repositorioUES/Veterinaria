@@ -811,3 +811,33 @@ class reportePdfView(View):
         except:
             pass
         return HttpResponseRedirect(reverse_lazy('listar_clinica'))
+
+@login_required
+def eliminar_empleado(request, id):
+    empleado = get_object_or_404(Empleado, duiEmp = id)
+
+    if request.method == 'POST':
+        empleado.delete()
+        messages.success(request," Empleado eliminado correctamente")
+        return redirect('listado_empleados')
+    return render(request,'Plantillas/borrarEmpleado.html', {'empleado':empleado})
+
+@login_required
+def eliminar_solicitud_servicio(request, id):
+    solicitud = get_object_or_404(SolicitudServicio, id=id)
+
+    if request.method == 'POST':
+        solicitud.delete()
+        messages.success(request," Solicitud de Servicio eliminada correctamente")
+        return redirect('listado_solicitud_servicio')
+    return render(request,'Plantillas/borrarSolicitudServicio.html', {'solicitud':solicitud})
+
+@login_required
+def eliminar_solicitud_ingreso(request, id):
+    solicitud = get_object_or_404(Solicitudes, id=id)
+
+    if request.method == 'POST':
+        solicitud.delete()
+        messages.success(request," Solicitd de Ingreso eliminada correctamente")
+        return redirect('listado_solicitudes')
+    return render(request,'Plantillas/borrarSolicitudIngreso.html', {'solicitud':solicitud})

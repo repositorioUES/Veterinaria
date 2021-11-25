@@ -20,7 +20,7 @@
 						<th style="text-align: center">Cargo</th>
 						<th>Detalle</th>
 						<th style="text-align: center">Cambiar Estado</th>
-			
+						<th>Borrar</th>
 					</tr>
 					{% for p in empleados %}
 						
@@ -41,10 +41,13 @@
 								{{p.cargo}}
 							</td>
 							<td style="text-align: center">
-								<a href="{% url 'detalle_empleado' p.duiEmp %}" class="btn btn-primary" style="color:white;">Detalle</a>
+								<a href="{% url 'detalle_empleado' p.duiEmp %}" class="btn btn-primary" style="color:white;"><i class="fa fa-eye" aria-hidden="true"></i></a>
 							</td>
 							<td style="text-align:center;">
 								<button onclick="return abrir_modal('{% url 'cambiar_estado' p.duiEmp %}')"  style="color:white; background-color:orange" class="btn btn-successtn"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+							</td>
+							<td style="text-align:center;">
+								<button onclick="return abrir_modal('{% url 'eliminar_empleado' p.duiEmp %}')"  style="color:white; background-color:red" class="btn btn-successtn"><i class="fa fa-trash" aria-hidden="true"></i></button>
 							</td>
 						</tr>
 					{% endfor %}

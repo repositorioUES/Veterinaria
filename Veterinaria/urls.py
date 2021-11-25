@@ -19,6 +19,9 @@ urlpatterns = [
     path('modificar_consultorio/<id>/',modificar_consultorio, name="modificar_consultorio"),
     path('eliminar_consultorio/<id>/',eliminar_consultorio, name="eliminar_consultorio"),
     path('reporte_clinica/<id>/',reportePdfView.as_view(), name="reporte_clinica"),
+    path('eliminar_empleado/<str:id>/',eliminar_empleado, name="eliminar_empleado"),
+    path('eliminar_solicitud_ingreso/<id>/',eliminar_solicitud_ingreso, name="eliminar_solicitud_ingreso"),
+    path('eliminar_solicitud_servicio/<id>/',eliminar_solicitud_servicio, name="eliminar_solicitud_servicio"),
 ]
 
 urlpatterns += [

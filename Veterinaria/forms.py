@@ -161,7 +161,7 @@ class SoloPacienteForm(forms.ModelForm):
 	class Meta:
 		model = Paciente
 		fields = [
-			 'activo','foto','nombrePac','sexo', 'especie','raza','color','fechaNacimPac','observaciones','propietario','personaInscrip',
+			 'activo','foto','nombrePac','sexo', 'especie','raza','color','fechaNacimPac','observaciones','personaInscrip','propietario',
 		]
 		labels = {
 			'activo': 'Activo',
@@ -173,8 +173,8 @@ class SoloPacienteForm(forms.ModelForm):
 		    'color':'Color *',
 		    'fechaNacimPac':'Fecha de Nacimiento *',
             'observaciones':'Observaciones',
-			'propietario':'Propietario *',
 			'personaInscrip':'Persona que Inscribió *',
+			'propietario':'Propietario *',
 		}
 		widgets = {
 			'observaciones':forms.Textarea(attrs={'class':'form-contol','rows':'4'}),
