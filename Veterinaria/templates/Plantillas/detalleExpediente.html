@@ -110,7 +110,7 @@
     </div>
 {% if sinVacunas == 0%}
 <div>
-    <h5>Esquema de Vacunación: </h5> 
+    <h5>Esquema de Vacunación:</h5> 
 </div>
 <table  class="table table-sm">
 		<tr style="text-align: center; background-color: #393c7f; color:whitesmoke;">
@@ -119,6 +119,7 @@
 			<th style="text-align: center">Lote</th>
             <th style="text-align: center">Próxima Aplicación</th>
             <th style="text-align: center">Médico que la Aplicó</th>
+            <th style="text-align: center">Vacunas</th>
 		</tr>
 		{% for v in vacunas %}
 		<tr>
@@ -127,6 +128,11 @@
             <td style="text-align: center">{{v.lote}}</td>
             <td style="text-align: center">{{v.fechaProx}}</td>
             <td style="text-align: center">{{v.aplicador}}</td>
+            <td style="text-align:center;">
+                <a href="{% url 'reporte_Vacuna' exp.pacienteId.pk %}" class="btn"
+                    style="color:white; background-color:rgb(199, 2, 2)"><i class="fa fa-file-pdf-o"
+                        aria-hidden="true"></i></a>
+            </td>
 		{% endfor %}
 	</table>
 {% endif %}
@@ -140,6 +146,7 @@
             <th style="text-align: center">Hora</th>
 			<th style="text-align: center">Médico</th>
             <th style="text-align: center">Detalles</th>
+            <th style="text-align: center">Reportes</th>
 		</tr>
 		{% for c in cons %}
 		<tr>
@@ -155,6 +162,11 @@
 			<td style="text-align:center;">
 					<a href="{% url 'detalle_consulta' c.pk %}" class="btn"  style="color:white; background-color:blue"><i class="fa fa-eye" aria-hidden="true"></i></a>
 				</td>
+            <td style="text-align:center;">
+                <a href="{% url 'reporte_Consulta' c.pk %}" class="btn"
+                    style="color:white; background-color:rgb(199, 2, 2)"><i class="fa fa-file-pdf-o"
+                        aria-hidden="true"></i></a>
+            </td>
 			</tr>
 		{% endfor %}
 	</table>

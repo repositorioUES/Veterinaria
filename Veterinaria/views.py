@@ -796,18 +796,136 @@ def AgregarVacuna(request, pk):
 
 
 
-class reportePdfView(View):
+class reportePaciente(View):
+
+    def link_callback(self,uri, rel):
+
+        # use short variable names
+        sUrl = settings.STATIC_URL
+        mUrl = settings.MEDIA_URL
+        mRoot = settings.MEDIA_ROOT
+
+        # convert URIs to absolute system paths
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+
+        else:
+            return uri  # handle absolute uri (ie: http://some.tld/foo.png)
+
+        # make sure that file exists
+        if not os.path.isfile(path):
+                raise Exception(
+                    'media URI must start with %s or %s' % (sUrl, mUrl)
+                )
+        return path
+
+
     def get(self,request, *args, **kwargs):
         try:
-            template = get_template('reporte.html')
-            context = {'title': 'Clinicas'}
+            
+            template = get_template('reportePaciente.html')
+            context = {'titulo1': 'Asociación de Veterinarios de El Salvador',
+                        'titulo2' : 'Ficha de Identificación de Paciente',
+                        'paciente' : Paciente.objects.get( pk=self.kwargs['pk']),
+            }
             html = template.render(context)
             response = HttpResponse(content_type='application/pdf')
             #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
             
             # create a pdf
-            pisa_status = pisa.CreatePDF(html, dest=response)
+            pisa_status = pisa.CreatePDF(html, dest=response,link_callback=self.link_callback)
             return response
         except:
             pass
-        return HttpResponseRedirect(reverse_lazy('listar_clinica'))
+        return HttpResponseRedirect(reverse_lazy('listado_pacientes'))
+
+
+class reporteConsulta(View):
+
+    def link_callback(self,uri, rel):
+
+        # use short variable names
+        sUrl = settings.STATIC_URL
+        mUrl = settings.MEDIA_URL
+        mRoot = settings.MEDIA_ROOT
+
+        # convert URIs to absolute system paths
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+
+        else:
+            return uri  # handle absolute uri (ie: http://some.tld/foo.png)
+
+        # make sure that file exists
+        if not os.path.isfile(path):
+                raise Exception(
+                    'media URI must start with %s or %s' % (sUrl, mUrl)
+                )
+        return path
+
+
+    def get(self,request, *args, **kwargs):
+        try:
+            
+            template = get_template('reporteConsulta.html')
+            context = {'titulo1': 'Asociación de Veterinarios de El Salvador',
+                        'JVPMV' : 'JVPMV ####',
+                        'titulo2' : 'Servicio Medico Veterinario y Quijurgico',
+                        'consulta' : Consulta.objects.get( pk=self.kwargs['pk']),
+            }
+            html = template.render(context)
+            response = HttpResponse(content_type='application/pdf')
+            #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+            
+            # create a pdf
+            pisa_status = pisa.CreatePDF(html, dest=response,link_callback=self.link_callback)
+            return response
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('expediente'))
+
+
+class reporteVacuna(View):
+
+    def link_callback(self,uri, rel):
+
+        # use short variable names
+        sUrl = settings.STATIC_URL
+        mUrl = settings.MEDIA_URL
+        mRoot = settings.MEDIA_ROOT
+
+        # convert URIs to absolute system paths
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+
+        else:
+            return uri  # handle absolute uri (ie: http://some.tld/foo.png)
+
+        # make sure that file exists
+        if not os.path.isfile(path):
+                raise Exception(
+                    'media URI must start with %s or %s' % (sUrl, mUrl)
+                )
+        return path
+
+
+    def get(self,request, *args, **kwargs):
+        try:
+            
+            template = get_template('reporteVacuna.html')
+            context = {'vacuna' : Vacuna.objects.get( pk=self.kwargs['pk']),
+                        'paciente' : Paciente.objects.get( pk=self.kwargs['pk']),
+                        'vacunas' : Vacuna.objects.filter(pk = self.kwargs['pk']),
+                        'consulta' : Consulta.objects.get( pk=self.kwargs['pk']),
+
+            }
+            html = template.render(context)
+            response = HttpResponse(content_type='application/pdf')
+            #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+            
+            # create a pdf
+            pisa_status = pisa.CreatePDF(html, dest=response,link_callback=self.link_callback)
+            return response
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('expediente'))
