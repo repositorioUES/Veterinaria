@@ -65,14 +65,23 @@
             </td>
             <td>
              <p>
-                 <b>FECHA:</b> {{ consulta.fechaConsulta }}<br>
+                 <b>FECHA:</b> {{ consulta.fechaConsulta }} - {{ consulta.hora }}<br>
                  <b>EDAD:</b> {{ consulta.edad }} años<br>
              </p>
              </td>
          </tr>
     </table>
 <p>
-    <b>RX :</b> {{ consulta.medicamento }}<br>
+    <b>RX </b> <br>
+</p>
+<p>
+    <b>Observacioines :</b> {% if consulta.observaciones != None%}{{ consulta.observaciones }} {% else %} - {% endif %}<br>
+</p>
+<p>
+    <b>Medicamento Recetado :</b> {% if consulta.medicamento != None%}{{ consulta.medicamento }} {% else %} - {% endif %}<br>
+</p>
+<p>
+    <b>Examenes :</b> {% if consulta.examenes != None%}{{ consulta.examenes }} {% else %} - {% endif %}<br>
 </p>
 
     <p>

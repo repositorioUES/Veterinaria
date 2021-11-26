@@ -25,6 +25,10 @@ urlpatterns = [
     path('reporte_Paciente/<int:pk>',reportePaciente.as_view(), name="reporte_Paciente"),
     path('reporte_Consulta/<int:pk>',reporteConsulta.as_view(), name="reporte_Consulta"),
     path('reporte_Vacuna/<int:pk>',reporteVacuna.as_view(), name="reporte_Vacuna"),
+    path('reporte_por_medico/<int:pk>',reportePorMedico.as_view(), name="reporte_por_medico"),
+    path('reporte_por_fecha/<int:pk>',reportePorFecha.as_view(), name="reporte_por_fecha"),
+    path('reporte_por_clinica',reportePorClinica.as_view(), name="reporte_por_clinica"),
+    path('reporte_por_fecha_asoc',reportePorFechaAsoc.as_view(), name="reporte_por_fecha_asoc"),
 ]
 
 urlpatterns += [

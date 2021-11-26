@@ -23,6 +23,7 @@
                     <th style="text-align: center">Propietario</th>
                     <th style="text-align: center">Detalles</th>
                     <th style="text-align: center">Expediente</th>
+                    <th style="text-align: center">Reporte</th>
                 </tr>
                     {% for p in pacientes %}
                         
@@ -39,6 +40,11 @@
                             </td>
                             <td style="text-align:center;">
                                 <a href="{% url 'expediente' p.pk %}" class="btn"  style="color:white; background-color:blue"><i class="fa fa-file" aria-hidden="true"></i></a>
+                            </td>
+                            <td style="text-align:center;">
+                                <a href="{% url 'reporte_Paciente' p.pk %}" class="btn"
+                                    style="color:white; background-color:rgb(199, 2, 2)"><i class="fa fa-file-pdf-o"
+                                    aria-hidden="true"></i></a>
                             </td>
                         </tr>
                         

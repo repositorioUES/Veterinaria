@@ -119,7 +119,7 @@
 			<th style="text-align: center">Lote</th>
             <th style="text-align: center">Próxima Aplicación</th>
             <th style="text-align: center">Médico que la Aplicó</th>
-            <th style="text-align: center">Vacunas</th>
+            {% comment %} <th style="text-align: center">Vacunas</th> {% endcomment %}
 		</tr>
 		{% for v in vacunas %}
 		<tr>
@@ -128,11 +128,11 @@
             <td style="text-align: center">{{v.lote}}</td>
             <td style="text-align: center">{{v.fechaProx}}</td>
             <td style="text-align: center">{{v.aplicador}}</td>
-            <td style="text-align:center;">
+            {% comment %} <td style="text-align:center;">
                 <a href="{% url 'reporte_Vacuna' exp.pacienteId.pk %}" class="btn"
                     style="color:white; background-color:rgb(199, 2, 2)"><i class="fa fa-file-pdf-o"
                         aria-hidden="true"></i></a>
-            </td>
+            </td> {% endcomment %}
 		{% endfor %}
 	</table>
 {% endif %}

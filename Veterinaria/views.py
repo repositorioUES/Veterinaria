@@ -870,7 +870,7 @@ class reporteConsulta(View):
             template = get_template('reporteConsulta.html')
             context = {'titulo1': 'Asociación de Veterinarios de El Salvador',
                         'JVPMV' : 'JVPMV ####',
-                        'titulo2' : 'Servicio Medico Veterinario y Quijurgico',
+                        'titulo2' : 'Servicio Medico Veterinario y Quirurjurgico',
                         'consulta' : Consulta.objects.get( pk=self.kwargs['pk']),
             }
             html = template.render(context)
@@ -959,3 +959,231 @@ def eliminar_solicitud_ingreso(request, id):
         messages.success(request," Solicitd de Ingreso eliminada correctamente")
         return redirect('listado_solicitudes')
     return render(request,'Plantillas/borrarSolicitudIngreso.html', {'solicitud':solicitud})
+
+@login_required
+def Consolidados(request, pk):
+    clinica = Clinica.objects.get(id = pk)
+    return render(request,'Plantillas/consolidados.html', {'clinica':clinica})
+
+@login_required
+def ConsolidadosAsoc(request):
+    return render(request,'Plantillas/consolidadosAsoc.html')
+
+class reportePorMedico(View):
+
+    def link_callback(self,uri, rel):
+
+        # use short variable names
+        sUrl = settings.STATIC_URL
+        mUrl = settings.MEDIA_URL
+        mRoot = settings.MEDIA_ROOT
+
+        # convert URIs to absolute system paths
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+
+        else:
+            return uri  # handle absolute uri (ie: http://some.tld/foo.png)
+
+        # make sure that file exists
+        if not os.path.isfile(path):
+                raise Exception(
+                    'media URI must start with %s or %s' % (sUrl, mUrl)
+                )
+        return path
+
+
+    def get(self,request, *args, **kwargs):
+        try:
+
+            clinica = Clinica.objects.get(id=self.kwargs['pk'])
+            consultas = Consulta.objects.filter(clinica_id=self.kwargs['pk'])
+            medicos = []
+
+            for c in consultas:
+                medicos.append(c.medico)
+
+            medicos = set(medicos)
+            print(medicos)
+            
+            template = get_template('reportePorMedico.html')
+            context = {'medicos' : medicos,
+                        'consultas' : consultas,
+                        'titulo1': 'Asociación de Veterinarios de El Salvador',
+                        'titulo2' : 'Servicio Medico Veterinario y Quirurjurgico',
+                        'titulo3' : 'Consolidado de Consultas Atendidas Por cada Médico en la Clinica: ' + str(clinica.nombre),
+            }
+            html = template.render(context)
+            response = HttpResponse(content_type='application/pdf')
+            #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+            
+            # create a pdf
+            pisa_status = pisa.CreatePDF(html, dest=response,link_callback=self.link_callback)
+            return response
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('consolidados'))
+
+class reportePorFecha(View):
+
+    def link_callback(self,uri, rel):
+
+        # use short variable names
+        sUrl = settings.STATIC_URL
+        mUrl = settings.MEDIA_URL
+        mRoot = settings.MEDIA_ROOT
+
+        # convert URIs to absolute system paths
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+
+        else:
+            return uri  # handle absolute uri (ie: http://some.tld/foo.png)
+
+        # make sure that file exists
+        if not os.path.isfile(path):
+                raise Exception(
+                    'media URI must start with %s or %s' % (sUrl, mUrl)
+                )
+        return path
+
+
+    def get(self,request, *args, **kwargs):
+        try:
+            clinica = Clinica.objects.get(id=self.kwargs['pk'])
+            consultas = Consulta.objects.filter(clinica_id=self.kwargs['pk'])
+            fechas = []
+
+            for c in consultas:
+                fechas.append(c.fechaConsulta)
+
+            fechas = set(fechas)
+            print(fechas)
+            
+            template = get_template('reportePorFecha.html')
+            context = {'fechas' : fechas,
+                        'consultas' : consultas,
+                        'titulo1': 'Asociación de Veterinarios de El Salvador',
+                        'titulo2' : 'Servicio Medico Veterinario y Quirurjurgico',
+                        'titulo3' : 'Consolidado de Consultas Atendidas Por Fecha de la Clínica: ' + str(clinica.nombre),
+            }
+            html = template.render(context)
+            response = HttpResponse(content_type='application/pdf')
+            #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+            
+            # create a pdf
+            pisa_status = pisa.CreatePDF(html, dest=response,link_callback=self.link_callback)
+            return response
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('consolidados'))
+
+class reportePorClinica(View):
+
+    def link_callback(self,uri, rel):
+
+        # use short variable names
+        sUrl = settings.STATIC_URL
+        mUrl = settings.MEDIA_URL
+        mRoot = settings.MEDIA_ROOT
+
+        # convert URIs to absolute system paths
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+
+        else:
+            return uri  # handle absolute uri (ie: http://some.tld/foo.png)
+
+        # make sure that file exists
+        if not os.path.isfile(path):
+                raise Exception(
+                    'media URI must start with %s or %s' % (sUrl, mUrl)
+                )
+        return path
+
+
+    def get(self,request, *args, **kwargs):
+        try:
+
+            consultas = Consulta.objects.all()
+            clinicas = Clinica.objects.all()
+            clinicasId = []
+
+            for c in consultas:
+                clinicasId.append(c.clinica_id)
+
+            clinicasId = set(clinicasId)
+            print(clinicasId)
+            
+            template = get_template('reportePorClinica.html')
+            context = {'clinicasId' : clinicasId,
+                        'consultas' : consultas,
+                        'clinicas' : clinicas,
+                        'titulo1': 'Asociación de Veterinarios de El Salvador',
+                        'titulo2' : 'Servicio Medico Veterinario y Quirurjurgico',
+                        'titulo3' : 'Consolidado de Consultas Atendidas Por Clínica',
+            }
+            html = template.render(context)
+            response = HttpResponse(content_type='application/pdf')
+            #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+            
+            # create a pdf
+            pisa_status = pisa.CreatePDF(html, dest=response,link_callback=self.link_callback)
+            return response
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('consolidados'))
+
+class reportePorFechaAsoc(View):
+
+    def link_callback(self,uri, rel):
+
+        # use short variable names
+        sUrl = settings.STATIC_URL
+        mUrl = settings.MEDIA_URL
+        mRoot = settings.MEDIA_ROOT
+
+        # convert URIs to absolute system paths
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+
+        else:
+            return uri  # handle absolute uri (ie: http://some.tld/foo.png)
+
+        # make sure that file exists
+        if not os.path.isfile(path):
+                raise Exception(
+                    'media URI must start with %s or %s' % (sUrl, mUrl)
+                )
+        return path
+
+
+    def get(self,request, *args, **kwargs):
+        try:
+           
+            consultas = Consulta.objects.all()
+            fechas = []
+
+            for c in consultas:
+                fechas.append(c.fechaConsulta)
+
+            fechas = set(fechas)
+            print(fechas)
+            
+            template = get_template('reportePorFecha.html')
+            context = {'fechas' : fechas,
+                        'consultas' : consultas,
+                        'titulo1': 'Asociación de Veterinarios de El Salvador',
+                        'titulo2' : 'Servicio Medico Veterinario y Quirurjurgico',
+                        'titulo3' : 'Consolidado de Consultas Atendidas Por Fecha de Todas las Clínicas',
+            }
+            html = template.render(context)
+            response = HttpResponse(content_type='application/pdf')
+            #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+            
+            # create a pdf
+            pisa_status = pisa.CreatePDF(html, dest=response,link_callback=self.link_callback)
+            return response
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('consolidados'))

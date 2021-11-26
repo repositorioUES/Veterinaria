@@ -40,6 +40,8 @@
 <div class="d-flex justify-content-end">
     <a class="btn btn-success" href="{% url 'registrar_consultorio' clinica.id %}" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Consultorio</a>
 	&nbsp;
+	<a class="btn btn-danger " href="{% url 'consolidados' clinica.id%}"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Consolidados</a>
+	&nbsp;
 	<a class="btn btn-info " href="{% url 'crear_solicitud_servicio'%}">Sugerir Servicio</a>
 </div>&nbsp;
 
