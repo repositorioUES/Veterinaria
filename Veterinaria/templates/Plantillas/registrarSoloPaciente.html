@@ -17,8 +17,8 @@
         {{ form|crispy}}
 
         <div>
-            <B><label>Introduzca el Nombre del Paciente, Nombre o DUI del Propietario</label></B>
-            <input  type="text" placeholder="Buscar Propietario" id="id_buscar" name="buscar" class="form-control" value="{{ request.GET.buscar }}">
+            <B><label>Introduzca el Nombre o DUI del Propietario</label></B>
+            <input  type="text" placeholder="Buscar Propietario" id="id_buscar" name="buscar" value="{{ request.GET.buscar }}">
         </div>
         <br>
         <h5>Datos para el Expediente</h5>
